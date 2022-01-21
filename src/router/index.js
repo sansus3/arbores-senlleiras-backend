@@ -19,6 +19,16 @@ const routes = [
     path: '/geolocalizacion',
     name: 'Geolocalizacion',
     component: () => import('../views/Geolocalizacion.vue')
+  },
+  {
+    path: '/catalogo',
+    name: 'Catalogo',
+    component: () => import('../views/Catalogo.vue')
+  },
+  {
+    path: '/catalogo/:id',
+    name: 'Arbore',
+    component: () => import('@/views/Arbore.vue')
   }
 ]
 

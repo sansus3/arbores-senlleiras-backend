@@ -1,8 +1,10 @@
 <template>
-  <div id="nav">
+  <nav class="main-menu" id="nav">
     <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-  </div>
+    <!-- <router-link to="/catalogo">Catálogo</router-link> | -->
+    <router-link to="/geolocalizacion">Geolocalización</router-link> |
+    <router-link to="/about">Sobre nosotros</router-link>
+  </nav>
   <router-view/>
 </template>
 

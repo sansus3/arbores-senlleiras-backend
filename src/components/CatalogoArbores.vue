@@ -5,7 +5,7 @@
         <ul>
             <li v-for="item in arbores" :key="item.id">
                 <router-link
-                    :to="`/catalogo/${item.id}`"
+                    :to="`/arbore/${item.id}`"
                 >{{ item.genus }} {{ item.specie }} ({{ item.names.join() }})</router-link>
             </li>
         </ul>

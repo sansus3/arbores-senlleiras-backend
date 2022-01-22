@@ -16,7 +16,7 @@ export default createStore({
         async () => {
           try {
             state.listadoArbores.loader.pending = true;
-            const respuesta = await fetch('http://raw.githubusercontent.com/sansus3/COLABORATIVO_GITHUB/main/species.json');
+            const respuesta = await fetch('https://raw.githubusercontent.com/sansus3/COLABORATIVO_GITHUB/main/species.json');
             if (!respuesta.ok) {//estado en un rango de 200 a 299
               console.error(`Error index.js en mutaciones [${respuesta.status}]`);
               throw Error(respuesta.status);

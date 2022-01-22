@@ -16,6 +16,11 @@ const routes = [
     component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
   },
   {
+    path: '/contacto',
+    name: 'Contacto',
+    component: () => import('../views/Contacto.vue')
+  },
+  {
     path: '/geolocalizacion',
     name: 'Geolocalizacion',
     component: () => import('../views/Geolocalizacion.vue')
@@ -26,7 +31,7 @@ const routes = [
     component: () => import('../views/Catalogo.vue')
   },
   {
-    path: '/catalogo/:id',
+    path: '/arbore/:id',
     name: 'Arbore',
     component: () => import('@/views/Arbore.vue')
   }

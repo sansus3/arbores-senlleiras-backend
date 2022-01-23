@@ -3,7 +3,7 @@ import { createStore } from 'vuex'
 export default createStore({
   state: {
     listadoArbores: {
-      loader: {
+      loader: { //Como la carga del árbol es json este objeto no describe el estado en que no encontramos
         pending: false,
         msg: 'Cargando datos...'
       },
@@ -25,7 +25,7 @@ export default createStore({
             state.listadoArbores.loader.pending = false;
           } catch (error) {
             state.listadoArbores.loader.pending = true;
-            state.listadoArbores.loader.msg = error;
+            state.listadoArbores.loader.msg = error.message;
             console.error(`Error index.js en mutaciones [${error}]`);
           }
         }

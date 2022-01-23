@@ -1,34 +1,49 @@
-<template>
-    <div role="alert" v-if="loader.pending">{{ loader.msg }}</div>
-    <section v-else class="section section__catalogo">
-        <h3 class="section__title">Ejemplares ({{ totalCatalogo }})</h3>
-        <ul>
-            <li v-for="item in arbores" :key="item.id">
-                <router-link
-                    :to="`/arbore/${item.id}`"
-                >{{ item.genus }} {{ item.specie }} ({{ item.names.join() }})</router-link>
-            </li>
-        </ul>
-    </section>
+<template>   
+        <loader-component :text="loader.msg" :visibleBool="loader.pending"></loader-component>
+        <table class="table table-striped">
+            <caption>Ejemplares: {{ totalCatalogo }}</caption>
+            <thead>
+                <tr>
+                    <th scope="col">Código</th>
+                    <th scope="col">Género</th>
+                    <th scope="col">Especie</th>
+                    <th scope="col">Nombres comunes</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="item in arbores" :key="item.id">
+                    <th scope="row">{{ item.id }}</th>
+                    <td>
+                        <router-link :to="`/arbore/${item.id}`">{{ item.genus }}</router-link>
+                    </td>
+                    <td>{{ item.specie }}</td>
+                    <td>{{ item.names.join() }}</td>
+                </tr>
+            </tbody>
+        </table>
 </template>
 
 <script>
-import { mapActions, mapState } from "vuex"
+import LoaderComponent from './LoaderComponent';
+import { mapActions, mapState } from "vuex";
 export default {
     mounted() {
         this.getListadoArbores();
+    },
+    components: {
+        LoaderComponent
     },
     computed: {
         ...mapState(['listadoArbores']),
         totalCatalogo() {
             return this.listadoArbores.arbores.length;
         },
-        arbores(){
-            const {arbores} = this.listadoArbores;
+        arbores() {
+            const { arbores } = this.listadoArbores;
             return arbores;
         },
-        loader(){
-            const {loader} = this.listadoArbores;
+        loader() {
+            const { loader } = this.listadoArbores;
             return loader;
         }
     },

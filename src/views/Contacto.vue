@@ -1,5 +1,6 @@
-<template>
-    <form action="#" v-on:submit.prevent>
+<template>    
+    <form class="p-2" action="#" v-on:submit.prevent>
+    <h2 class="display-3">Contacto</h2>
     <ul class="fields p-2">
         <li class="field mb-3">
         <!-- form-control viene de bootstrap -->

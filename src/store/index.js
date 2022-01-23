@@ -1,3 +1,4 @@
+import { setTextRange } from 'typescript';
 import { createStore } from 'vuex'
 
 export default createStore({
@@ -30,11 +31,17 @@ export default createStore({
           }
         }
       )()
+    },
+    setArbol(state,payment){
+      state.listadoArbores.arbores.push(payment);
     }
   },
   actions: {
     getListadoArbores({ commit }) {
       commit('listadoArbores');
+    },
+    setArbol({commit},objTree){
+      commit('setArbol',objTree);
     }
   },
   modules: {

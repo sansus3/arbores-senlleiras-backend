@@ -11,7 +11,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="item in arbores" :key="item.id">
+                <tr v-for="item in species" :key="item.id">
                     <th scope="row">{{ item.id }}</th>
                     <td>
                         <router-link :to="`/specie/specie-${item.id}`">{{ item.genus }}</router-link>
@@ -28,28 +28,20 @@ import LoaderComponent from './LoaderComponent';
 import { mapActions, mapState } from "vuex";
 export default {
     mounted() {
-        this.getListadoArbores();
+        this.getListadoEspecies();
     },
     components: {
         LoaderComponent
     },
     computed: {
-        ...mapState(['listadoArbores']),
+        ...mapState(['species','loader']),
         totalCatalogo() {
-            return this.listadoArbores.arbores?this.listadoArbores.arbores.length:0;
+            return this.species?this.species.length:0;
         },
-        arbores() {
-            const { arbores } = this.listadoArbores;
-            return arbores;
-        },
-        loader() {
-            const { loader } = this.listadoArbores;
-            return loader;
-        }
     },
     methods: {
         ...mapActions(
-            ['getListadoArbores']
+            ['getListadoEspecies']
         )
     },
 }

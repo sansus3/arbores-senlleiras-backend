@@ -1,23 +1,32 @@
 import { createStore } from 'vuex';
 
-import router from '../router';
+import router from '../router';//Esta línea no está en el original. Nos permite manipular las rutas
 
 export default createStore({
   state: {
-    listadoArbores: {
-      loader: { //Como la carga del árbol es json este objeto no describe el estado en que no encontramos
-        pending: false,
-        msg: 'Cargando datos...'
-      },
-      arbores: [],
-    }, //Listado de árboles para el catálogo
+    loader: {
+      pending: false,
+      msg: 'Cargando datos...'  
+    },
+    species: [], //Listado de especies para el catálogo
   },
   mutations: {
-    async listadoArbores(state) {
-      state.listadoArbores.arbores = [];
+    listadoEspecies(state,payment) {
+      state.species = payment;
+    },
+    setArbol(state, payment) {
+      state.species.push(payment);
+      router.push('/catalogo');//router es importado
+    },
+    updateLoader(state,payment){
+      state.loader.pending = payment.pending;
+    }
+  },
+  actions: {
+    async getListadoEspecies({ commit }) {
       try {
+        commit('updateLoader',{pending:true});
         const url = 'https://arbores-senlleiras-default-rtdb.europe-west1.firebasedatabase.app/species.json';
-        state.listadoArbores.loader.pending = true;
         const response = await fetch(
           url,
           {
@@ -27,28 +36,19 @@ export default createStore({
             }
           }
         );
-        console.log(response)
+        //console.log(response)
         const dataBD = await response.json();
-        console.log(dataBD)
+        const arbores = [];
+        //console.log(dataBD)
         for (let id in dataBD) {
-          state.listadoArbores.arbores.push(dataBD[id]);
+          arbores.push(dataBD[id]);
         }
-        state.listadoArbores.loader.pending = false;
+        commit('listadoEspecies',arbores);
+        commit('updateLoader',{pending:false});
       } catch (error) {
-        state.listadoArbores.loader.pending = true;
-        state.listadoArbores.loader.msg = error.message;
-        console.error(`Error index.js en mutaciones [${error}]`);
+        commit('updateLoader',{pending:true});
+        console.error(`getListadoEspecies() index.js en mutaciones [${error}]`);  
       }
-
-    },
-    setArbol(state, payment) {
-      state.listadoArbores.arbores.push(payment);
-      router.push('/catalogo');
-    }
-  },
-  actions: {
-    getListadoArbores({ commit }) {
-      commit('listadoArbores');
     },
 
     async setArbol({ commit }, objTree) {
@@ -69,7 +69,7 @@ export default createStore({
       } catch (error) {
         console.log(error)
       }
-      
+
     }
   },
   modules: {

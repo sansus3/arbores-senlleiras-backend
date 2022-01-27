@@ -50,9 +50,6 @@
 import LoaderComponent from './LoaderComponent';
 import { mapActions, mapState } from "vuex";
 export default {
-    mounted() {
-        this.getListadoEspecies();
-    },
     components: {
         LoaderComponent
     },
@@ -61,12 +58,7 @@ export default {
         totalCatalogo() {
             return this.species ? this.species.length : 0;
         },
-    },
-    methods: {
-        ...mapActions(
-            ['getListadoEspecies']
-        )
-    },
+    },   
 }
 </script>
 

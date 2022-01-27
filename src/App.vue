@@ -29,7 +29,7 @@
             >Opciones</a>
             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
               <li>
-                 <router-link class="dropdown-item" to="/specie" navbar-brand>Nueva especie</router-link>
+                <router-link class="dropdown-item" to="/specie" navbar-brand>Nueva especie</router-link>
               </li>
               <li>
                 <a class="dropdown-item" href="#">Another action</a>
@@ -57,6 +57,20 @@
   </nav>
   <router-view />
 </template>
+
+<script>
+import { mapActions } from 'vuex';
+export default {
+  created() {
+    this.getListadoEspecies();
+  },
+  methods: {
+    ...mapActions(
+      ['getListadoEspecies']
+    )
+  },
+}
+</script>
 
 <style lang="scss">
 #app {

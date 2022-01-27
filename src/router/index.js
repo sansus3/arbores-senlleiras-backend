@@ -39,6 +39,11 @@ const routes = [
     path: `/specie/specie-:id`,
     name: 'Arbore',
     component: () => import('@/views/Arbore.vue')
+  },
+  {
+    path: `/specie/edit-:id`,
+    name: 'Edit',
+    component: () => import('@/views/specie/Edit.vue')
   }
 ]
 

@@ -1,4 +1,5 @@
 <template>
+     <loader-component text="loader.msg" :visibleBool="loader.pending"></loader-component>
     <form action="#" v-on:submit.prevent>
         <ul class="fields p-2">
             <li class="field mb-3">
@@ -56,14 +57,15 @@
             </li>
 
             <li class="mb-3">
-                <button class="btn btn-dark" @click="actionAlta" :disabled="btnDisabled">Añadir</button>
+                <button class="btn btn-dark" @click="accionPersonalizada" :disabled="btnDisabled">{{btntext}}</button>
             </li>
         </ul>
     </form>
 </template>
 
 <script>
-import { mapActions } from "vuex";
+import LoaderComponent from '@/components/LoaderComponent';
+import { mapState } from "vuex";
 //objeto literal árbol para el v-model del formulario
 const Arbol = {
     id: null,
@@ -73,25 +75,37 @@ const Arbol = {
     descriptio: ''
 }
 export default {
-    data() {
+    components: {
+        LoaderComponent
+    },
+    data(){
         return {
-            arbol:Arbol,
+            arbol: this.arbore
+        }
+    },
+    props: {
+        arbore: {
+            type: Object,
+            required: false,
+            default(){
+                return Arbol;
+            }
+        },
+        btntext: {
+            type: String,
+            required: false,
+            default: "Enviar"
         }
     },
     computed: {
+        ...mapState(['loader']),
         btnDisabled() {
             return !this.arbol.specie.length || !this.arbol.genus.length
         }
     },
     methods: {
-        ...mapActions(['setArbol']),
-        actionAlta() {
-            this.arbol.id = Math.trunc(Math.random() * 100) + 1;
-            this.arbol.names = this.arbol.names.split(',');
-            this.setArbol(this.arbol);
-            //reseteamos arbol
-            this.arbol = Arbol
-
+        accionPersonalizada(){
+            this.$emit('customAction',this.arbol)
         }
     },
 }

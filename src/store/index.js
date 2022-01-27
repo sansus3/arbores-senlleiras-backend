@@ -53,6 +53,7 @@ export default createStore({
 
     async setArbol({ commit }, objTree) {
       try {
+        commit('updateLoader',{pending:true});
         const url = `https://arbores-senlleiras-default-rtdb.europe-west1.firebasedatabase.app/species/specie-${objTree.id}.json`;
 
         const response = await fetch(
@@ -66,7 +67,9 @@ export default createStore({
           }
         );
         commit('setArbol', objTree);
+        commit('updateLoader',{pending:false});
       } catch (error) {
+        commit('updateLoader',{pending:true});
         console.log(error)
       }
 

@@ -1,5 +1,6 @@
-import { setTextRange } from 'typescript';
-import { createStore } from 'vuex'
+import { createStore } from 'vuex';
+
+import router from '../router';
 
 export default createStore({
   state: {
@@ -42,6 +43,7 @@ export default createStore({
     },
     setArbol(state, payment) {
       state.listadoArbores.arbores.push(payment);
+      router.push('/catalogo');
     }
   },
   actions: {
@@ -63,10 +65,11 @@ export default createStore({
             body: JSON.stringify(objTree)
           }
         );
+        commit('setArbol', objTree);
       } catch (error) {
         console.log(error)
       }
-      commit('setArbol', objTree);
+      
     }
   },
   modules: {

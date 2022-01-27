@@ -8,13 +8,21 @@ export default createStore({
       pending: false,
       msg: 'Cargando datos...'  
     },
+    specie:{id: null,specie: '',genus: '',names: '',descriptio: ''},
     species: [], //Listado de especies para el catálogo
   },
   mutations: {
     listadoEspecies(state,payment) {
       state.species = payment;
     },
-    setArbol(state, payment) {
+    setEspecie(state,payment){
+      //console.log(state.species,payment)
+      state.specie = state.species.find(spe=>spe.id==payment);
+    },
+    actualizarEspecie(state,payment){
+      state.specie = payment;
+    },
+    insertarEspecie(state, payment) {
       state.species.push(payment);
       router.push('/catalogo');//router es importado
     },
@@ -50,8 +58,33 @@ export default createStore({
         console.error(`getListadoEspecies() index.js en mutaciones [${error}]`);  
       }
     },
+    setSpecie(context,id){
+      context.commit('setEspecie',id);
+    },
+    //Actualización de la especie
+    async updateSpecie({commit},objSpecie){
+      try {
+        commit('updateLoader',{pending:true});
+        const url = `https://arbores-senlleiras-default-rtdb.europe-west1.firebasedatabase.app/species/specie-${objSpecie.id}.json`;
 
-    async setArbol({ commit }, objTree) {
+        const response = await fetch(
+          url,
+          {
+            method: 'PATCH', // Editar datos
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(objSpecie)
+          }
+        );
+        commit('actualizarEspecie', objSpecie);
+        commit('updateLoader',{pending:false});
+      } catch (error) {
+        commit('updateLoader',{pending:true});
+        console.log(error)
+      }
+    },
+    async insertSpecie({ commit }, objTree) {
       try {
         commit('updateLoader',{pending:true});
         const url = `https://arbores-senlleiras-default-rtdb.europe-west1.firebasedatabase.app/species/specie-${objTree.id}.json`;
@@ -66,7 +99,7 @@ export default createStore({
             body: JSON.stringify(objTree)
           }
         );
-        commit('setArbol', objTree);
+        commit('insertarEspecie', objTree);
         commit('updateLoader',{pending:false});
       } catch (error) {
         commit('updateLoader',{pending:true});

@@ -14,12 +14,12 @@ export default {
         CrudArbore
     },
     methods: {
-        ...mapActions(['setArbol']),
+        ...mapActions(['insertSpecie']),
         actionAlta(arbol) {
-            console.log(arbol)
+            //console.log(arbol)
             arbol.id = Math.trunc(Math.random() * 100) + 1;
             arbol.names = arbol.names.split(',');
-            this.setArbol(arbol);
+            this.insertSpecie(arbol);
         },
     },
 }

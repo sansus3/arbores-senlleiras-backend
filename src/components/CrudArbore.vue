@@ -1,6 +1,6 @@
 <template>
      <loader-component text="loader.msg" :visibleBool="loader.pending"></loader-component>
-    <form action="#" v-on:submit.prevent>
+    <form action="#" v-on:submit.prevent="accionPersonalizada">
         <ul class="fields p-2">
             <li class="field mb-3">
                 <label
@@ -57,7 +57,7 @@
             </li>
 
             <li class="mb-3">
-                <button class="btn btn-dark" @click="accionPersonalizada" :disabled="btnDisabled">{{btntext}}</button>
+                <button class="btn btn-dark" :disabled="btnDisabled">{{btntext}}</button>
             </li>
         </ul>
     </form>
@@ -103,6 +103,7 @@ export default {
             return !this.arbol.specie.length || !this.arbol.genus.length
         }
     },
+    emits: ['customAction'],
     methods: {
         accionPersonalizada(){
             this.$emit('customAction',this.arbol)

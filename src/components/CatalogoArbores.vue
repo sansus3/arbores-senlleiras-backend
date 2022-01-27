@@ -20,7 +20,15 @@
                 <td>{{ item.specie }}</td>
                 <td>{{ item.names.join() }}</td>
                 <td>
-                    <router-link class="text-decoration-none" :to="`/specie/edit-${item.id}`">                    
+                    <router-link
+                        class="text-decoration-none"
+                        :to="{
+                            name: 'Edit',
+                            params: {
+                                id: item.id
+                            }
+                        }"
+                    >
                         Editar
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -58,7 +66,7 @@ export default {
         totalCatalogo() {
             return this.species ? this.species.length : 0;
         },
-    },   
+    },
 }
 </script>
 

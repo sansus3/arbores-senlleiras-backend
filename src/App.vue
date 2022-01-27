@@ -18,6 +18,30 @@
           <li class="nav-item">
             <router-link class="nav-link" to="/catalogo" navbar-brand>Catálogo</router-link>
           </li>
+          <li class="nav-item dropdown">
+            <a
+              class="nav-link dropdown-toggle"
+              href="#"
+              id="navbarDropdown"
+              role="button"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >Opciones</a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <li>
+                 <router-link class="dropdown-item" to="/specie" navbar-brand>Nueva especie</router-link>
+              </li>
+              <li>
+                <a class="dropdown-item" href="#">Another action</a>
+              </li>
+              <li>
+                <hr class="dropdown-divider" />
+              </li>
+              <li>
+                <a class="dropdown-item" href="#">Something else here</a>
+              </li>
+            </ul>
+          </li>
           <li class="nav-item">
             <router-link class="nav-link" to="/geolocalizacion" navbar-brand>Geolocalización</router-link>
           </li>
@@ -42,13 +66,11 @@
   color: #2c3e50;
 }
 
-
-li.nav-item{
+li.nav-item {
   a {
     &.nav-link.router-link-exact-active {
-      background-color:#2c3e50
+      background-color: #2c3e50;
     }
   }
 }
-
 </style>

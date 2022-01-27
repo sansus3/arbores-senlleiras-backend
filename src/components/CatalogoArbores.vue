@@ -14,7 +14,7 @@
                 <tr v-for="item in arbores" :key="item.id">
                     <th scope="row">{{ item.id }}</th>
                     <td>
-                        <router-link :to="`/arbore/${item.id}`">{{ item.genus }}</router-link>
+                        <router-link :to="`/specie/specie-${item.id}`">{{ item.genus }}</router-link>
                     </td>
                     <td>{{ item.specie }}</td>
                     <td>{{ item.names.join() }}</td>
@@ -36,7 +36,7 @@ export default {
     computed: {
         ...mapState(['listadoArbores']),
         totalCatalogo() {
-            return this.listadoArbores.arbores.length;
+            return this.listadoArbores.arbores?this.listadoArbores.arbores.length:0;
         },
         arbores() {
             const { arbores } = this.listadoArbores;

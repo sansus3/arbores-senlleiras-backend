@@ -45,6 +45,16 @@
                 />
             </li>
 
+            <li class="field mb-3">
+                <label for="descriptio" class="form-label">Descripción</label>
+                <textarea
+                    v-model.trim="arbol.descriptio"
+                    class="form-control"
+                    id="descriptio"
+                    rows="3"
+                ></textarea>
+            </li>
+
             <li class="mb-3">
                 <button class="btn btn-dark" @click="actionAlta" :disabled="btnDisabled">Añadir</button>
             </li>
@@ -54,16 +64,18 @@
 
 <script>
 import { mapActions } from "vuex";
+//objeto literal árbol para el v-model del formulario
+const Arbol = {
+    id: null,
+    specie: '',
+    genus: '',
+    names: '',
+    descriptio: ''
+}
 export default {
     data() {
         return {
-            arbol: {
-                id: null,
-                specie: '',
-                genus: '',
-                names: '',
-            },
-
+            arbol:Arbol,
         }
     },
     computed: {
@@ -78,12 +90,7 @@ export default {
             this.arbol.names = this.arbol.names.split(',');
             this.setArbol(this.arbol);
             //reseteamos arbol
-            this.arbol = {
-                id: null,
-                specie: '',
-                genus: '',
-                names: '',
-            }
+            this.arbol = Arbol
 
         }
     },

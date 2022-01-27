@@ -31,7 +31,12 @@ const routes = [
     component: () => import('../views/Catalogo.vue')
   },
   {
-    path: '/arbore/:id',
+    path: '/specie',
+    name: 'Specie',
+    component: () => import('../views/specie/Specie.vue')
+  },
+  {
+    path: `/specie/specie-:id`,
     name: 'Arbore',
     component: () => import('@/views/Arbore.vue')
   }

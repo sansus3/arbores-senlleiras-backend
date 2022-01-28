@@ -5,22 +5,6 @@
             <li class="field mb-3">
                 <label
                     data-title="⚠ Campo obligatorio"
-                    for="specie"
-                    class="form-label control-label"
-                >Especie</label>
-                <input
-                    id="specie"
-                    name="specie"
-                    v-model.trim="arbol.specie"
-                    type="text"
-                    placeholder="Especie aquí"
-                    class="field__control form-control"
-                />
-            </li>
-
-            <li class="field mb-3">
-                <label
-                    data-title="⚠ Campo obligatorio"
                     for="genus"
                     class="form-label control-label"
                 >Género</label>
@@ -35,11 +19,27 @@
             </li>
 
             <li class="field mb-3">
+                <label
+                    data-title="⚠ Campo obligatorio"
+                    for="specie"
+                    class="form-label control-label"
+                >Especie</label>
+                <input
+                    id="specie"
+                    name="specie"
+                    v-model.trim="arbol.specie"
+                    type="text"
+                    placeholder="Especie aquí"
+                    class="field__control form-control"
+                />
+            </li>
+
+            <li class="field mb-3">
                 <label for="names" class="form-label">Nombres</label>
                 <input
                     id="names"
                     name="names"
-                    v-model.trim="arbol.names"
+                    v-model.trim="names"
                     type="text"
                     placeholder="Nombres separados con comas"
                     class="field__control form-control"
@@ -71,7 +71,7 @@ const Arbol = {
     id: null,
     specie: '',
     genus: '',
-    names: '',
+    names: [],
     descriptio: ''
 }
 export default {
@@ -80,7 +80,8 @@ export default {
     },
     data(){
         return {
-            arbol: this.arbore
+            arbol: this.arbore,
+            names: ''
         }
     },
     props: {
@@ -101,13 +102,19 @@ export default {
         ...mapState(['loader']),
         btnDisabled() {
             return !this.arbol.specie.length || !this.arbol.genus.length
-        }
+        },
+        
     },
     emits: ['customAction'],
     methods: {
         accionPersonalizada(){
+            this.joinNames();
             this.$emit('customAction',this.arbol)
+        },
+        joinNames(){
+            this.arbol.names = this.names.split(',');
         }
+        
     },
 }
 </script>

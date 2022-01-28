@@ -17,8 +17,9 @@ export default {
         ...mapActions(['insertSpecie']),
         actionAlta(arbol) {
             //console.log(arbol)
-            arbol.id = Math.trunc(Math.random() * 100) + 1;
-            arbol.names = arbol.names.split(',');
+            const l1 = arbol.genus.charAt(0), l2 = arbol.specie.charAt(0);
+            arbol.id = `${l1.toLowerCase()}${l2.toLowerCase()}${Math.trunc(Math.random() * 100) + 1}`;
+            //console.log(arbol.names)
             this.insertSpecie(arbol);
         },
     },

@@ -11,7 +11,7 @@ import {mapActions,mapState} from "vuex";
 import CrudArbore from "@/components/CrudArbore";
 export default {
     created(){
-        this.setSpecie(this.$route.params.id)
+        this.setSpecie(this.$route.params.id);
     },   
     computed:{
         ...mapState(['specie'])
@@ -19,7 +19,7 @@ export default {
     methods: {
         ...mapActions(['setSpecie','updateSpecie']),
         actionActualizacion(especie){
-            //console.log(especie);
+            //console.log(especie.names);
             this.updateSpecie(especie);
         }
     },

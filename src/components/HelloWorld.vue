@@ -1,6 +1,10 @@
 <template>
   <div class="hello">
     <h1>{{ msg }}</h1>
+    <h3>Especies de Senlleiras</h3>
+    <p>
+    Para ver el catálogo ir a <router-link to="/catalogo" navbar-brand>Catálogo</router-link></p>
+    <h3>vue-cli documentation</h3>
     <p>
       For a guide and recipes on how to configure / customize this project,<br>
       check out the

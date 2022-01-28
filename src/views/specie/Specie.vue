@@ -2,16 +2,16 @@
     <section class="section">
         <h2 class="section__title display-3">Especie</h2>
          <!-- Create Read Update Delete (Crud) Árboles. Formulario -->
-        <crud-arbore @custom-action="actionAlta"></crud-arbore> 
+        <formulario-especie @custom-action="actionAlta"></formulario-especie> 
     </section>
 </template>
 
 <script>
 import { mapActions } from "vuex";
-import CrudArbore from "@/components/CrudArbore";
+import FormularioEspecie from "@/components/FormularioEspecie";
 export default {
     components: {
-        CrudArbore
+        FormularioEspecie
     },
     methods: {
         ...mapActions(['insertSpecie']),

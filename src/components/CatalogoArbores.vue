@@ -15,7 +15,15 @@
             <tr v-for="item in species" :key="item.id">
                 <th scope="row">{{ item.id }}</th>
                 <td>
-                    <router-link :to="`/specie/specie-${item.id}`">{{ item.genus }}</router-link>
+                    <router-link 
+                        :to="{
+                            name: 'Arbore',
+                            params: {
+                                id: item.id
+                            }
+                        }"
+                    >
+                    {{ item.genus }}</router-link>
                 </td>
                 <td>{{ item.specie }}</td>
                 <td>{{ item.names.join() }}</td>
@@ -29,7 +37,6 @@
                             }
                         }"
                     >
-                       
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
                             width="16"
@@ -46,7 +53,7 @@
                                 fill-rule="evenodd"
                                 d="M2.832 13.228 8 9a1 1 0 1 0-1-1l-4.228 5.168-.026.086.086-.026z"
                             />
-                        </svg>                  
+                        </svg>
                     </router-link>
                     <a href="#" @click.prevent="deleteId(item.id)">
                         <svg
@@ -87,8 +94,8 @@ export default {
     },
     methods: {
         ...mapActions(['deleteSpecie']),
-        deleteId(id){
-            if(confirm(`¿Desea eliminar el item ${id}`))
+        deleteId(id) {
+            if (confirm(`¿Desea eliminar el item ${id}`))
                 this.deleteSpecie(id);
         }
     },

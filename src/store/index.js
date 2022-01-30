@@ -10,8 +10,12 @@ export default createStore({
     },
     specie: { id: null, specie: '', genus: '', names: [], descriptio: '' },
     species: [], //Listado de especies para el catálogo
+    user: null
   },
   mutations: {
+    usuarioRegistro(state,payment){
+      state.user = payment;
+    },
     listadoEspecies(state, payment) {
       state.species = payment;
     },
@@ -34,6 +38,10 @@ export default createStore({
     }
   },
   actions: {
+    //Registro de usuario
+    async userRegister({commit},user){
+      console.log(user)
+    },
     //Listado de especies
     async getListadoEspecies({ commit }) {
       try {

@@ -36,14 +36,19 @@ const routes = [
     component: () => import('../views/specie/Specie.vue')
   },
   {
-    path: `/specie/specie-:id`,
+    path: `/description-specie-:id`,
     name: 'Arbore',
     component: () => import('@/views/Arbore.vue')
   },
   {
-    path: `/specie/edit-:id`,
+    path: `/edit-specie-:id`,
     name: 'Edit',
     component: () => import('@/views/specie/Edit.vue')
+  },
+  {
+    path: `/registro`,
+    name: 'Registro',
+    component: () => import('@/views/Registro.vue')
   }
 ]
 

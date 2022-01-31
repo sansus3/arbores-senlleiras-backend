@@ -16,7 +16,7 @@
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
           <li class="nav-item">
-            <router-link class="nav-link" to="/catalogo" navbar-brand>Catálogo</router-link>
+            <router-link class="nav-link" to="/catalogo">Catálogo</router-link>
           </li>
           <li class="nav-item dropdown">
             <a
@@ -29,7 +29,7 @@
             >Opciones</a>
             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
               <li>
-                <router-link class="dropdown-item" to="/specie" navbar-brand>Nueva especie</router-link>
+                <router-link class="dropdown-item" to="/specie">Nueva especie</router-link>
               </li>
               <li>
                 <a class="dropdown-item" href="#">Another action</a>
@@ -38,18 +38,26 @@
                 <hr class="dropdown-divider" />
               </li>
               <li>
+                <router-link
+                  class="dropdown-item"
+                  :to="{
+                      name: 'Acceso'
+                    }"
+                >
+                Acceso
+                </router-link>
                 <a class="dropdown-item" href="#">Something else here</a>
               </li>
             </ul>
           </li>
           <li class="nav-item">
-            <router-link class="nav-link" to="/geolocalizacion" navbar-brand>Geolocalización</router-link>
+            <router-link class="nav-link" to="/geolocalizacion">Geolocalización</router-link>
           </li>
           <li class="nav-item">
             <router-link class="nav-link" to="/about" navbar-brand>Sobre nosotros</router-link>
           </li>
           <li class="nav-item">
-            <router-link class="nav-link" to="/contacto" navbar-brand>Contacto</router-link>
+            <router-link class="nav-link" to="/contacto">Contacto</router-link>
           </li>
         </ul>
       </div>

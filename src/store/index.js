@@ -13,7 +13,10 @@ export default createStore({
     user: null
   },
   mutations: {
-    usuarioRegistro(state,payment){
+    logueoUsuario(state, payment) {
+      state.user = payment;
+    },
+    usuarioRegistro(state, payment) {
       state.user = payment;
     },
     listadoEspecies(state, payment) {
@@ -35,21 +38,23 @@ export default createStore({
     },
     updateLoader(state, payment) {
       state.loader.pending = payment.pending;
+      if (payment.msg)
+        state.loader.msg = payment.msg;
     }
   },
   actions: {
     //Registro de usuario
-    async userRegister({commit},user){
-      console.log(user)
+    userRegister({ commit }, user) {
+      //console.log(user)
     },
     //Login de usuario
     //Documentación API REST
     //https://cloud.google.com/identity-platform/docs/reference/rest/v1/accounts/signInWithPassword
-    async userLogin({commit},user){
-      console.log(user)
+    async userLogin({ commit }, user) {
+      //console.log(user)
       const url = "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyD-a66QbdKHK7XGcquXhLz40SzSf3s0uX8";
-      try{
-        const respuesta = await fetch(url,{
+      try {
+        const respuesta = await fetch(url, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
@@ -57,15 +62,23 @@ export default createStore({
           body: JSON.stringify({
             email: user.email,
             password: user.password,
-            returnSecureteToken: true
+            returnSecureToken: true
           })
         });
+        
         const userDB = await respuesta.json();
-        console.log(userDB)
-      }catch(error){
-        console.log(`Error en userLogin : ${error}`);
+        
+        //console.log(userDB)
+        // if (userDB.error && userDB.error.errors.length)
+        //   console.log(`Error de acceso: ${userDB.error.message}`);
+
+        commit('logueoUsuario', userDB);
+
+
+      } catch (error) {
+        console.log(`Error en userLogin @@@@@@@@@@@: ${error}`);
       }
-      
+
     },
     //Listado de especies
     async getListadoEspecies({ commit }) {

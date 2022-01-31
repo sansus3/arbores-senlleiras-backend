@@ -15,6 +15,8 @@
                     type="text"
                     placeholder="Género aquí"
                     class="field__control form-control"
+                    pattern=".{3,}"
+                    title="Mínimo 3 caracteres"
                 />
             </li>
 
@@ -31,6 +33,8 @@
                     type="text"
                     placeholder="Especie aquí"
                     class="field__control form-control"
+                    pattern=".{3,}"
+                    title="Mínimo 3 caracteres"
                 />
             </li>
 
@@ -112,10 +116,18 @@ export default {
             this.$emit('customAction',this.arbol)
         },
         joinNames(){
+            this.names = this.names.replace(/ +,/g,",");//limpiamos espacios en blanco adicionales a las comas
+            //console.log(this.names)
+            this.names = this.names.replace(/, +/g,",");
+            //console.log(this.names.split(','))
             this.arbol.names = this.names.split(',');
         }
         
     },
+    created(){
+        if(this.arbol.names.length)
+            this.names = this.arbol.names.join();
+    }
 }
 </script>
 

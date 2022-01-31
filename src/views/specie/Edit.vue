@@ -8,7 +8,7 @@
 
 <script>
 import {mapActions,mapState} from "vuex";
-import FormularioEspecie from "@/components/FormularioEspecie";
+import FormularioEspecie from "@/components/specie/FormularioEspecie";
 export default {
     created(){
         this.setSpecie(this.$route.params.id);

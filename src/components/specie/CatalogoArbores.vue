@@ -80,7 +80,7 @@
 </template>
 
 <script>
-import LoaderComponent from './LoaderComponent';
+import LoaderComponent from '@/components/LoaderComponent';
 import { mapActions, mapState } from "vuex";
 export default {
     components: {

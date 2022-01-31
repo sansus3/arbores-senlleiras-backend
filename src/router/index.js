@@ -28,7 +28,7 @@ const routes = [
   {
     path: '/catalogo',
     name: 'Catalogo',
-    component: () => import('../views/Catalogo.vue')
+    component: () => import('../views/specie/Catalogo.vue')
   },
   {
     path: '/specie',
@@ -38,7 +38,7 @@ const routes = [
   {
     path: `/description-specie-:id`,
     name: 'Arbore',
-    component: () => import('@/views/Arbore.vue')
+    component: () => import('@/views/specie/Arbore.vue')
   },
   {
     path: `/edit-specie-:id`,

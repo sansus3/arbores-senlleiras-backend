@@ -9,7 +9,7 @@
 
 <script>
 
-import CatalogoArbores from "../components/CatalogoArbores"
+import CatalogoArbores from "@/components/specie/CatalogoArbores"
 
 export default {
     components: {

@@ -42,6 +42,31 @@ export default createStore({
     async userRegister({commit},user){
       console.log(user)
     },
+    //Login de usuario
+    //Documentación API REST
+    //https://cloud.google.com/identity-platform/docs/reference/rest/v1/accounts/signInWithPassword
+    async userLogin({commit},user){
+      console.log(user)
+      const url = "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyD-a66QbdKHK7XGcquXhLz40SzSf3s0uX8";
+      try{
+        const respuesta = await fetch(url,{
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            email: user.email,
+            password: user.password,
+            returnSecureteToken: true
+          })
+        });
+        const userDB = await respuesta.json();
+        console.log(userDB)
+      }catch(error){
+        console.log(`Error en userLogin : ${error}`);
+      }
+      
+    },
     //Listado de especies
     async getListadoEspecies({ commit }) {
       try {

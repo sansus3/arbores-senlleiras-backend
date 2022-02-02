@@ -1,6 +1,6 @@
 <template>
      <loader-component text="loader.msg" :visibleBool="loader.pending"></loader-component>
-    <form action="#" v-on:submit.prevent="accionPersonalizada">
+    <form method="post" enctype="multipart/form-data" action="#" v-on:submit.prevent="accionPersonalizada">
         <ul class="fields p-2">
             <li class="field mb-3">
                 <label
@@ -51,6 +51,12 @@
             </li>
 
             <li class="field mb-3">
+                <label for="formFileMultiple" class="form-label">Multiple files input example</label>
+                <input @change="almacenarImagenes($event)" class="form-control" type="file" id="formFileMultiple" accept="image/gif, image/jpeg, image/png" multiple>
+                <button @click.prevent>Cargar</button>
+            </li>
+
+            <li class="field mb-3">
                 <label for="descriptio" class="form-label">Descripción</label>
                 <textarea
                     v-model.trim="arbol.descriptio"
@@ -70,6 +76,12 @@
 <script>
 import LoaderComponent from '@/components/LoaderComponent';
 import { mapState } from "vuex";
+
+//Firebase
+import { firebaseApp } from '../../main';
+import { getStorage,ref,uploadBytes  } from "firebase/storage";
+const storage = getStorage(firebaseApp);
+
 //objeto literal árbol para el v-model del formulario
 const Arbol = {
     id: null,
@@ -111,6 +123,19 @@ export default {
     },
     emits: ['customAction'],
     methods: {
+        almacenarImagenes(event){
+            try{
+            const storageRef  = ref(storage, `images/${event.target.files[0].name}`);
+            // 'file' comes from the Blob or File API
+            const file = event.target.files[0];
+
+            uploadBytes(storageRef, file).then((snapshot) => {
+            console.log('Uploaded a blob or file!');
+            });}
+            catch(error){
+                console.log(`Error jeje: ${error}`);
+            }
+        },
         accionPersonalizada(){
             this.joinNames();
             this.$emit('customAction',this.arbol)

@@ -29,7 +29,11 @@
             >Opciones</a>
             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
               <li>
-                <router-link class="dropdown-item" to="/specie">Nueva especie</router-link>
+                <router-link 
+                  class="dropdown-item" 
+                  :to="{
+                    name:'Specie'
+                  }">Nueva especie</router-link>
               </li>
               <li>
                 <a class="dropdown-item" href="#">Another action</a>
@@ -41,11 +45,9 @@
                 <router-link
                   class="dropdown-item"
                   :to="{
-                      name: 'Acceso'
-                    }"
-                >
-                Acceso
-                </router-link>
+                    name: 'Acceso'
+                  }"
+                >Acceso</router-link>
                 <a class="dropdown-item" href="#">Something else here</a>
               </li>
             </ul>

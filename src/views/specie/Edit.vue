@@ -19,7 +19,7 @@ export default {
     methods: {
         ...mapActions(['setSpecie','updateSpecie']),
         actionActualizacion(especie){
-            //console.log(especie.names);
+            //console.log(especie);
             this.updateSpecie(especie);
         }
     },

@@ -36,7 +36,7 @@ const routes = [
     component: () => import('../views/users/Acceso.vue')
   },
   {
-    path: '/specie',
+    path: '/new-specie',
     name: 'Specie',
     component: () => import('../views/specie/Specie.vue')
   },

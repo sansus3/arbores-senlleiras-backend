@@ -1,14 +1,21 @@
 import { createStore } from 'vuex';
 
 import router from '../router';//Esta línea no está en el original. Nos permite manipular las rutas
-
+const Specie = { 
+  id: null, 
+  specie: '', 
+  genus: '', 
+  names: [], 
+  imgData: '', 
+  descriptio: '' 
+}
 export default createStore({
   state: {
     loader: {
       pending: false,
       msg: 'Cargando datos...'
     },
-    specie: { id: null, specie: '', genus: '', names: [], descriptio: '' },
+    specie: Specie,
     species: [], //Listado de especies para el catálogo
     user: null
   },
@@ -23,8 +30,10 @@ export default createStore({
       state.species = payment;
     },
     setEspecie(state, payment) {
-      //console.log(state.species,payment)
-      state.specie = state.species.find(spe => spe.id == payment);
+        state.specie = state.species.find(spe => spe.id == payment);
+    },
+    resetSpecie(state) {
+      state.specie = Specie;
     },
     actualizarEspecie(state, payment) {
       state.specie = payment;
@@ -65,9 +74,9 @@ export default createStore({
             returnSecureToken: true
           })
         });
-        
+
         const userDB = await respuesta.json();
-        
+
         //console.log(userDB)
         // if (userDB.error && userDB.error.errors.length)
         //   console.log(`Error de acceso: ${userDB.error.message}`);
@@ -111,6 +120,10 @@ export default createStore({
     //rellenar el objeto specie a partir de un código dado
     setSpecie(context, id) {
       context.commit('setEspecie', id);
+    },
+    //reseteamos specie
+    resetSpecie({commit}){
+      commit('resetSpecie');
     },
     //Eleminación de especie
     async deleteSpecie({ commit }, id) {

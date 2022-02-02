@@ -1,6 +1,12 @@
 <template>
-     <loader-component text="loader.msg" :visibleBool="loader.pending"></loader-component>
-    <form method="post" enctype="multipart/form-data" action="#" v-on:submit.prevent="accionPersonalizada">
+    <loader-component text="loader.msg" :visibleBool="loader.pending"></loader-component>
+    {{$data}}
+    <form
+        method="post"
+        enctype="multipart/form-data"
+        action="#"
+        v-on:submit.prevent="accionPersonalizada"
+    >
         <ul class="fields p-2">
             <li class="field mb-3">
                 <label
@@ -52,8 +58,14 @@
 
             <li class="field mb-3">
                 <label for="formFileMultiple" class="form-label">Multiple files input example</label>
-                <input @change="almacenarImagenes($event)" class="form-control" type="file" id="formFileMultiple" accept="image/gif, image/jpeg, image/png" multiple>
-                <button @click.prevent>Cargar</button>
+                <input
+                    @change="almacenarImagenes($event)"
+                    class="form-control"
+                    type="file"
+                    id="formFileMultiple"
+                    accept="image/gif, image/jpeg, image/png"
+                    multiple
+                />
             </li>
 
             <li class="field mb-3">
@@ -67,7 +79,7 @@
             </li>
 
             <li class="mb-3">
-                <button class="btn btn-dark" :disabled="btnDisabled">{{btntext}}</button>
+                <button class="btn btn-dark" :disabled="btnDisabled">{{ btntext }}</button>
             </li>
         </ul>
     </form>
@@ -78,35 +90,26 @@ import LoaderComponent from '@/components/LoaderComponent';
 import { mapState } from "vuex";
 
 //Firebase
-import { firebaseApp } from '../../main';
-import { getStorage,ref,uploadBytes  } from "firebase/storage";
-const storage = getStorage(firebaseApp);
 
-//objeto literal árbol para el v-model del formulario
-const Arbol = {
-    id: null,
-    specie: '',
-    genus: '',
-    names: [],
-    descriptio: ''
-}
+import { getStorage, ref, uploadBytes } from "firebase/storage";
+import { storage } from '@/firebase';
+
+
 export default {
     components: {
         LoaderComponent
     },
-    data(){
+    data() {
         return {
-            arbol: this.arbore,
-            names: ''
+            arbol: null,
+            names: '',
         }
     },
     props: {
         arbore: {
             type: Object,
             required: false,
-            default(){
-                return Arbol;
-            }
+            
         },
         btntext: {
             type: String,
@@ -115,42 +118,49 @@ export default {
         }
     },
     computed: {
-        ...mapState(['loader']),
+        ...mapState(['loader','specie']),
         btnDisabled() {
             return !this.arbol.specie.length || !this.arbol.genus.length
         },
-        
+
     },
     emits: ['customAction'],
     methods: {
-        almacenarImagenes(event){
-            try{
-            const storageRef  = ref(storage, `images/${event.target.files[0].name}`);
-            // 'file' comes from the Blob or File API
-            const file = event.target.files[0];
+        almacenarImagenes(event) {
+            this.arbol.imgData = ""; //reseteamos los datos por si acaso
+            this.arbol.imgData = `${this.arbol.id}/${event.target.files[0].name}`;
+            try {
+                const storageRef = ref(storage, `images/${event.target.files[0].name}`);
+                // 'file' comes from the Blob or File API
+                const file = event.target.files[0];
 
-            uploadBytes(storageRef, file).then((snapshot) => {
-            console.log('Uploaded a blob or file!');
-            });}
-            catch(error){
+                // uploadBytes(storageRef, file).then((snapshot) => {
+                //     console.log('Uploaded a blob or file!');
+                // });
+            }
+            catch (error) {
                 console.log(`Error jeje: ${error}`);
             }
         },
-        accionPersonalizada(){
+        accionPersonalizada() {
             this.joinNames();
-            this.$emit('customAction',this.arbol)
+            this.$emit('customAction', this.arbol)
         },
-        joinNames(){
-            this.names = this.names.replace(/ +,/g,",");//limpiamos espacios en blanco adicionales a las comas
+        joinNames() {
+            this.names = this.names.replace(/ +,/g, ",");//limpiamos espacios en blanco adicionales a las comas
             //console.log(this.names)
-            this.names = this.names.replace(/, +/g,",");
+            this.names = this.names.replace(/, +/g, ",");
             //console.log(this.names.split(','))
             this.arbol.names = this.names.split(',');
         }
-        
+
     },
-    created(){
-        if(this.arbol.names.length)
+    created() {
+        this.arbol = this.arbore;
+        //console.log(this.arbol)
+    },
+    mounted(){
+        if (this.arbol.names.length)
             this.names = this.arbol.names.join();
     }
 }

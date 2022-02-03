@@ -1,13 +1,13 @@
 import { createStore } from 'vuex';
 
 import router from '@/router';//Esta línea no está en el original. Nos permite manipular las rutas
-const Specie = { 
-  id: null, 
-  specie: '', 
-  genus: '', 
-  names: [], 
-  imgData: '', 
-  descriptio: '' 
+const Specie = {
+  id: null,
+  specie: '',
+  genus: '',
+  names: [],
+  imgData: '',
+  descriptio: ''
 }
 export default createStore({
   state: {
@@ -15,7 +15,7 @@ export default createStore({
       pending: false,
       msg: 'Cargando datos...'
     },
-    specie: {...Specie},
+    specie: { ...Specie },
     species: [], //Listado de especies para el catálogo
     user: null
   },
@@ -30,11 +30,10 @@ export default createStore({
       state.species = payment;
     },
     setEspecie(state, payment) {
-        state.specie = state.species.find(spe => spe.id == payment);
+      state.specie = state.species.find(spe => spe.id == payment);
     },
     resetSpecie(state) {
-      
-      state.specie = {...Specie};
+      state.specie = { ...Specie };
     },
     actualizarEspecie(state, payment) {
       state.specie = payment;
@@ -123,7 +122,7 @@ export default createStore({
       context.commit('setEspecie', id);
     },
     //reseteamos specie
-    resetSpecie({commit}){
+    resetSpecie({ commit }) {
       commit('resetSpecie');
     },
     //Eleminación de especie

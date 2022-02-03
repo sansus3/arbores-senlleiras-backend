@@ -1,9 +1,8 @@
 <template>
     <loader-component text="loader.msg" :visibleBool="loader.pending"></loader-component>
-    {{$data}}
+    {{ $data }}
     <form
         method="post"
-        enctype="multipart/form-data"
         action="#"
         v-on:submit.prevent="accionPersonalizada"
     >
@@ -54,19 +53,7 @@
                     placeholder="Nombres separados con comas"
                     class="field__control form-control"
                 />
-            </li>
-
-            <li class="field mb-3">
-                <label for="formFileMultiple" class="form-label">Multiple files input example</label>
-                <input
-                    @change="almacenarImagenes($event)"
-                    class="form-control"
-                    type="file"
-                    id="formFileMultiple"
-                    accept="image/gif, image/jpeg, image/png"
-                    multiple
-                />
-            </li>
+            </li>          
 
             <li class="field mb-3">
                 <label for="descriptio" class="form-label">Descripción</label>
@@ -89,12 +76,6 @@
 import LoaderComponent from '@/components/LoaderComponent';
 import { mapState } from "vuex";
 
-//Firebase
-
-import { getStorage, ref, uploadBytes } from "firebase/storage";
-import { storage } from '@/firebase';
-
-
 export default {
     components: {
         LoaderComponent
@@ -109,7 +90,7 @@ export default {
         arbore: {
             type: Object,
             required: false,
-            
+
         },
         btntext: {
             type: String,
@@ -118,31 +99,16 @@ export default {
         }
     },
     computed: {
-        ...mapState(['loader','specie']),
+        ...mapState(['loader', 'specie']),
         btnDisabled() {
             return !this.arbol.specie.length || !this.arbol.genus.length
         },
 
     },
     emits: ['customAction'],
-    methods: {
-        almacenarImagenes(event) {
-            this.arbol.imgData = ""; //reseteamos los datos por si acaso
-            this.arbol.imgData = `${this.arbol.id}/${event.target.files[0].name}`;
-            try {
-                const storageRef = ref(storage, `images/${event.target.files[0].name}`);
-                // 'file' comes from the Blob or File API
-                const file = event.target.files[0];
-
-                // uploadBytes(storageRef, file).then((snapshot) => {
-                //     console.log('Uploaded a blob or file!');
-                // });
-            }
-            catch (error) {
-                console.log(`Error jeje: ${error}`);
-            }
-        },
+    methods: {      
         accionPersonalizada() {
+           
             this.joinNames();
             this.$emit('customAction', this.arbol)
         },
@@ -159,7 +125,7 @@ export default {
         this.arbol = this.arbore;
         //console.log(this.arbol)
     },
-    mounted(){
+    mounted() {
         if (this.arbol.names.length)
             this.names = this.arbol.names.join();
     }

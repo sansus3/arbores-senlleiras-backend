@@ -6,7 +6,7 @@ const Specie = {
   specie: '',
   genus: '',
   names: [],
-  imgData: '',
+  url: '',
   descriptio: ''
 }
 export default createStore({

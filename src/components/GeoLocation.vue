@@ -6,7 +6,6 @@
         <div v-if="errorStr" class="alert alert-danger" role="alert">{{ errorStr }}</div>
 
         <div
-            
             class="alert alert-secondary"
             role="alert"
             v-if="location.latitude"
@@ -76,8 +75,6 @@
                     />
                 </li>
 
-                
-
                 <li class="field mb-3">
                     <label for="descriptio" class="form-label">Descripción</label>
                     <textarea
@@ -96,57 +93,50 @@
     </section>
 </template>
 
-<script>
+<script setup>
+import { computed, reactive, ref } from 'vue';//ref:Válido para datos primitivos (números, strings o booleanos); reactive par objetos y arrays
 import LoaderComponent from './LoaderComponent'
-export default {
-    name: 'GeoLocation',
-    components: {
-        LoaderComponent
-    },
-    data() {
-        return {
-            location: {
-                latitude: null,
-                longitude: null
-            },
-            btntext: "Enviar",
-            geolocationBool: false,
-            errorStr: '',
-            form:{
-                genus: '',
-                specie: '',
-                descriptio: ''
-            }
+//Variables
+const location = reactive(
+    {
+        latitude: null,
+        longitude: null
+    });
+
+let btntext = ref('Enviar');
+let geolocationBool = ref(false);
+let errorStr = ref('');
+const form = reactive({
+    genus: '',
+    specie: '',
+    descriptio: ''
+});
+
+//Métodos
+const getGeolocation = () => {
+    if (!window.navigator.geolocation) {
+        errorStr.value = "La Geolocalización no está disponible";
+        return;
+    }
+    geolocationBool.value = true;
+    window.navigator.geolocation.getCurrentPosition(
+        posicion => {
+            location.latitude = posicion.coords.latitude;
+            location.longitude = posicion.coords.longitude;
+            geolocationBool.value = false;
+        },
+        error => {
+            errorStr.value = error.message;
+            geolocationBool.value = false;
         }
-    },
-    computed: {
-        btnDisabled(){
-            return this.form.genus.length<3 || this.form.specie.length<3;
-        }
-    },
-    methods: {
-        getGeolocation() {
-            if (!window.navigator.geolocation) {
-                this.errorStr = "La Geolocalización no está disponible";
-                return;
-            }
-            this.geolocationBool = true;
-            window.navigator.geolocation.getCurrentPosition(
-                posicion => {
-                    this.location = {
-                        latitude: posicion.coords.latitude,
-                        longitude: posicion.coords.longitude,
-                    }
-                    this.geolocationBool = false;
-                },
-                error => {
-                    this.errorStr = error.message;
-                    this.geolocationBool = false;
-                }
-            );
-        }
-    },
+    );
 }
+//Propiedad computada
+const btnDisabled = computed(
+    () => {
+        return form.genus.length < 3 || form.specie.length < 3;
+    }
+);
 </script>
 
 <style lang="scss" scoped>

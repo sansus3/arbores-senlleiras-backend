@@ -2,7 +2,7 @@
     <form method="post" enctype="multipart/form-data" action="#" v-on:submit.prevent="subirFicheros">
         <ul class="fields p-2">
             <li class="field mb-3">
-                <label for="formFileMultiple" class="form-label">Multiple files input example</label>
+                <label for="formFileMultiple" class="form-label">Selecciona imágenes</label>
                 <input
                     @change="almacenarImagenes($event)"
                     class="form-control"
@@ -11,94 +11,81 @@
                     accept="image/gif, image/jpeg, image/png"
                     multiple
                 />
-                {{filesName.join(', ')}}
             </li>
              <li class="mb-3">
-                <button class="btn btn-dark" :disabled="btnDisabled">{{ btnText }}</button>
+                <button @click="emitAction" class="btn btn-dark" :disabled="btnDisabled">{{ btnText }}</button>
             </li>
         </ul>
+        <loader-component :visibleBool="visible"></loader-component>
     </form>
+    
 </template>
 
 <script>
-import { reactive,computed } from "vue";
+import { reactive,ref as referencia,computed } from "vue";
 import { ref,uploadBytes  } from "firebase/storage";
 import { storage } from "@/firebase";
+import LoaderComponent from './LoaderComponent'
+
 export default {
+    components: {
+        LoaderComponent
+    },
     props: {
-        data: {
-            type: Object,
-            required: false
+        urlBase: {
+            type: String,
+            required: true
         },
         btnText: {
             type: String,
             require: false,
-            default: 'Subir'
+            default: "Subir"
         },
     },
-    setup(props) {
-        console.log(props.data)
-        
+    setup(props, { emit }) {
+        let visible = referencia(false);
         let files = reactive({});
-        let filesName = reactive([]);
-
-        
         //Métodos 
         const almacenarImagenes = event => {
-            console.clear();            //this.arbol.url = `${this.arbol.id}/${event.target.files[0].name}`;
-            //files = event.target.files; //Objeto de tipo FileList. Ver https://developer.mozilla.org/en-US/docs/Web/API/FileList
-            Object.assign(files,event.target.files);//Para no perder la reactividad del objeto
-            console.log(files)
-            filesName.splice(0,filesName.length);//reseteamos array sin peder reactividad
-            for (let item in files) {
-                console.log(files[item])
-                console.log(files[item].name)                
-                filesName.push(files[item].name);               
-            }
-            // files = event.target.files;
-            // //console.log(files)
-            // for(let element in files){
-            //     console.log(element.item)
+            //Debugger
+            //console.clear();            //Limpiamos consola
+            //console.log(props.url)
+            //https://developer.mozilla.org/en-US/docs/Web/API/FileList
+            Object.assign(files, event.target.files); //Object.assign mantiene la reactividad
+            //Recorrer objeto
+            // for (let item in files) {
+            //     console.log(files[item])
+            //     console.log(files[item].name)               
             // }
-            //console.log(filesName)
-        }
+        };
         const subirFicheros = () => {
-            //Subida de ficheros físicos            
+            //Subida de ficheros físicos
+                      
             for (let item in files) {
-                const storageRef = ref(storage, `${props.data.id}/${files[item].name}`); //creamos una referencia
+                visible.value = true;
+                const storageRef = ref(storage, `${props.urlBase}/${files[item].name}`); //creamos una referencia
                 uploadBytes(storageRef, files[item]).then((snapshot) => {
-                    console.log('Uploaded a blob or file!');
+                    //console.log("¡Terminada la subida de ficheros!");
+                    visible.value = false;
                 });
-                console.log(files[item])               
+                
+                //console.log(files[item])               
             }
-        }
+        };
+        //Emit
+        const emitAction = () => {
+            if (files[0]) //Si hay algún fichero seleccionado
+                emit("customAction", files);
+        };
         //Propiedades computadas       
         const btnDisabled = computed(() => !files[0]);
         return {
             btnDisabled,
             almacenarImagenes,
-            filesName,
-            subirFicheros
-        }
-        // accionPersonalizada() {
-        //     if (this.arbol.url.length) {
-
-        //         try {
-        //             const storageRef = ref(storage, this.arbol.url); //creamos una referencia
-        //             // 'file' comes from the Blob or File API
-        //             const file = this.files;
-
-        //             uploadBytes(storageRef, file).then((snapshot) => {
-        //                 console.log('Uploaded a blob or file!');
-        //             });
-        //         }
-        //         catch (error) {
-        //             console.log(`Error jeje: ${error}`);
-        //         }
-        //     }
-        //     this.joinNames();
-        //     this.$emit('customAction', this.arbol)
-        // },
+            subirFicheros,
+            emitAction,
+            visible
+        };
     }
 }
 </script>

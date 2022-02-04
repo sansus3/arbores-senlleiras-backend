@@ -43,7 +43,7 @@ const routes = [
   {
     path: `/description-specie-:id`,
     name: 'Arbore',
-    component: () => import('@/views/specie/Arbore.vue')
+    component: () => import('@/views/specie/SpecieDescription.vue')
   },
   {
     path: `/images-specie-:id`,

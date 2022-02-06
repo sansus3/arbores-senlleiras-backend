@@ -13,7 +13,7 @@
                 />
             </li>
              <li class="mb-3">
-                <button @click="emitAction" class="btn btn-dark" :disabled="btnDisabled">{{ btnText }}</button>
+                <button class="btn btn-dark" :disabled="btnDisabled">{{ btnText }}</button>
             </li>
         </ul>
         <loader-component :visibleBool="visible"></loader-component>
@@ -67,15 +67,15 @@ export default {
                 uploadBytes(storageRef, files[item]).then((snapshot) => {
                     //console.log("¡Terminada la subida de ficheros!");
                     visible.value = false;
-                });
-                
+                });               
                 //console.log(files[item])               
             }
+            emitAction();
         };
         //Emit
         const emitAction = () => {
             if (files[0]) //Si hay algún fichero seleccionado
-                emit("customAction", files);
+                emit("customAction", files);//información de los fichero subidos
         };
         //Propiedades computadas       
         const btnDisabled = computed(() => !files[0]);

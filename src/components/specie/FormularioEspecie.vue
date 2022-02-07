@@ -1,6 +1,5 @@
 <template>
     <loader-component text="loader.msg" :visibleBool="loader.pending"></loader-component>
-    {{ $data }}
     <form
         method="post"
         action="#"
@@ -16,7 +15,7 @@
                 <input
                     id="genus"
                     name="genus"
-                    v-model.trim="arbol.genus"
+                    v-model.trim="arbore.genus"
                     type="text"
                     placeholder="Género aquí"
                     class="field__control form-control"
@@ -34,7 +33,7 @@
                 <input
                     id="specie"
                     name="specie"
-                    v-model.trim="arbol.specie"
+                    v-model.trim="arbore.specie"
                     type="text"
                     placeholder="Especie aquí"
                     class="field__control form-control"
@@ -58,7 +57,7 @@
             <li class="field mb-3">
                 <label for="descriptio" class="form-label">Descripción</label>
                 <textarea
-                    v-model.trim="arbol.descriptio"
+                    v-model.trim="arbore.descriptio"
                     class="form-control"
                     id="descriptio"
                     rows="3"
@@ -74,18 +73,14 @@
 
 <script>
 import LoaderComponent from '@/components/LoaderComponent';
-import { mapState } from "vuex";
+import { computed,ref } from 'vue';
+import { useStore } from 'vuex';
 
 export default {
     components: {
         LoaderComponent
     },
-    data() {
-        return {
-            arbol: null,
-            names: '',
-        }
-    },
+    emits: ['customAction'],
     props: {
         arbore: {
             type: Object,
@@ -98,37 +93,46 @@ export default {
             default: "Enviar"
         }
     },
-    computed: {
-        ...mapState(['loader', 'specie']),
-        btnDisabled() {
-            return !this.arbol.specie.length || !this.arbol.genus.length
-        },
+    setup(props,{emit}){
+        //console.log(props.arbore)
+        const storage = useStore();
+        let names = ref('');
+        //Si del objeto arbore su propiedad names (que es un array) tiene un tamaño almacenamos en formulario su valor en string
+        if (props.arbore.names.length)
+            names.value = props.arbore.names.join();
 
-    },
-    emits: ['customAction'],
-    methods: {      
-        accionPersonalizada() {
-           
-            this.joinNames();
-            this.$emit('customAction', this.arbol)
-        },
-        joinNames() {
-            this.names = this.names.replace(/ +,/g, ",");//limpiamos espacios en blanco adicionales a las comas
+        //Comprobamos el estado del loader
+        const loader = computed(
+            ()=> storage.state.loader
+        );
+
+        //Si el campo specie o genus está vacío desactivamos el botón de envío de datos
+        const btnDisabled = computed(
+            () => !props.arbore.specie.length || !props.arbore.genus.length
+        );
+
+        
+        //para almacenar en la bse de datos el string del formulario names lo convertimos en array
+        const joinNames = () => {
+            names.value = names.value.replace(/ +,/g, ",");//limpiamos espacios en blanco adicionales a las comas
             //console.log(this.names)
-            this.names = this.names.replace(/, +/g, ",");
+            names.value = names.value.replace(/, +/g, ",");
             //console.log(this.names.split(','))
-            this.arbol.names = this.names.split(',');
+            props.arbore.names = names.value.split(',');
         }
 
-    },
-    created() {
-        this.arbol = this.arbore;
-        //console.log(this.arbol)
-    },
-    mounted() {
-        if (this.arbol.names.length)
-            this.names = this.arbol.names.join();
-    }
+        //Nuestro emit que nos sirve bien para edición como para inserción
+        const accionPersonalizada = () => {
+            joinNames();
+            emit('customAction', props.arbore)
+        }
+        return {
+            names,
+            loader,
+            btnDisabled,
+            accionPersonalizada
+        }
+    }    
 }
 </script>
 

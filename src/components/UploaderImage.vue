@@ -17,6 +17,7 @@
             </li>
         </ul>
         <loader-component :visibleBool="visible"></loader-component>
+        <div v-if="errorStr" class="alert alert-danger" role="alert">{{ errorStr }}</div>
     </form>
     
 </template>
@@ -36,6 +37,11 @@ export default {
             type: String,
             required: true
         },
+        maxSize: {
+            type: Number,
+            required: false,
+            default: 750000
+        },
         btnText: {
             type: String,
             require: false,
@@ -45,6 +51,7 @@ export default {
     setup(props, { emit }) {
         let visible = referencia(false);
         let files = reactive({});
+        let errorStr = referencia('');
         //Métodos 
         const almacenarImagenes = event => {
             //Debugger
@@ -60,9 +67,13 @@ export default {
         };
         const subirFicheros = () => {
             //Subida de ficheros físicos
-                      
+            errorStr.value = '';         
             for (let item in files) {
                 visible.value = true;
+                if(files[item].size > props.maxSize){
+                    errorStr.value = `${files[item].name} excedión el máximo tamaño permitido ${files[item].size} (Máximo: ${props.maxSize}).`;
+                    return;
+                }
                 const storageRef = ref(storage, `${props.urlBase}/${files[item].name}`); //creamos una referencia
                 uploadBytes(storageRef, files[item]).then((snapshot) => {
                     //console.log("¡Terminada la subida de ficheros!");
@@ -81,6 +92,7 @@ export default {
         const btnDisabled = computed(() => !files[0]);
         return {
             btnDisabled,
+            errorStr,
             almacenarImagenes,
             subirFicheros,
             emitAction,

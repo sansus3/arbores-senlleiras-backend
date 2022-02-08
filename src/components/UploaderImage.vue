@@ -40,7 +40,7 @@ export default {
         maxSize: {
             type: Number,
             required: false,
-            default: 750000
+            default: 1500000
         },
         btnText: {
             type: String,

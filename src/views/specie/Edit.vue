@@ -20,7 +20,7 @@
 <script>
 import { useStore } from "vuex";
 import { useRoute } from "vue-router";
-import { computed } from "vue";
+import { computed,onMounted } from "vue";
 
 
 import FormularioEspecie from "@/components/specie/FormularioEspecie";
@@ -30,20 +30,23 @@ export default {
     },
     setup() {
         //Cargamos storage de vuex y rutas de route
-        const storage = useStore();
+        const store = useStore();
         const parameters = useRoute();
 
+       
+
         //Cargamos información de la especie
-        storage.dispatch('setSpecie', parameters.params.id);
+        store.dispatch('setSpecie', parameters.params.id);
        
         //Obtenemos la data
         const specie = computed(() => {
-            return storage.state.specie;
+            return store.state.specie;
         });
+            
 
         //Actualización de la data
         const actionActualizacion = especie => {
-            storage.dispatch('updateSpecie', especie)
+            store.dispatch('updateSpecie', especie)
         }
 
         return {

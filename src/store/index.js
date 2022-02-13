@@ -93,7 +93,7 @@ export default createStore({
     async getListadoEspecies({ commit }) {
       try {
         commit('updateLoader', { pending: true });
-        const url = 'https://arbores-senlleiras-default-rtdb.europe-west1.firebasedatabase.app/species.json';
+        const url = 'https://senlleiras-especies-default-rtdb.europe-west1.firebasedatabase.app/species.json';
         const response = await fetch(
           url,
           {
@@ -129,7 +129,7 @@ export default createStore({
     async deleteSpecie({ commit }, id) {
       try {
         commit('updateLoader', { pending: true });
-        const url = `https://arbores-senlleiras-default-rtdb.europe-west1.firebasedatabase.app/species/specie-${id}.json`;
+        const url = `https://senlleiras-especies-default-rtdb.europe-west1.firebasedatabase.app/species/specie-${id}.json`;
         fetch(url, {
           method: 'DELETE',
           headers: {
@@ -147,7 +147,8 @@ export default createStore({
     async updateSpecie({ commit }, objSpecie) {
       try {
         commit('updateLoader', { pending: true });
-        const url = `https://arbores-senlleiras-default-rtdb.europe-west1.firebasedatabase.app/species/specie-${objSpecie.id}.json`;
+        const url = `https://senlleiras-especies-default-rtdb.europe-west1.firebasedatabase.app/species/specie-${objSpecie.id}.json`;
+        
 
         const response = await fetch(
           url,
@@ -169,7 +170,7 @@ export default createStore({
     async insertSpecie({ commit }, objTree) {
       try {
         commit('updateLoader', { pending: true });
-        const url = `https://arbores-senlleiras-default-rtdb.europe-west1.firebasedatabase.app/species/specie-${objTree.id}.json`;
+        const url = `https://senlleiras-especies-default-rtdb.europe-west1.firebasedatabase.app/species/specie-${objTree.id}.json`;
 
         const response = await fetch(
           url,

@@ -1,85 +1,16 @@
 <template>
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <div class="container-fluid">
-      <router-link class="navbar-brand" to="/">Senlleiras</router-link>
-      <button
-        class="navbar-toggler"
-        type="button"
-        data-bs-toggle="collapse"
-        data-bs-target="#navbarNav"
-        aria-controls="navbarNav"
-        aria-expanded="false"
-        aria-label="Toggle navigation"
-      >
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav">
-          <li class="nav-item">
-            <router-link class="nav-link" to="/catalogo">Catálogo</router-link>
-          </li>
-          <li class="nav-item dropdown">
-            <a
-              class="nav-link dropdown-toggle"
-              href="#"
-              id="navbarDropdown"
-              role="button"
-              data-bs-toggle="dropdown"
-              aria-expanded="false"
-            >Opciones</a>
-            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <li>
-                <router-link 
-                  class="dropdown-item" 
-                  :to="{
-                    name:'Specie'
-                  }">Nueva especie</router-link>
-              </li>
-              <li>
-                <a class="dropdown-item" href="#">Another action</a>
-              </li>
-              <li>
-                <hr class="dropdown-divider" />
-              </li>
-              <li>
-                <router-link
-                  class="dropdown-item"
-                  :to="{
-                    name: 'Acceso'
-                  }"
-                >Acceso</router-link>
-                <a class="dropdown-item" href="#">Something else here</a>
-              </li>
-            </ul>
-          </li>
-          <li class="nav-item">
-            <router-link class="nav-link" to="/geolocalizacion">Geolocalización</router-link>
-          </li>
-          <li class="nav-item">
-            <router-link class="nav-link" to="/about" navbar-brand>Sobre nosotros</router-link>
-          </li>
-          <li class="nav-item">
-            <router-link class="nav-link" to="/contacto">Contacto</router-link>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </nav>
-  <router-view />
+  <div>
+    <the-header></the-header>
+    <router-view />
+  </div>
 </template>
 
-<script>
-import { mapActions } from 'vuex';
-export default {
-  created() {
-    this.getListadoEspecies();
-  },
-  methods: {
-    ...mapActions(
-      ['getListadoEspecies']
-    )
-  },
-}
+<script setup>
+import TheHeader from './components/TheHeader.vue';
+import { getSpecies } from './hooks/species.hook';
+//obtenemos las especies del hook
+const {species} = getSpecies();
+
 </script>
 
 <style lang="scss">

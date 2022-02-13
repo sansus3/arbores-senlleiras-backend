@@ -25,7 +25,7 @@
 <script>
 import { reactive,ref as referencia,computed } from "vue";
 import { ref,uploadBytes  } from "firebase/storage";
-import { storage } from "@/firebase";
+import { storage } from "@/hooks/firebase";
 import LoaderComponent from './LoaderComponent'
 
 export default {

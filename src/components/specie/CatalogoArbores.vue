@@ -4,16 +4,15 @@
         <caption>Ejemplares: {{ totalCatalogo }}</caption>
         <thead>
             <tr>
-                <th scope="col">Código</th>
                 <th scope="col">Género</th>
                 <th scope="col">Especie</th>
                 <th scope="col">Nombres comunes</th>
+                <th scope="col">Descripcion</th>
                 <th scope="col">Opciones</th>
             </tr>
         </thead>
         <tbody>
             <tr v-for="item in species" :key="item.id">
-                <th scope="row">{{ item.id }}</th>
                 <td>
                     <router-link
                         :to="{
@@ -26,6 +25,7 @@
                 </td>
                 <td>{{ item.specie }}</td>
                 <td>{{ item.names.join() }}</td>
+                <td>{{ item.descriptio }}</td>
                 <td>
                     <router-link
                         class="text-decoration-none"

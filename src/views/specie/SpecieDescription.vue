@@ -24,7 +24,7 @@
 <script>
 import { ref, listAll,getDownloadURL  } from "firebase/storage";
 
-import { storage } from "../../firebase.js"
+import { storage } from "@/hooks/firebase.js"
 import { mapActions, mapState } from "vuex";
 export default {
     created() {

@@ -17,43 +17,29 @@
     </section>
 </template>
 
-<script>
+<script setup>
 import { useStore } from "vuex";
 import { useRoute } from "vue-router";
 import { computed,onMounted } from "vue";
-
-
 import FormularioEspecie from "@/components/specie/FormularioEspecie";
-export default {
-    components: {
-        FormularioEspecie
-    },
-    setup() {
-        //Cargamos storage de vuex y rutas de route
-        const store = useStore();
-        const parameters = useRoute();
 
-       
+const store = useStore();
+const route = useRoute();
 
-        //Cargamos información de la especie
-        store.dispatch('setSpecie', parameters.params.id);
+//Cargamos información de la especie
+onMounted(()=>{
+    store.dispatch('setSpecie', route.params.id);
+});     
        
-        //Obtenemos la data
-        const specie = computed(() => {
-            return store.state.specie;
-        });
+//Obtenemos la data
+const specie = computed(() => {
+    return store.state.specie;
+});
             
 
-        //Actualización de la data
-        const actionActualizacion = especie => {
-            store.dispatch('updateSpecie', especie)
-        }
-
-        return {
-            specie,
-            actionActualizacion
-        }
-
-    }
+//Actualización de la data
+const actionActualizacion = especie => {
+    store.dispatch('updateSpecie', especie)
 }
+
 </script>

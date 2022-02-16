@@ -39,7 +39,7 @@
                                     :to="{
                                         name: 'Catalogo'
                                     }"
-                                >Listado</router-link>
+                                >Catálogo</router-link>
                             </li>
                             <li>
                                 <hr class="dropdown-divider" />
@@ -53,11 +53,15 @@
                                 >Nueva especie</router-link>
                             </li>
                         </ul>
-                    </li>                   
+                    </li>
                     <li class="nav-item">
-                        <router-link class="nav-link" to="/about" navbar-brand>Acerca de</router-link>
-                    </li>                    
+                        <router-link class="nav-link" :to="{ name: 'About' }" navbar-brand>Acerca de</router-link>
+                    </li>
                 </ul>
+            </div>
+            <div class="text-end">
+                <button type="button" class="btn btn-outline-light me-2">Login</button>
+                <button type="button" class="btn btn-warning">LogOut</button>
             </div>
         </div>
     </nav>

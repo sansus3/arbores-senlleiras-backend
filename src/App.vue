@@ -6,7 +6,7 @@
 </template>
 
 <script setup>
-import TheHeader from './components/TheHeader.vue';
+import TheHeader from './views/TheHeader.vue';
 import { getSpecies } from './hooks/species.hook';
 //obtenemos las especies del hook
 const {species} = getSpecies();

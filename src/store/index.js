@@ -193,6 +193,20 @@ export default createStore({
     }
 
   },
+  getters: {
+    getSpeciesSpecieSort(state){
+      return state.species.sort((x,y)=> x.specie.localeCompare(y.specie))
+    },
+    getSpeciesSpecieSortDesc(state){
+      return state.species.sort((x,y)=> y.specie.localeCompare(x.specie))
+    },
+    getSpeciesGenusSort(state){
+      return state.species.sort((x,y)=> x.genus.localeCompare(y.genus))
+    },
+    getSpeciesGenusSortDesc(state){
+      return state.species.sort((x,y)=> y.genus.localeCompare(x.genus))
+    }
+  },
   modules: {
   }
 })

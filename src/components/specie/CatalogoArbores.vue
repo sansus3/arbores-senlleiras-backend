@@ -4,8 +4,14 @@
         <caption>Ejemplares: {{ totalCatalogo }}</caption>
         <thead>
             <tr>
-                <th scope="col">Género</th>
-                <th scope="col">Especie</th>
+                <th scope="col">
+                    <a @click.prevent="sortSpecie('genus')" href="#">Género</a>
+                    <i class="bi" :class="genusSort"></i>
+                </th>
+                <th scope="col">
+                    <a @click.prevent="sortSpecie('specie')" href="#">Especie</a>
+                    <i class="bi" :class="specieSort"></i>
+                </th>
                 <th scope="col">Nombres comunes</th>
                 <th scope="col">Descripcion</th>
                 <th scope="col">Opciones</th>
@@ -107,22 +113,55 @@
 
 <script setup>
 import { useStore } from 'vuex';
-import { computed } from 'vue';
+import { computed, reactive } from 'vue';
 import LoaderComponent from '@/components/LoaderComponent';
 
 //Inicializamos el store
 const store = useStore();
 //Cargamos propiedades del store (vuex)
-const species = computed(()=>store.state.species);
-const loader = computed(()=>store.state.loader);
+let species = computed(() => store.state.species);
+const loader = computed(() => store.state.loader);
+
+const genusSort = reactive({ 'bi-sort-alpha-down': true, 'bi-sort-alpha-down-alt': false });
+const specieSort = reactive({ 'bi-sort-alpha-down': true, 'bi-sort-alpha-down-alt': false });
 
 //Elementos computados
-const totalCatalogo = computed(()=>species.value?species.value.length:0);
+const totalCatalogo = computed(() => species.value ? species.value.length : 0);
 
 //Métodos
+const sortSpecie = sort => {
+    switch (sort) {
+        case 'genus':
+            if (genusSort['bi-sort-alpha-down'] == true) {
+                genusSort['bi-sort-alpha-down'] = false;
+                genusSort['bi-sort-alpha-down-alt'] = true;
+                species = store.getters.getSpeciesGenusSort;
+            } else {
+                genusSort['bi-sort-alpha-down'] = true;
+                genusSort['bi-sort-alpha-down-alt'] = false;
+                species = store.getters.getSpeciesGenusSortDesc;
+            }
+            break;
+        case 'specie':
+            if (specieSort['bi-sort-alpha-down'] == true) {
+                specieSort['bi-sort-alpha-down'] = false;
+                specieSort['bi-sort-alpha-down-alt'] = true;
+                species = store.getters.getSpeciesSpecieSort;
+            } else {
+                specieSort['bi-sort-alpha-down'] = true;
+                specieSort['bi-sort-alpha-down-alt'] = false;
+                species = store.getters.getSpeciesSpecieSortDesc;
+            }
+            break;
+            break;
+        default:
+            break;
+    }
+
+}
 const deleteId = id => {
     if (confirm(`¿Desea eliminar el item ${id}`))
-        store.dispatch('deleteSpecie',id);
+        store.dispatch('deleteSpecie', id);
 }
 </script>
 

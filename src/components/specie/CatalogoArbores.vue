@@ -105,26 +105,24 @@
     </table>
 </template>
 
-<script>
+<script setup>
+import { useStore } from 'vuex';
+import { computed } from 'vue';
 import LoaderComponent from '@/components/LoaderComponent';
-import { mapActions, mapState } from "vuex";
-export default {
-    components: {
-        LoaderComponent
-    },
-    computed: {
-        ...mapState(['species', 'loader']),
-        totalCatalogo() {
-            return this.species ? this.species.length : 0;
-        },
-    },
-    methods: {
-        ...mapActions(['deleteSpecie']),
-        deleteId(id) {
-            if (confirm(`¿Desea eliminar el item ${id}`))
-                this.deleteSpecie(id);
-        }
-    },
+
+//Inicializamos el store
+const store = useStore();
+//Cargamos propiedades del store (vuex)
+const species = computed(()=>store.state.species);
+const loader = computed(()=>store.state.loader);
+
+//Elementos computados
+const totalCatalogo = computed(()=>species.value?species.value.length:0);
+
+//Métodos
+const deleteId = id => {
+    if (confirm(`¿Desea eliminar el item ${id}`))
+        store.dispatch('deleteSpecie',id);
 }
 </script>
 

@@ -7,13 +7,6 @@
     </section>
 </template>
 
-<script>
-
+<script setup>
 import CatalogoArbores from "@/components/specie/CatalogoArbores"
-
-export default {
-    components: {
-        CatalogoArbores,
-    },    
-}
 </script>

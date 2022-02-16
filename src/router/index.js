@@ -38,7 +38,7 @@ const routes = [
   {
     path: '/new-specie',
     name: 'Specie',
-    component: () => import('../views/specie/Specie.vue')
+    component: () => import('../views/specie/Insert.vue')
   },
   {
     path: `/description-specie-:id`,

@@ -43,6 +43,7 @@ export default createStore({
     },
     insertarEspecie(state, payment) {
       state.species.push(payment);
+      state.specie = {...Specie}; //resetamos
       router.push('/catalogo');//router es importado
     },
     updateLoader(state, payment) {

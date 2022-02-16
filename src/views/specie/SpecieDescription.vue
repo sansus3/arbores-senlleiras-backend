@@ -10,14 +10,8 @@
                 :href="`https://www.google.com/search?q=${specie.genus}+${specie.specie}`"
             >Más información</a>
             <p class="lead">{{ specie.descriptio }}</p>
-            <div>
-                <img
-                    class="rounded mx-auto img-fluid"
-                    v-for="(ruta, index) in rutas"
-                    :key="index"
-                    :src="ruta"
-                    width="200"
-                />
+            <div>                
+                <storage-firebase :files_uid="$route.params.id"></storage-firebase>
             </div>
         </section>
     </article>
@@ -26,39 +20,17 @@
 <script setup>
 import { useRoute } from "vue-router";
 import { useStore } from "vuex";
-import { onMounted, reactive, computed } from "vue";
-import { ref, listAll, getDownloadURL } from "firebase/storage";
-import { storage } from "@/hooks/firebase.js";
+import { onMounted, computed } from "vue";
+import StorageFirebase from "@/components/specie/StorageFirebase.vue"
 
 const route = useRoute();
 const store = useStore();
 
-let rutas = reactive([]);
-let src = "#";
+
 
 const specie = computed(() => store.state.specie);
 
 onMounted(() => {
     store.dispatch('setSpecie', route.params.id);
-    loadImages();
 });
-
-
-const loadImages = async () => {
-    // Create a reference under which you want to list
-    const listRef = ref(storage, route.params.id);
-    // Find all the prefixes and items.
-    const res = await listAll(listRef)
-    //console.log(res)
-    res.items.forEach((itemRef) => {
-        // All the items under listRef.
-        //console.log(itemRef.fullPath)
-        (async () => {
-            const url = await getDownloadURL(ref(storage, itemRef.fullPath));
-            rutas.push(url);
-        })()
-
-    });
-}
-
 </script>

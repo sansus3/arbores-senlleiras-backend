@@ -1,50 +1,51 @@
 <template>
-     <section class="section section__catalogo p-2">
-        <h2 class="display-6">Subida de imágenes de {{$route.params.id}}</h2>
+    <section class="section section__catalogo p-2">
+        <h2 class="display-6">
+            <!-- Subida de imágenes de {{ $route.params.id }} -->
+            {{ specie.genus }} {{ specie.specie }} {{ specie.names.join() }}
+        </h2>
         <template v-if="specie">
             <uploader-image :urlBase="getUrl" @customAction="guardarDatos"></uploader-image>
-        </template>           
+        </template>
     </section>
 </template>
 
-<script>
-
-
-import { mapActions,mapState } from "vuex";
+<script setup>
+import { onMounted, reactive, computed } from "vue";
+import { useStore } from "vuex";
+import { useRoute } from "vue-router";
 import UploaderImage from '@/components/UploaderImage';
 
 
-export default {
-    created(){
-        this.setSpecie(this.$route.params.id); //obtenemos información de la imagen
-    },
-    data(){
-        return {
-            urls: []
-        }
-    },
-    computed: {
-        ...mapState(['specie']),
-        getUrl(){
-            return `${this.specie.id}/`;
-        }
-    },
-    methods: {
-        ...mapActions(['setSpecie']),
-        guardarDatos(files){
-            this.urls = [];
-            for (let item in files) {
-                //console.log(files[item])
-                //console.log(files[item].name)                
-                this.urls.push(`${this.specie.id}/${files[item].name}`);               
-            }
-            //Almacenar en la base de datos???
-            console.log(this.urls)
-        }
-    },
-    components:{
-        UploaderImage
+const store = useStore();
+const route = useRoute();
+
+
+onMounted(() => {
+    store.dispatch('setSpecie', route.params.id);
+});
+
+
+
+let urls = reactive([]);
+const specie = computed(() => store.state.specie);
+const getUrl = computed(() => {
+    return `${route.params.id}/`;
+});
+
+
+/**
+ * Función que añade ficheros a un array
+ * @param {Object} files Object de objetos de ficheros de imagen
+ */
+const guardarDatos = files => {
+    urls = reactive([]);
+    for (let item in files) {
+        //console.log(files[item])
+        //console.log(files[item].name)                
+        urls.push(`${specie.value.id}/${files[item].name}`);
     }
-   
+    //Almacenar en la base de datos???
+    //console.log(urls)
 }
 </script>

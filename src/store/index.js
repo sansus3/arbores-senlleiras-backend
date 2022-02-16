@@ -20,36 +20,36 @@ export default createStore({
     user: null
   },
   mutations: {
-    logueoUsuario(state, payment) {
-      state.user = payment;
+    logueoUsuario(state, payload) {
+      state.user = payload;
     },
-    usuarioRegistro(state, payment) {
-      state.user = payment;
+    usuarioRegistro(state, payload) {
+      state.user = payload;
     },
-    listadoEspecies(state, payment) {
-      state.species = payment;
+    listadoEspecies(state, payload) {
+      state.species = payload;
     },
-    setEspecie(state, payment) {
-      state.specie = state.species.find(spe => spe.id == payment);
+    setEspecie(state, payload) {
+      state.specie = state.species.find(spe => spe.id == payload);
     },
     resetSpecie(state) {
       state.specie = { ...Specie };
     },
-    actualizarEspecie(state, payment) {
-      state.specie = payment;
+    actualizarEspecie(state, payload) {
+      state.specie = payload;
     },
-    eliminarEspecie(state, payment) {
-      state.species = state.species.filter(el => el.id !== payment);
+    eliminarEspecie(state, payload) {
+      state.species = state.species.filter(el => el.id !== payload);
     },
-    insertarEspecie(state, payment) {
-      state.species.push(payment);
+    insertarEspecie(state, payload) {
+      state.species.push(payload);
       state.specie = {...Specie}; //resetamos
       router.push('/catalogo');//router es importado
     },
-    updateLoader(state, payment) {
-      state.loader.pending = payment.pending;
-      if (payment.msg)
-        state.loader.msg = payment.msg;
+    updateLoader(state, payload) {
+      state.loader.pending = payload.pending;
+      if (payload.msg)
+        state.loader.msg = payload.msg;
     }
   },
   actions: {

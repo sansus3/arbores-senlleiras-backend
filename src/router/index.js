@@ -15,7 +15,7 @@ const routes = [
   {
     path: '/about',
     name: 'About',
-    component: () => import('../views/Home.vue')
+    component: () => import('../views/About.vue')
   },
   {
     path: '/new-specie',

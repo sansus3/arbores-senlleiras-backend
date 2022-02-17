@@ -1,11 +1,14 @@
 <template>
-    <div
-        class="d-flex justify-content-center align-items-center"
-        v-for="(ruta, index) in rutas"
-        :key="index"
-    >
-        <img class="rounded img-fluid" :src="ruta" width="200" />
-        <a href="#" @click.prevent="deleteImg(index)">Eliminar</a>
+    <div class="d-flex justify-content-center align-items-center">
+        <figure class="figure" v-for="(ruta, index) in rutas" :key="index">
+            <img :src="ruta" width="200" class="figure-img img-fluid rounded" :alt="index+1" />
+            <figcaption class="figure-caption">
+                Imagen {{index+1}}
+                <template v-if="optionsBool">
+                    <a href="#" @click.prevent="deleteImg(index)">Eliminar</a>
+                </template>
+            </figcaption>
+        </figure>
     </div>
 </template>
 
@@ -18,6 +21,10 @@ const props = defineProps({
     files_uid: {
         type: String,
         required: true
+    },
+    optionsBool: {
+        type: Boolean,
+        default: false,
     }
 });
 

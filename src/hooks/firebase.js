@@ -1,4 +1,4 @@
-//npm install --save firebase //https://learnvue.co/2021/06/a-vue-firebase-authentication-tutorial-vue-3-and-firebase/#user-registration
+//npm install --save firebase 
 import { initializeApp } from "firebase/app";
 import { getStorage } from "firebase/storage";
 // Set the configuration for your app

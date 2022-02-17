@@ -1,7 +1,13 @@
 <template>
     <loader-component :text="loader.msg" :visibleBool="loader.pending"></loader-component>
     <form @submit.prevent="buscar" class="d-flex justify-content-end p-2 bd-highlight">
-        <input v-model="search" class="form-control me-2" type="search" placeholder="Búsqueda por género" aria-label="Search" />
+        <input
+            v-model="search"
+            class="form-control me-2"
+            type="search"
+            placeholder="Búsqueda por género"
+            aria-label="Search"
+        />
     </form>
     <div class="table-responsive">
         <table class="table table-striped">
@@ -117,6 +123,7 @@
 <script setup>
 import { useStore } from 'vuex';
 import { computed, reactive, ref } from 'vue';
+import { getAllFiles, deleteFile } from '@/hooks/storage.firebase';
 import LoaderComponent from '@/components/LoaderComponent';
 
 //Inicializamos el store
@@ -129,9 +136,10 @@ const search = ref("");
 const genusSort = reactive({ 'bi-sort-alpha-down': true, 'bi-sort-alpha-down-alt': false });
 const specieSort = reactive({ 'bi-sort-alpha-down': true, 'bi-sort-alpha-down-alt': false });
 
-const speciesFilter = computed(()=>{
-     return species.value.filter(item => {
-        return item.genus.toLowerCase().includes(search.value.toLowerCase())})
+const speciesFilter = computed(() => {
+    return species.value.filter(item => {
+        return item.genus.toLowerCase().includes(search.value.toLowerCase())
+    })
 });
 
 //Elementos computados
@@ -144,22 +152,22 @@ const sortSpecie = sort => {
             if (genusSort['bi-sort-alpha-down'] == true) {
                 genusSort['bi-sort-alpha-down'] = false;
                 genusSort['bi-sort-alpha-down-alt'] = true;
-                speciesFilter.value.sort((x,y)=> x.genus.localeCompare(y.genus))
+                speciesFilter.value.sort((x, y) => x.genus.localeCompare(y.genus))
             } else {
                 genusSort['bi-sort-alpha-down'] = true;
                 genusSort['bi-sort-alpha-down-alt'] = false;
-                speciesFilter.value.sort((x,y)=> y.genus.localeCompare(x.genus))
+                speciesFilter.value.sort((x, y) => y.genus.localeCompare(x.genus))
             }
             break;
         case 'specie':
             if (specieSort['bi-sort-alpha-down'] == true) {
                 specieSort['bi-sort-alpha-down'] = false;
                 specieSort['bi-sort-alpha-down-alt'] = true;
-                speciesFilter.value.sort((x,y)=> x.specie.localeCompare(y.specie))
+                speciesFilter.value.sort((x, y) => x.specie.localeCompare(y.specie))
             } else {
                 specieSort['bi-sort-alpha-down'] = true;
                 specieSort['bi-sort-alpha-down-alt'] = false;
-                speciesFilter.value.sort((x,y)=> y.specie.localeCompare(x.specie))
+                speciesFilter.value.sort((x, y) => y.specie.localeCompare(x.specie))
             }
             break;
     }
@@ -167,9 +175,16 @@ const sortSpecie = sort => {
 }
 
 
-const deleteId = id => {
-    if (confirm(`¿Desea eliminar el item ${id}`))
+const deleteId = async (id) => {
+    if (confirm(`¿Desea eliminar el item ${id}`)) {
         store.dispatch('deleteSpecie', id);
+        const { response } = await getAllFiles(id);
+        for (let i = 0, tam = response.items.length; i < tam; i++) {
+            //console.log(`${id}/${response.items[i].name}`)
+            await deleteFile(`${id}/${response.items[i].name}`);
+        }
+    }
+
 }
 </script>
 

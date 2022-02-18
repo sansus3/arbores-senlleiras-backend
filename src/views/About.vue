@@ -7,7 +7,7 @@
             <h3>Obradoiros</h3>
             <a
                 class="d-flex align-items-center"
-                href="https://santiagosustentable.com/`"
+                href="https://santiagosustentable.com"
             >Más información</a>
             <p class="lead">Análise, deseño e construcción dunha App no ámbito das árbores e bosques de Compostela en realidade virtual e aumentada</p>
             <div>                

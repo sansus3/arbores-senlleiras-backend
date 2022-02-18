@@ -1,5 +1,5 @@
+import { storage } from "@/hooks/firebase.storage";
 import { ref, listAll, deleteObject, getStorage } from "firebase/storage";
-import { storage } from "@/hooks/firebase.js";
 import { reactive } from "vue";
 
 
@@ -18,10 +18,6 @@ export const deleteFile = async (uid) => {
         console.error(error);
     }
 }
-
-
-
-
 
 /**
  * 

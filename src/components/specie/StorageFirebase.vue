@@ -13,8 +13,8 @@
 </template>
 
 <script setup>
+import { storage } from "@/hooks/firebase.storage";
 import { ref, listAll, getDownloadURL, deleteObject, getStorage } from "firebase/storage";
-import { storage } from "@/hooks/firebase.js";
 import { reactive } from "vue";
 
 const props = defineProps({

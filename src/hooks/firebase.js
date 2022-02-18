@@ -1,19 +1,20 @@
-//npm install --save firebase 
+//Si trabajamos con nodejs
+//npm install firebase
+// Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { getStorage } from "firebase/storage";
-// Set the configuration for your app
-// TODO: Replace with your app's config object
-const firebaseConfig = {    
-    apiKey: '',//your-api-key
-    authDomain: 'senlleiras-especies',//<your-auth-domain>
-    databaseURL: '',//<your-database-url>
-    storageBucket: 'gs://senlleiras-especies.appspot.com/',//<your-storage-bucket-url>'
-}
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
 
+// Your web app's Firebase configuration
+const firebaseConfig = {
+  apiKey: "AIzaSyCxM2ZiH_GbjcRFefEXhhX5B9d81a5on2g",
+  authDomain: "senlleiras-especies.firebaseapp.com",
+  databaseURL: "https://senlleiras-especies-default-rtdb.europe-west1.firebasedatabase.app",
+  projectId: "senlleiras-especies",
+  storageBucket: "senlleiras-especies.appspot.com",
+  messagingSenderId: "466585523034",
+  appId: "1:466585523034:web:1856eed106d0f1f10b1963"
+};
 
-
-const firebaseApp = initializeApp(firebaseConfig);
-
-// Get a reference to the storage service, which is used to create references in your storage bucket
-
-export const storage = getStorage(firebaseApp);
+// Initialize Firebase
+export const firebaseApp = initializeApp(firebaseConfig);

@@ -44,7 +44,7 @@
                             <label
                                 class="form-check-label"
                                 for="flexCheckChecked"
-                            >Estoy seguro de eliminar estas especie y todo su contenido.</label>
+                            >Estoy seguro de eliminar esta especie y todo su contenido.</label>
                         </div>
                     </div>
                 </div>
@@ -57,7 +57,7 @@
 import { useRoute } from "vue-router";
 import { useStore } from "vuex";
 import { onMounted, computed, ref } from "vue";
-import { getAllFiles, deleteFile } from '@/hooks/storage.firebase';
+import { getAllFiles, deleteFile } from '@/hooks/files.hook';
 import LoaderComponent from '@/components/LoaderComponent';
 const route = useRoute();
 const store = useStore();

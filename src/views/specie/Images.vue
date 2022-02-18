@@ -1,12 +1,17 @@
 <template>
     <section class="section section__catalogo p-2">
-        <h2 class="display-6">
-            <!-- Subida de imágenes de {{ $route.params.id }} -->
-            {{ specie.genus }} {{ specie.specie }} {{ specie.names.join() }}
-        </h2>
-        <template v-if="specie">
+        <header v-if="specie">
+            <h2 class="display-6">
+                <!-- Subida de imágenes de {{ $route.params.id }} -->
+                {{ specie.genus }} {{ specie.specie }} {{ specie.names.join() }}
+            </h2>
             <uploader-image :urlBase="getUrl" @customAction="guardarDatos"></uploader-image>
-        </template>
+        </header>
+        <div
+            v-else
+            class="alert alert-danger"
+            role="alert"
+        >Ha ocurrido un error en la edición de la especie vuelva al catálogo y vuelva a intentarlo</div>
     </section>
 </template>
 

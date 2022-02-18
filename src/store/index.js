@@ -9,7 +9,7 @@ const Specie = {
   url: '',
   descriptio: ''
 }
-export default createStore({
+const store = createStore({
   state: {
     loader: {
       pending: false,
@@ -196,3 +196,5 @@ export default createStore({
   modules: {
   }
 })
+
+export default store;

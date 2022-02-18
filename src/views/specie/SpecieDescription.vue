@@ -11,7 +11,7 @@
             >Más información</a>
             <p class="lead">{{ specie.descriptio }}</p>
             <div>                
-                <storage-firebase :optionsBool="true" :files_uid="$route.params.id"></storage-firebase>
+                <storage-firebase :files_uid="$route.params.id"></storage-firebase>
             </div>
         </section>
     </article>

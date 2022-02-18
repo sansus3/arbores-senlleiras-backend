@@ -8,6 +8,9 @@
                 :arbore="specie"
                 btntext="Actualizar"
             ></formulario-especie>
+             <div>                
+                <storage-firebase :optionsBool="true" :files_uid="$route.params.id"></storage-firebase>
+            </div>
         </template>
         <div
             v-else
@@ -21,6 +24,7 @@
 import { useStore } from "vuex";
 import { useRoute } from "vue-router";
 import { computed,onMounted } from "vue";
+import StorageFirebase from "@/components/specie/StorageFirebase.vue"
 import FormularioEspecie from "@/components/specie/FormularioEspecie";
 
 const store = useStore();

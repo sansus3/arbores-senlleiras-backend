@@ -1,9 +1,9 @@
 //Si trabajamos con nodejs
 //npm install firebase
-// Import the functions you need from the SDKs you need
+
+//Imports
 import { initializeApp } from "firebase/app";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
+import { getStorage } from "firebase/storage";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -18,3 +18,7 @@ const firebaseConfig = {
 
 // Initialize Firebase
 export const firebaseApp = initializeApp(firebaseConfig);
+
+
+// Get a reference to the storage service, which is used to create references in your storage bucket
+export const storage = getStorage(firebaseApp);

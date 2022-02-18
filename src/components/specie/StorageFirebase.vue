@@ -13,7 +13,7 @@
 </template>
 
 <script setup>
-import { storage } from "@/hooks/firebase.storage";
+import { storage } from "@/hooks/firebase";
 import { ref, listAll, getDownloadURL, deleteObject, getStorage } from "firebase/storage";
 import { reactive } from "vue";
 

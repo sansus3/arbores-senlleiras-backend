@@ -1,5 +1,7 @@
 import { createStore } from 'vuex';
 
+import users from './users';
+
 import router from '@/router';//Esta línea no está en el original. Nos permite manipular las rutas
 const Specie = {
   id: null,
@@ -17,15 +19,8 @@ const store = createStore({
     },
     specie: { ...Specie },
     species: [], //Listado de especies para el catálogo
-    user: null
   },
   mutations: {
-    logueoUsuario(state, payload) {
-      state.user = payload;
-    },
-    usuarioRegistro(state, payload) {
-      state.user = payload;
-    },
     listadoEspecies(state, payload) {
       state.species = payload;
     },
@@ -44,7 +39,7 @@ const store = createStore({
     },
     insertarEspecie(state, payload) {
       state.species.push(payload);
-      state.specie = {...Specie}; //resetamos
+      state.specie = { ...Specie }; //resetamos
       router.push('/catalogo');//router es importado
     },
     updateLoader(state, payload) {
@@ -54,43 +49,6 @@ const store = createStore({
     }
   },
   actions: {
-    //Registro de usuario
-    userRegister({ commit }, user) {
-      //console.log(user)
-    },
-    //Login de usuario
-    //Documentación API REST
-    //https://cloud.google.com/identity-platform/docs/reference/rest/v1/accounts/signInWithPassword
-    async userLogin({ commit }, user) {
-      //console.log(user)
-      const url = "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyD-a66QbdKHK7XGcquXhLz40SzSf3s0uX8";
-      try {
-        const respuesta = await fetch(url, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            email: user.email,
-            password: user.password,
-            returnSecureToken: true
-          })
-        });
-
-        const userDB = await respuesta.json();
-
-        //console.log(userDB)
-        // if (userDB.error && userDB.error.errors.length)
-        //   console.log(`Error de acceso: ${userDB.error.message}`);
-
-        commit('logueoUsuario', userDB);
-
-
-      } catch (error) {
-        console.log(`Error en userLogin @@@@@@@@@@@: ${error}`);
-      }
-
-    },
     //Listado de especies
     async getListadoEspecies({ commit }) {
       try {
@@ -150,7 +108,7 @@ const store = createStore({
       try {
         commit('updateLoader', { pending: true });
         const url = `https://senlleiras-especies-default-rtdb.europe-west1.firebasedatabase.app/species/specie-${objSpecie.id}.json`;
-        
+
 
         const response = await fetch(
           url,
@@ -195,6 +153,7 @@ const store = createStore({
 
   },
   modules: {
+    users
   }
 })
 

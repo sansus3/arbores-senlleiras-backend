@@ -59,10 +59,12 @@
                     </li>
                 </ul>
             </div>
-            <div class="text-end">
-                <button type="button" class="btn btn-outline-light me-2">Login</button>
-                <button type="button" class="btn btn-warning">LogOut</button>
-            </div>
+            <!-- The login -->
+            <TheLogin></TheLogin>
         </div>
     </nav>
 </template>
+
+<script setup>
+    import TheLogin from '@/components/users/TheLogin.vue';
+</script>

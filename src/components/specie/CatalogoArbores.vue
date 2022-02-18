@@ -4,7 +4,7 @@
             v-model="search"
             class="form-control me-2"
             type="search"
-            placeholder="Búsqueda por género"
+            placeholder="Género, especie, nombre común"
             aria-label="Search"
         />
     </form>
@@ -144,6 +144,8 @@ const specieSort = reactive({ 'bi-sort-alpha-down': true, 'bi-sort-alpha-down-al
 const speciesFilter = computed(() => {
     return species.value.filter(item => {
         return item.genus.toLowerCase().includes(search.value.toLowerCase())
+        || item.specie.toLowerCase().includes(search.value.toLowerCase())
+        || item.names.join().toLowerCase().includes(search.value.toLowerCase())
     })
 });
 

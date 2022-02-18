@@ -40,6 +40,7 @@ const store = createStore({
     },
     eliminarEspecie(state, payload) {
       state.species = state.species.filter(el => el.id !== payload);
+      router.push('/catalogo');//router es importado
     },
     insertarEspecie(state, payload) {
       state.species.push(payload);

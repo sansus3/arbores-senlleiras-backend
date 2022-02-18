@@ -28,6 +28,11 @@ const routes = [
     component: () => import('@/views/specie/SpecieDescription.vue')
   },
   {
+    path: `/delete-specie-:id`,
+    name: 'DeleteSpecie',
+    component: () => import('@/views/specie/SpecieDelete.vue')
+  },
+  {
     path: `/images-specie-:id`,
     name: 'SpecieImages',
     component: () => import('@/views/specie/Images.vue')

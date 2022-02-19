@@ -14,7 +14,7 @@
 import { firebaseApp } from "@/hooks/firebase";
 import { getAuth, signInWithPopup, signOut, GoogleAuthProvider } from "firebase/auth";
 import { useStore } from "vuex";
-import { ref,reactive,onMounted,computed } from "vue";
+import { computed } from "vue";
 const provider = new GoogleAuthProvider();
 const auth = getAuth();
 const store = useStore();

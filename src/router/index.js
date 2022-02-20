@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Home from '../views/Home.vue'
+import users from '../store/users'
 
 const routes = [
   {
@@ -26,6 +27,7 @@ const routes = [
   {
     path: '/new-specie',
     name: 'Specie',
+    meta: { requiresAuth: true },
     component: () => import('../views/specie/Insert.vue')
   },
   {
@@ -36,11 +38,13 @@ const routes = [
   {
     path: `/delete-specie-:id`,
     name: 'DeleteSpecie',
+    meta: { requiresAuth: true },
     component: () => import('@/views/specie/SpecieDelete.vue')
   },
   {
     path: `/images-specie-:id`,
     name: 'SpecieImages',
+    meta: { requiresAuth: true },
     component: () => import('@/views/specie/Images.vue')
   },
   {
@@ -55,4 +59,17 @@ const router = createRouter({
   routes
 })
 
-export default router
+export default router;
+
+//https://router.vuejs.org/guide/advanced/meta.html
+router.beforeEach((to, from) => {
+  if (to.meta.requiresAuth && !users.state.user) {
+    // this route requires auth, check if logged in
+    // if not, redirect to login page.
+    return {
+      path: '/sign-in',
+      // save the location we were at to come back later
+      query: { redirect: to.fullPath },
+    }
+  }
+});

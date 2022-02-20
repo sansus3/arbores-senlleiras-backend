@@ -123,7 +123,6 @@
                 </tr>
             </tbody>
         </table>
-        <loader-component :text="loader.msg" :visibleBool="loader.pending"></loader-component>
     </div>
 </template>
 
@@ -131,17 +130,18 @@
 import { useStore } from 'vuex';
 import { computed, reactive, ref } from 'vue';
 
-import LoaderComponent from '@/components/LoaderComponent';
-
 //Inicializamos el store
 const store = useStore();
+const search = ref("");
 //Cargamos propiedades del store (vuex)
-let species = computed(() => store.state.species);
+let species = computed(() => {
+    return store.state.species;
+});
 const isLogin = computed(()=>{
     return store.state.users.user===null;
 });
-const loader = computed(() => store.state.loader);
-const search = ref("");
+
+
 
 
 const genusSort = reactive({ 'bi-sort-alpha-down': true, 'bi-sort-alpha-down-alt': false });

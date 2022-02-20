@@ -6,7 +6,7 @@
         <section class="bd-heading sticky-xl-top align-self-start mt-5 mb-3 mt-xl-0 mb-xl-2">
             <h3>{{ specie.names.join(', ') }}</h3>
             <p class="lead">{{ specie.descriptio }}</p>
-            <loader-component :text="loader.msg" :visibleBool="loader.pending"></loader-component>
+            <loader-component :visibleBool="visibleBool"></loader-component>
         </section>
         <div
             class="modal modal-sheet position-static d-block bg-danger py-5"
@@ -62,11 +62,12 @@ import LoaderComponent from '@/components/LoaderComponent';
 const route = useRoute();
 const store = useStore();
 
+const visibleBool = ref(false);
+
 
 const checked = ref(false);
 const warning = ref(false);
 const specie = computed(() => store.state.specie);
-const loader = computed(() => store.state.loader);
 
 onMounted(() => {
     store.dispatch('setSpecie', route.params.id);
@@ -74,13 +75,21 @@ onMounted(() => {
 
 //Métodos
 const onDelete = async () => {
-    if (checked.value) {        
+    if (checked.value) {
+        visibleBool.value = true;
         const { response } = await getAllFiles(route.params.id);
         for (let i = 0, tam = response.items.length; i < tam; i++) {
             //console.log(`${route.params.id}/${response.items[i].name}`)
             await deleteFile(`${route.params.id}/${response.items[i].name}`);
         }
-        store.dispatch('deleteSpecie', route.params.id);
+        try {
+            await store.dispatch('deleteSpecie', route.params.id);
+        } catch (error) {
+            console.log(error);
+        } finally {
+            visibleBool.value = false;
+        }
+
     } else {
         warning.value = true;
         setTimeout(() => {

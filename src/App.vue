@@ -7,10 +7,19 @@
 
 <script setup>
 import TheHeader from './views/TheHeader.vue';
-import { getSpecies } from './hooks/species.hook';
-//obtenemos las especies del hook
-const {species} = getSpecies();
 
+import { onMounted } from 'vue';
+import { useStore } from 'vuex';
+const store = useStore();
+onMounted( async () => {
+  try {
+    await store.dispatch('getListadoEspecies');
+  } catch (error) {
+    console.log(error);
+  } finally {
+
+  }
+});
 </script>
 
 <style lang="scss">

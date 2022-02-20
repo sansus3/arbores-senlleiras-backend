@@ -14,10 +14,6 @@ const Specie = {
 }
 const store = createStore({
   state: {
-    loader: {
-      pending: false,
-      msg: 'Cargando datos...'
-    },
     specie: { ...Specie },
     species: [], //Listado de especies para el catálogo
   },
@@ -43,40 +39,28 @@ const store = createStore({
       state.specie = { ...Specie }; //resetamos
       router.push('/catalogo');//router es importado
     },
-    updateLoader(state, payload) {
-      state.loader.pending = payload.pending;
-      if (payload.msg)
-        state.loader.msg = payload.msg;
-    }
   },
   actions: {
     //Listado de especies
     async getListadoEspecies({ commit }) {
-      try {
-        commit('updateLoader', { pending: true });
-        const url = 'https://senlleiras-especies-default-rtdb.europe-west1.firebasedatabase.app/species.json';
-        const response = await fetch(
-          url,
-          {
-            method: 'GET', // Lectura de datos
-            headers: {
-              'Content-Type': 'application/json'
-            }
+      const url = 'https://senlleiras-especies-default-rtdb.europe-west1.firebasedatabase.app/species.json';
+      const response = await fetch(
+        url,
+        {
+          method: 'GET', // Lectura de datos
+          headers: {
+            'Content-Type': 'application/json'
           }
-        );
-        //console.log(response)
-        const dataBD = await response.json();
-        const arbores = [];
-        //console.log(dataBD)
-        for (let id in dataBD) {
-          arbores.push(dataBD[id]);
         }
-        commit('listadoEspecies', arbores);
-        commit('updateLoader', { pending: false });
-      } catch (error) {
-        commit('updateLoader', { pending: true });
-        console.error(`getListadoEspecies() index.js en mutaciones [${error}]`);
+      );
+      //console.log(response)
+      const dataBD = await response.json();
+      const arbores = [];
+      //console.log(dataBD)
+      for (let id in dataBD) {
+        arbores.push(dataBD[id]);
       }
+      commit('listadoEspecies', arbores);
     },
     //rellenar el objeto specie a partir de un código dado
     setSpecie(context, id) {
@@ -88,21 +72,14 @@ const store = createStore({
     },
     //Eleminación de especie
     async deleteSpecie({ commit }, id) {
-      try {
-        commit('updateLoader', { pending: true });
-        const url = `https://senlleiras-especies-default-rtdb.europe-west1.firebasedatabase.app/species/specie-${id}.json`;
-        fetch(url, {
-          method: 'DELETE',
-          headers: {
-            'Content-Type': 'application/json'
-          }
-        })
-        commit('eliminarEspecie', id);
-        commit('updateLoader', { pending: false });
-      } catch (error) {
-        commit('updateLoader', { pending: true });
-        console.log(error);
-      }
+      const url = `https://senlleiras-especies-default-rtdb.europe-west1.firebasedatabase.app/species/specie-${id}.json`;
+      await fetch(url, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+      commit('eliminarEspecie', id);
     },
     //Actualización de la especie
     async updateSpecie({ commit }, objSpecie) {

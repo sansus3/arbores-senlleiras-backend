@@ -107,7 +107,7 @@ const store = createStore({
     //Actualización de la especie
     async updateSpecie({ commit }, objSpecie) {
       const url = `https://senlleiras-especies-default-rtdb.europe-west1.firebasedatabase.app/species/specie-${objSpecie.id}.json`;
-      const response = await fetch(
+      await fetch(
         url,
         {
           method: 'PATCH', // Editar datos
@@ -120,9 +120,8 @@ const store = createStore({
       commit('actualizarEspecie', objSpecie);
     },
     async insertSpecie({ commit }, objTree) {
-      commit('updateLoader', { pending: true });
       const url = `https://senlleiras-especies-default-rtdb.europe-west1.firebasedatabase.app/species/specie-${objTree.id}.json`;
-      const response = await fetch(
+      await fetch(
         url,
         {
           method: 'PUT', // Editar datos

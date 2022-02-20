@@ -1,5 +1,6 @@
 import { createStore } from 'vuex';
-
+import { auth } from '../hooks/firebase';
+import { onAuthStateChanged  } from "firebase/auth";
 import users from './users';
 
 import router from '@/router';//Esta línea no está en el original. Nos permite manipular las rutas
@@ -149,6 +150,25 @@ const store = createStore({
         console.log(error)
       }
 
+    },
+    checkAuth({commit}){
+      //https://firebase.google.com/docs/auth/web/manage-users?authuser=0
+      try {
+        onAuthStateChanged(auth, (user) => {
+          if (user) {
+            // User is signed in, see docs for a list of available properties
+            // https://firebase.google.com/docs/reference/js/firebase.User
+            console.log(user)
+            commit('users/setUser',user);
+            // ...
+          } else {
+            // User is signed out
+            commit('users/setUser',null);
+          }
+        });
+      } catch (error) {
+        console.log(error)
+      }
     }
 
   },
@@ -158,3 +178,5 @@ const store = createStore({
 })
 
 export default store;
+
+store.dispatch('checkAuth');

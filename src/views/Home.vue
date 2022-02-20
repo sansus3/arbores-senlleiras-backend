@@ -16,14 +16,16 @@
           Catálogo de especies
         </router-link>
 
-        <router-link 
-          class="list-group-item list-group-item-action"
-          :to="{
-            name : 'Specie'
-          }"
-        >
-          Nueva especie
-        </router-link>
+        <template v-if="!isLogin">
+          <router-link
+            class="list-group-item list-group-item-action"
+            :to="{
+              name : 'Specie'
+            }"
+          >
+            Nueva especie
+          </router-link>
+        </template>
       </div>
     </div>
     <div class="col">
@@ -34,15 +36,13 @@
   </div>
 </template>
 
-<script>
-// @ is an alias to /src
-
-
-export default {
-  name: 'Home',
-  components: {
-  }
-}
+<script setup>
+import { useStore } from 'vuex';
+import { computed } from 'vue';
+const store = useStore();
+const isLogin = computed(()=>{
+    return store.state.users.user===null;
+});
 </script>
 
 <style scoped>

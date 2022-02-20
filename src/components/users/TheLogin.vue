@@ -1,52 +1,38 @@
 <template>
     <div class="text-end">
-        <template v-if="login">
+        <template v-if="isLogin">
             <button @click="doLogin" type="button" class="btn btn-outline-light me-2">Login</button>
         </template>
-        <template v-else>
-            <span class="text-white p-1">Hola {{ user.displayName }} </span>        
+        <template v-else>       
             <button @click="doLogout" type="button" class="btn btn-warning">LogOut</button>
         </template>
     </div>
 </template>
 
 <script setup>
-import { firebaseApp } from "@/hooks/firebase";
-import { getAuth, signInWithPopup, signOut, GoogleAuthProvider } from "firebase/auth";
-import { useStore } from "vuex";
+
+import { useRouter } from "vue-router";
 import { computed } from "vue";
-const provider = new GoogleAuthProvider();
-const auth = getAuth();
+import { useStore } from "vuex";
+
 const store = useStore();
+const router = useRouter();
 
-
-const user = computed(()=>{
-    console.log(store.state.users.user)
-    return store.state.users.user;
+const isLogin = computed(()=>{
+    return store.state.users.user===null;
 });
 
-const login = computed(()=>user.value===null);
 
-const doLogin = async () => {
-    try {
-        const result = await signInWithPopup(auth, provider);
-        const credential = GoogleAuthProvider.credentialFromResult(result);
-        const token = credential.accessToken;
-        // The signed-in user info.
-        store.dispatch('setUser',result.user)
-        //console.log(user.email)
-
-    } catch (error) {
-        console.error(error);
-    }
+const doLogin = () => {
+   router.push({name:'Login'});
 }
 
 const doLogout = async () => {
     try {
-        const result = await signOut(auth);
-        store.dispatch('doLogout');
+        await store.dispatch('users/doLogout');
+        router.push({name:'Home'});
     } catch (error) {
-        console.error(`doLogout: ${error.message}`);
-    }
+        console.log(error);
+    }   
 }
 </script>

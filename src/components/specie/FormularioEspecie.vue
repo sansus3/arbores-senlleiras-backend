@@ -1,10 +1,9 @@
 <template>
     <loader-component text="loader.msg" :visibleBool="loader.pending"></loader-component>
-    <form
-        method="post"
-        action="#"
-        v-on:submit.prevent="accionPersonalizada"
-    >
+    <template v-if="isLogin">
+        Debe de iniciar sesión
+    </template>
+    <form v-else method="post" action="#" v-on:submit.prevent="accionPersonalizada">
         <ul class="fields p-2">
             <li class="field mb-3">
                 <label
@@ -52,7 +51,7 @@
                     placeholder="Nombres separados con comas"
                     class="field__control form-control"
                 />
-            </li>          
+            </li>
 
             <li class="field mb-3">
                 <label for="descriptio" class="form-label">Descripción</label>
@@ -73,7 +72,7 @@
 
 <script>
 import LoaderComponent from '@/components/LoaderComponent';
-import { computed,ref } from 'vue';
+import { computed, ref } from 'vue';
 import { useStore } from 'vuex';
 
 export default {
@@ -93,17 +92,20 @@ export default {
             default: "Enviar"
         }
     },
-    setup(props,{emit}){
+    setup(props, { emit }) {
         //console.log(props.arbore)
         const storage = useStore();
         let names = ref('');
+        const isLogin = computed(() => {
+            return storage.state.users.user === null;
+        });
         //Si del objeto arbore su propiedad names (que es un array) tiene un tamaño almacenamos en formulario su valor en string
         if (props.arbore.names.length)
             names.value = props.arbore.names.join();
 
         //Comprobamos el estado del loader
         const loader = computed(
-            ()=> storage.state.loader
+            () => storage.state.loader
         );
 
         //Si el campo specie o genus está vacío desactivamos el botón de envío de datos
@@ -111,7 +113,7 @@ export default {
             () => !props.arbore.specie.length || !props.arbore.genus.length
         );
 
-        
+
         //para almacenar en la bse de datos el string del formulario names lo convertimos en array
         const joinNames = () => {
             names.value = names.value.replace(/ +,/g, ",");//limpiamos espacios en blanco adicionales a las comas
@@ -130,9 +132,10 @@ export default {
             names,
             loader,
             btnDisabled,
+            isLogin,
             accionPersonalizada
         }
-    }    
+    }
 }
 </script>
 

@@ -1,28 +1,31 @@
+import { auth } from "../hooks/firebase";
+import { signInWithEmailAndPassword,signOut  } from "firebase/auth";
 export default {
-    state : {
-        user : null
+    namespaced: true,
+    state: {
+        user: null
     },
-    mutations : {
-        setUser(state,payload){
+    mutations: {
+        setUser(state, payload) {
             //console.log(payload)
             state.user = payload;
         },
-        doLogout(state){
+        doLogout(state) {
             state.user = null;
         }
     },
-    actions : {
-        setUser({commit},user){
-            console.log(user)
-            // console.log(user);
-            commit('setUser',user);
+    actions: {
+        async doLogin({ commit }, { email, password }) {
+            //console.log(email, password);
+            const response = await signInWithEmailAndPassword(auth, email, password);
+            commit('setUser', response.user);
+            //console.log('ok')
         },
-        doLogout({commit}){
+        async doLogout({ commit }) {
+            await signOut(auth);
             //console.log('dologout')
             commit('doLogout');
         }
     },
-    getters : {
-
-    },
+    getters: {},
 }

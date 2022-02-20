@@ -1,9 +1,5 @@
 <template>
-    <loader-component text="loader.msg" :visibleBool="loader.pending"></loader-component>
-    <template v-if="isLogin">
-        Debe de iniciar sesión
-    </template>
-    <form v-else method="post" action="#" v-on:submit.prevent="accionPersonalizada">
+    <form method="post" action="#" v-on:submit.prevent="accionPersonalizada">
         <ul class="fields p-2">
             <li class="field mb-3">
                 <label
@@ -71,14 +67,11 @@
 </template>
 
 <script>
-import LoaderComponent from '@/components/LoaderComponent';
+
 import { computed, ref } from 'vue';
 import { useStore } from 'vuex';
 
 export default {
-    components: {
-        LoaderComponent
-    },
     emits: ['customAction'],
     props: {
         arbore: {
@@ -96,17 +89,12 @@ export default {
         //console.log(props.arbore)
         const storage = useStore();
         let names = ref('');
-        const isLogin = computed(() => {
-            return storage.state.users.user === null;
-        });
+       
         //Si del objeto arbore su propiedad names (que es un array) tiene un tamaño almacenamos en formulario su valor en string
         if (props.arbore.names.length)
             names.value = props.arbore.names.join();
 
-        //Comprobamos el estado del loader
-        const loader = computed(
-            () => storage.state.loader
-        );
+       
 
         //Si el campo specie o genus está vacío desactivamos el botón de envío de datos
         const btnDisabled = computed(
@@ -130,9 +118,7 @@ export default {
         }
         return {
             names,
-            loader,
             btnDisabled,
-            isLogin,
             accionPersonalizada
         }
     }

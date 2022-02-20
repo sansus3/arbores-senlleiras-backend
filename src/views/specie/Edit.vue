@@ -2,6 +2,7 @@
     <section class="section">
         <h2 class="section__title display-3">Edición de Especie</h2>
         <!-- Create Read Update Delete (Crud) Árboles. Formulario -->
+        <loader-component :visibleBool="visibleBool"></loader-component>
         <template v-if="specie">
             <formulario-especie
                 @custom-action="actionActualizacion"
@@ -23,12 +24,14 @@
 <script setup>
 import { useStore } from "vuex";
 import { useRoute } from "vue-router";
-import { computed,onMounted } from "vue";
+import { computed,onMounted,ref } from "vue";
 import StorageFirebase from "@/components/specie/StorageFirebase.vue"
 import FormularioEspecie from "@/components/specie/FormularioEspecie";
+import LoaderComponent from "@/components/LoaderComponent.vue";
 
 const store = useStore();
 const route = useRoute();
+const visibleBool = ref(false);
 
 //Cargamos información de la especie
 onMounted(()=>{
@@ -42,8 +45,16 @@ const specie = computed(() => {
             
 
 //Actualización de la data
-const actionActualizacion = especie => {
-    store.dispatch('updateSpecie', especie)
+const actionActualizacion = async(especie) => {
+    try {
+        visibleBool.value = true;
+        await store.dispatch('updateSpecie', especie);
+    } catch (error) {
+        console.log(error);
+    } finally {
+          visibleBool.value = false;
+    }
+    
 }
 
 </script>

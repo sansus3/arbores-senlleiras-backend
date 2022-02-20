@@ -1,6 +1,6 @@
 import { createStore } from 'vuex';
 import { auth } from '../hooks/firebase';
-import { onAuthStateChanged  } from "firebase/auth";
+import { onAuthStateChanged } from "firebase/auth";
 import users from './users';
 
 import router from '@/router';//Esta línea no está en el original. Nos permite manipular las rutas
@@ -106,52 +106,35 @@ const store = createStore({
     },
     //Actualización de la especie
     async updateSpecie({ commit }, objSpecie) {
-      try {
-        commit('updateLoader', { pending: true });
-        const url = `https://senlleiras-especies-default-rtdb.europe-west1.firebasedatabase.app/species/specie-${objSpecie.id}.json`;
-
-
-        const response = await fetch(
-          url,
-          {
-            method: 'PATCH', // Editar datos
-            headers: {
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(objSpecie)
-          }
-        );
-        commit('actualizarEspecie', objSpecie);
-        commit('updateLoader', { pending: false });
-      } catch (error) {
-        commit('updateLoader', { pending: true });
-        console.log(error)
-      }
+      const url = `https://senlleiras-especies-default-rtdb.europe-west1.firebasedatabase.app/species/specie-${objSpecie.id}.json`;
+      const response = await fetch(
+        url,
+        {
+          method: 'PATCH', // Editar datos
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(objSpecie)
+        }
+      );
+      commit('actualizarEspecie', objSpecie);
     },
     async insertSpecie({ commit }, objTree) {
-      try {
-        commit('updateLoader', { pending: true });
-        const url = `https://senlleiras-especies-default-rtdb.europe-west1.firebasedatabase.app/species/specie-${objTree.id}.json`;
-
-        const response = await fetch(
-          url,
-          {
-            method: 'PUT', // Editar datos
-            headers: {
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(objTree)
-          }
-        );
-        commit('insertarEspecie', objTree);
-        commit('updateLoader', { pending: false });
-      } catch (error) {
-        commit('updateLoader', { pending: true });
-        console.log(error)
-      }
-
+      commit('updateLoader', { pending: true });
+      const url = `https://senlleiras-especies-default-rtdb.europe-west1.firebasedatabase.app/species/specie-${objTree.id}.json`;
+      const response = await fetch(
+        url,
+        {
+          method: 'PUT', // Editar datos
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(objTree)
+        }
+      );
+      commit('insertarEspecie', objTree);
     },
-    checkAuth({commit}){
+    checkAuth({ commit }) {
       //https://firebase.google.com/docs/auth/web/manage-users?authuser=0
       try {
         onAuthStateChanged(auth, (user) => {
@@ -159,11 +142,11 @@ const store = createStore({
             // User is signed in, see docs for a list of available properties
             // https://firebase.google.com/docs/reference/js/firebase.User
             console.log(user)
-            commit('users/setUser',user);
+            commit('users/setUser', user);
             // ...
           } else {
             // User is signed out
-            commit('users/setUser',null);
+            commit('users/setUser', null);
           }
         });
       } catch (error) {

@@ -50,6 +50,7 @@ const routes = [
   {
     path: `/edit-specie-:id`,
     name: 'Edit',
+    meta: { requiresAuth: true },
     component: () => import('@/views/specie/Edit.vue')
   },
 ]
@@ -62,6 +63,7 @@ const router = createRouter({
 export default router;
 
 //https://router.vuejs.org/guide/advanced/meta.html
+//Ruts protegidas con vue/router
 router.beforeEach((to, from) => {
   if (to.meta.requiresAuth && !users.state.user) {
     // this route requires auth, check if logged in

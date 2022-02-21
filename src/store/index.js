@@ -19,7 +19,7 @@ const store = createStore({
   },
   mutations: {
     listadoEspecies(state, payload) {
-      state.species = payload;
+      state.species = Object.values(payload);
     },
     setEspecie(state, payload) {
       state.specie = state.species.find(spe => spe.id == payload);
@@ -52,15 +52,8 @@ const store = createStore({
             'Content-Type': 'application/json'
           }
         }
-      );
-      //console.log(response)
-      const dataBD = await response.json();
-      const arbores = [];
-      //console.log(dataBD)
-      for (let id in dataBD) {
-        arbores.push(dataBD[id]);
-      }
-      commit('listadoEspecies', arbores);
+      );     
+      commit('listadoEspecies', await response.json());
     },
     //rellenar el objeto specie a partir de un código dado
     setSpecie(context, id) {

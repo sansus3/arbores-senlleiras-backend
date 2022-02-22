@@ -35,20 +35,26 @@ const visibleBool = ref(false);
 
 //Cargamos información de la especie
 onMounted(()=>{
-    store.dispatch('setSpecie', route.params.id);
+    store.dispatch('species/setSpecie', route.params.id);
+    //console.log(store.state.species.specie)
+
 });     
        
 //Obtenemos la data
 const specie = computed(() => {
-    return store.state.specie;
+    store.state.species.specie.nombres = store.state.species.specie.names.join();
+    return store.state.species.specie;
 });
+
             
 
 //Actualización de la data
 const actionActualizacion = async(especie) => {
     try {
         visibleBool.value = true;
-        await store.dispatch('updateSpecie', especie);
+        delete especie.nombres;
+        //console.log(especie)
+        await store.dispatch('species/updateSpecie', especie);
     } catch (error) {
         console.log(error);
     } finally {
@@ -56,5 +62,4 @@ const actionActualizacion = async(especie) => {
     }
     
 }
-
 </script>

@@ -14,13 +14,14 @@ import FormularioEspecie from "@/components/specie/FormularioEspecie";
 import LoaderComponent from "@/components/LoaderComponent.vue";
 
 onMounted(() => {
-    store.dispatch('resetSpecie');
+    store.dispatch('species/resetSpecie');
 });
 
 const store = useStore();
 const visibleBool = ref(false);
 const specie = computed(() => {
-    return store.state.specie;
+    store.state.species.specie.nombres = '';
+    return store.state.species.specie
 });
 
 const actionAlta = async (arbol) => {
@@ -28,7 +29,7 @@ const actionAlta = async (arbol) => {
     try {
         //console.log(arbol)
         visibleBool.value = true;
-        await store.dispatch('insertSpecie', arbol);
+        await store.dispatch('species/insertSpecie', arbol);
     } catch (error) {
         console.log(error);
     } finally {

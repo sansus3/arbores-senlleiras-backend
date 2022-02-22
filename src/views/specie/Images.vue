@@ -27,13 +27,13 @@ const route = useRoute();
 
 
 onMounted(() => {
-    store.dispatch('setSpecie', route.params.id);
+    store.dispatch('species/setSpecie', route.params.id);
 });
 
 
 
 let urls = reactive([]);
-const specie = computed(() => store.state.specie);
+const specie = computed(() => store.state.species.specie);
 const getUrl = computed(() => {
     return `${route.params.id}/`;
 });

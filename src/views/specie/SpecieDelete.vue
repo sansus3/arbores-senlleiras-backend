@@ -67,10 +67,10 @@ const visibleBool = ref(false);
 
 const checked = ref(false);
 const warning = ref(false);
-const specie = computed(() => store.state.specie);
+const specie = computed(() => store.state.species.specie);
 
 onMounted(() => {
-    store.dispatch('setSpecie', route.params.id);
+    store.dispatch('species/setSpecie', route.params.id);
 });
 
 //Métodos
@@ -83,7 +83,7 @@ const onDelete = async () => {
             await deleteFile(`${route.params.id}/${response.items[i].name}`);
         }
         try {
-            await store.dispatch('deleteSpecie', route.params.id);
+            await store.dispatch('species/deleteSpecie', route.params.id);
         } catch (error) {
             console.log(error);
         } finally {

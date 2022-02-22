@@ -99,7 +99,7 @@
                             </router-link>
                             <router-link
                                 title="Eliminación de Especie"
-                                :to="{name:'DeleteSpecie',params: {id:item.id}}"
+                                :to="{ name: 'DeleteSpecie', params: { id: item.id } }"
                             >
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
@@ -128,17 +128,27 @@
 
 <script setup>
 import { useStore } from 'vuex';
-import { computed, reactive, ref } from 'vue';
+import { onMounted, computed, reactive, ref } from 'vue';
 
 //Inicializamos el store
 const store = useStore();
 const search = ref("");
+//Esperamos
+onMounted(async () => {
+    try {
+        await store.dispatch('species/getListadoEspecies');
+    } catch (error) {
+        console.log(error);
+    } finally {
+
+    }
+});
 //Cargamos propiedades del store (vuex)
 let species = computed(() => {
-    return store.state.species;
+    return store.state.species.species;
 });
-const isLogin = computed(()=>{
-    return store.state.users.user===null;
+const isLogin = computed(() => {
+    return store.state.users.user === null;
 });
 
 
@@ -150,8 +160,8 @@ const specieSort = reactive({ 'bi-sort-alpha-down': true, 'bi-sort-alpha-down-al
 const speciesFilter = computed(() => {
     return species.value.filter(item => {
         return item.genus.toLowerCase().includes(search.value.toLowerCase())
-        || item.specie.toLowerCase().includes(search.value.toLowerCase())
-        || item.names.join().toLowerCase().includes(search.value.toLowerCase())
+            || item.specie.toLowerCase().includes(search.value.toLowerCase())
+            || item.names.join().toLowerCase().includes(search.value.toLowerCase())
     })
 });
 

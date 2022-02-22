@@ -28,9 +28,9 @@ const store = useStore();
 
 
 
-const specie = computed(() => store.state.specie);
+const specie = computed(() => store.state.species.specie);
 
 onMounted(() => {
-    store.dispatch('setSpecie', route.params.id);
+    store.dispatch('species/setSpecie', route.params.id);
 });
 </script>

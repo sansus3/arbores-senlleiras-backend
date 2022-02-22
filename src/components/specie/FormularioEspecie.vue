@@ -42,7 +42,7 @@
                 <input
                     id="names"
                     name="names"
-                    v-model.trim="names"
+                    v-model.trim="arbore.nombres"
                     type="text"
                     placeholder="Nombres separados con comas"
                     class="field__control form-control"
@@ -66,62 +66,43 @@
     </form>
 </template>
 
-<script>
+<script setup>
 
-import { computed, ref } from 'vue';
-import { useStore } from 'vuex';
+import { computed, defineEmits, defineProps } from 'vue';
+const props = defineProps({
+    arbore: {
+        type: Object,
+        required: false,
 
-export default {
-    emits: ['customAction'],
-    props: {
-        arbore: {
-            type: Object,
-            required: false,
-
-        },
-        btntext: {
-            type: String,
-            required: false,
-            default: "Enviar"
-        }
     },
-    setup(props, { emit }) {
-        //console.log(props.arbore)
-        const storage = useStore();
-        let names = ref('');
-       
-        //Si del objeto arbore su propiedad names (que es un array) tiene un tamaño almacenamos en formulario su valor en string
-        if (props.arbore.names.length)
-            names.value = props.arbore.names.join();
-
-       
-
-        //Si el campo specie o genus está vacío desactivamos el botón de envío de datos
-        const btnDisabled = computed(
-            () => !props.arbore.specie.length || !props.arbore.genus.length
-        );
-
-
-        //para almacenar en la bse de datos el string del formulario names lo convertimos en array
-        const joinNames = () => {
-            names.value = names.value.replace(/ +,/g, ",");//limpiamos espacios en blanco adicionales a las comas
-            //console.log(this.names)
-            names.value = names.value.replace(/, +/g, ",");
-            //console.log(this.names.split(','))
-            props.arbore.names = names.value.split(',');
-        }
-
-        //Nuestro emit que nos sirve bien para edición como para inserción
-        const accionPersonalizada = () => {
-            joinNames();
-            emit('customAction', props.arbore)
-        }
-        return {
-            names,
-            btnDisabled,
-            accionPersonalizada
-        }
+    btntext: {
+        type: String,
+        required: false,
+        default: "Enviar"
     }
+});
+const emit = defineEmits(['customAction']);
+//Si el campo specie o genus está vacío desactivamos el botón de envío de datos
+const btnDisabled = computed(
+    () => {
+        return !props.arbore.specie.length || !props.arbore.genus.length
+    }
+);
+
+
+//para almacenar en la bse de datos el string del formulario names lo convertimos en array
+const joinNames = () => {
+    props.arbore.nombres = props.arbore.nombres.replace(/ +,/g, ",");//limpiamos espacios en blanco adicionales a las comas
+    //console.log(this.names)
+    props.arbore.nombres = props.arbore.nombres.replace(/, +/g, ",");
+    //console.log(this.names.split(','))
+    props.arbore.names = props.arbore.nombres.split(',');
+}
+
+//Nuestro emit que nos sirve bien para edición como para inserción
+const accionPersonalizada = () => {
+    joinNames();
+    emit('customAction', props.arbore)
 }
 </script>
 

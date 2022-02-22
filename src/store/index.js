@@ -4,6 +4,7 @@ import { onAuthStateChanged } from "firebase/auth";
 //Modulos del Store de Vuex
 import users from './users';
 import species from './species';
+import senlleiras from './senlleiras';
 
 
 
@@ -35,7 +36,8 @@ const store = createStore({
   },
   modules: {
     users,
-    species
+    species,
+    senlleiras
   }
 })
 

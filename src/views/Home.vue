@@ -29,9 +29,15 @@
       </div>
     </div>
     <div class="col">
-      <ul class="list-group">
-        <li class="list-group-item active" aria-current="true">Senlleiras</li>
-      </ul>
+      <span class="list-group-item list-group-item-action active" aria-current="true">Senlleiras</span>
+      <router-link 
+          class="list-group-item list-group-item-action"
+          :to="{
+            name : 'Senlleiras'
+          }"
+        >
+          Catálogo de senlleiras
+        </router-link>
     </div>
   </div>
 </template>

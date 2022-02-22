@@ -54,6 +54,37 @@
                             </li>
                         </ul>
                     </li>
+                    <li class="nav-item dropdown">
+                        <a
+                            class="nav-link dropdown-toggle"
+                            href="#"
+                            id="navbarDropdown"
+                            role="button"
+                            data-bs-toggle="dropdown"
+                            aria-expanded="false"
+                        >Senlleiras</a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li>
+                                <router-link
+                                    class="dropdown-item"
+                                    :to="{
+                                        name: 'Senlleiras'
+                                    }"
+                                >Catálogo de Senlleiras</router-link>
+                            </li>
+                            <!-- <li>
+                                <hr class="dropdown-divider" />
+                            </li>
+                            <li>
+                                <router-link
+                                    class="dropdown-item"
+                                    :to="{
+                                        name: 'Specie'
+                                    }"
+                                >Nueva especie</router-link>
+                            </li> -->
+                        </ul>
+                    </li>
                     <li class="nav-item">
                         <router-link class="nav-link" :to="{ name: 'About' }" navbar-brand>Acerca de</router-link>
                     </li>

@@ -123,24 +123,28 @@
                 </tr>
             </tbody>
         </table>
+        <loader-component :visibleBool="visibleBool"></loader-component>
     </div>
 </template>
 
 <script setup>
+import LoaderComponent from "@/components/LoaderComponent.vue";
 import { useStore } from 'vuex';
 import { onMounted, computed, reactive, ref } from 'vue';
 
 //Inicializamos el store
 const store = useStore();
 const search = ref("");
+const visibleBool = ref(false);
 //Esperamos
 onMounted(async () => {
     try {
+        visibleBool.value = true;
         await store.dispatch('species/getListadoEspecies');
     } catch (error) {
         console.log(error);
     } finally {
-
+        visibleBool.value = false;
     }
 });
 //Cargamos propiedades del store (vuex)

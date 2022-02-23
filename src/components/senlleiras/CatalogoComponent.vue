@@ -21,8 +21,8 @@
                     <td>
                         {{item.genus}} {{item.specie}}
                     </td>
-                    <td>dos</td>
-                    <td>tres</td>
+                    <td>{{item}}</td>
+                    <td><a @click.prevent="confirmToggle({id:item.id,confirm:!item.confirmado})" href="#">{{item.confirmado}}</a></td>
                     <td>cuatro</td>
                 </tr>
             </tbody>
@@ -53,7 +53,15 @@ onMounted(async () => {
 // });
 //Elementos computados
 const senlleirasFilter = computed(() => store.state.senlleiras.senlleiras);
-console.log(senlleirasFilter.value)
-const totalCatalogo = computed(() => senlleirasFilter.value ? senlleirasFilter.value.length : 0);
 
+const totalCatalogo = computed(() => senlleirasFilter.value ? senlleirasFilter.value.length : 0);
+//Métodos
+const confirmToggle = async (obj) => {
+    try {
+        await store.dispatch('senlleiras/confirmToggle',obj)
+    } catch (error) {
+        console.log(error);
+    }
+    
+}
 </script>

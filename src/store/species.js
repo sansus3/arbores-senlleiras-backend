@@ -9,6 +9,7 @@ const SPECIE = {
 }
 const state = {
     species: [], //Listado de especies para el catálogo
+    speciesFilter: [],
     specie: { ...SPECIE },
 }
 
@@ -100,11 +101,20 @@ const actions = {
         );
         commit('insertarEspecie', objTree);
     },
+    setSpeciesGenusSort({commit,state}){
+        state.speciesFilter = state.species;
+        state.speciesFilter.sort((x, y) => x.genus.localeCompare(y.genus))
+    }
+}
+
+const getters = {
+    
 }
 
 export default {
     namespaced: true,
     state,
     mutations,
-    actions
+    actions,
+    getters
 }

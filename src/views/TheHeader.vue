@@ -15,14 +15,6 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <router-link
-                            class="nav-link"
-                            :to="{
-                                name: 'Home'
-                            }"
-                        >Home</router-link>
-                    </li>
                     <li class="nav-item dropdown">
                         <a
                             class="nav-link dropdown-toggle"
@@ -39,7 +31,7 @@
                                     :to="{
                                         name: 'Catalogo'
                                     }"
-                                >Catálogo</router-link>
+                                >Catálogo de especies</router-link>
                             </li>
                             <li>
                                 <hr class="dropdown-divider" />

@@ -19,6 +19,12 @@ const routes = [
     component: () => import('../views/senlleiras/CatalogoView.vue')
   },
   {
+    path: `/edit-senlleira-:id`,
+    name: 'EditSenlleira',
+    meta: { requiresAuth: true },
+    component: () => import('@/views/senlleiras/EditView.vue')
+  },
+  {
     path: '/about',
     name: 'About',
     component: () => import('../views/About.vue')

@@ -1,6 +1,6 @@
 <template>
     <div class="table-responsive">
-        <table class="table table-striped">
+        <table class="table table-success table-striped">
             <caption>Ejemplares: {{ totalCatalogo }}</caption>
             <thead>
                 <tr>
@@ -9,22 +9,48 @@
                         <i class="bi"></i>
                     </th>
                     <th scope="col">
-                        <a @click.prevent href="#">Especie</a>
+                        <a @click.prevent href="#">Referencia</a>
                         <i class="bi"></i>
                     </th>
-                    <th scope="col">Nombres comunes</th>
-                    <th scope="col">Opciones</th>
+                    <th scope="col">Localización</th>
+                    <th scope="col" v-if="!isLogin">Opciones</th>
                 </tr>
             </thead>
             <tbody>
-                 <tr v-for="item in senlleirasFilter" :key="item.id">
-                    <td>
-                        {{item.genus}} {{item.specie}}
-                    </td>
-                    <td>{{item}}</td>
-                    <td><a @click.prevent="confirmToggle({id:item.id,confirm:!item.confirmado})" href="#">{{item.confirmado}}</a></td>
-                    <td>cuatro</td>
-                </tr>
+                <template v-if="!isLogin">
+                    <tr v-for="item in senlleirasFilter" :key="item.id">
+                        <td>{{ item.genus }} {{ item.specie }}</td>
+                        <td>{{ item.nombreArbol }}</td>
+                        <td>
+                            Latitud: {{ item.location.latitude }}
+                            <br />
+                            Longitud: {{ item.location.longitude }}
+                        </td>
+                        <td>
+                            <a
+                                @click.prevent="confirmToggle({ id: item.id, confirm: !item.confirmado })"
+                                href="#"
+                            >
+                                <i
+                                    class="bi"
+                                    :class="{ 'bi-eye': item.confirmado, 'bi-eye-slash': !item.confirmado }"
+                                ></i>
+                                {{item.confirmado}}
+                            </a>
+                        </td>
+                    </tr>
+                </template>
+                <template v-else>
+                    <tr v-for="item in senlleirasFilter" :key="item.id">
+                        <td>{{ item.genus }} {{ item.specie }}</td>
+                        <td>{{ item.nombreArbol }}</td>
+                        <td>
+                            Latitud: {{ item.location.latitude }}
+                            <br />
+                            Longitud: {{ item.location.longitude }}
+                        </td>                        
+                    </tr>
+                </template>
             </tbody>
         </table>
     </div>
@@ -34,6 +60,10 @@
 import { computed, onMounted } from 'vue';
 import { useStore } from 'vuex';
 const store = useStore();
+const isLogin = computed(() => {
+    return store.state.users.user === null;
+});
+
 onMounted(async () => {
     try {
         store.dispatch('senlleiras/listSenlleiras');
@@ -43,14 +73,7 @@ onMounted(async () => {
 
     }
 });
-//Datos filtrados
-// const senlleirasFilter = computed(() => {
-//     return species.value.filter(item => {
-//         return item.genus.toLowerCase().includes(search.value.toLowerCase())
-//             || item.specie.toLowerCase().includes(search.value.toLowerCase())
-//             || item.names.join().toLowerCase().includes(search.value.toLowerCase())
-//     })
-// });
+
 //Elementos computados
 const senlleirasFilter = computed(() => store.state.senlleiras.senlleiras);
 
@@ -58,10 +81,10 @@ const totalCatalogo = computed(() => senlleirasFilter.value ? senlleirasFilter.v
 //Métodos
 const confirmToggle = async (obj) => {
     try {
-        await store.dispatch('senlleiras/confirmToggle',obj)
+        await store.dispatch('senlleiras/confirmToggle', obj)
     } catch (error) {
         console.log(error);
     }
-    
+
 }
 </script>

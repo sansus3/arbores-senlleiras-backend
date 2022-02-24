@@ -1,6 +1,6 @@
 <template>
-    <section class="geolocation">
-        <div class="geolocation__field">
+    <section class="geolocation row">
+        <div class="geolocation__field col">
             <label for="latitud" class="form-label">Latitud</label>
             <input
                 id="latitud"
@@ -12,7 +12,7 @@
             />
         </div>
 
-        <div class="geolocation__field">
+        <div class="geolocation__field col">
             <label for="longitude" class="form-label">Longitud</label>
             <input
                 id="longitude"
@@ -23,19 +23,27 @@
                 class="field__control form-control"
             />
         </div>
-        <input type="button" @click="getGeolocation" class="btn btn-secondary" value="Geolocalizar">
+        <div class="col-auto">
+            <div class="form-label">&nbsp</div>
+            <input
+                type="button"
+                @click="getGeolocation"
+                class="btn btn-success d-block"
+                value="Geolocalizar"
+            />
+        </div>
     </section>
 </template>
 
 <script setup>
-import {ref} from "vue";
+import { ref } from "vue";
 //let geolocationBool = ref(false);
 let errorStr = ref("");
 
 const props = defineProps({
     location: {
         type: Object,
-        default: () => ({latitude: null,longitude: null}),
+        default: () => ({ latitude: null, longitude: null }),
         required: true
     }
 });

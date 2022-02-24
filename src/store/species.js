@@ -51,7 +51,9 @@ const actions = {
                 }
             }
         );
-        commit('listadoEspecies', await response.json());
+        const data = await response.json();
+        if(data)
+            commit('listadoEspecies', data);
     },
     //rellenar el objeto specie a partir de un código dado
     setSpecie(context, id) {

@@ -1,16 +1,15 @@
 <template>
     <div class="table-responsive">
+        <!-- {{senlleirasFilter}} -->
         <table class="table table-success table-striped">
             <caption>Ejemplares: {{ totalCatalogo }}</caption>
             <thead>
                 <tr>
                     <th scope="col">
-                        <a @click.prevent href="#">Nombre Científico</a>
-                        <i class="bi"></i>
+                        Nombre
                     </th>
                     <th scope="col">
-                        <a @click.prevent href="#">Referencia</a>
-                        <i class="bi"></i>
+                       Correo
                     </th>
                     <th scope="col">Localización</th>
                     <th scope="col" v-if="!isLogin">Opciones</th>
@@ -19,8 +18,8 @@
             <tbody>
                 <template v-if="!isLogin">
                     <tr v-for="item in senlleirasFilter" :key="item.id">
-                        <td>{{ item.genus }} {{ item.specie }}</td>
-                        <td>{{ item.nombreArbol }}</td>
+                        <td>{{ item.nombreReferencia }}, {{item.nombreComun}} ({{item.genus}} {{ item.specie }})</td>
+                        <td>{{item.email}}</td>
                         <td>
                             Latitud: {{ item.location.latitude }}
                             <br />
@@ -57,8 +56,8 @@
                 </template>
                 <template v-else>
                     <tr v-for="item in senlleirasFilter" :key="item.id">
-                        <td>{{ item.genus }} {{ item.specie }}</td>
-                        <td>{{ item.nombreArbol }}</td>
+                        <td>{{ item.nombreReferencia }}, {{item.nombreComun}} ({{item.genus}} {{ item.specie }})</td>
+                        <td>{{item.email}}</td>
                         <td>
                             Latitud: {{ item.location.latitude }}
                             <br />
@@ -91,7 +90,7 @@ onMounted(async () => {
         loading.value = true;
         store.dispatch('senlleiras/listSenlleiras');
     } catch (error) {
-        console.log(error);
+        console.log('Error CataloComponent.vue',error);
     } finally {
         loading.value = false;
     }

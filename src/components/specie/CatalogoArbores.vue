@@ -22,25 +22,25 @@
                         <i class="bi" :class="specieSort"></i>
                     </th>
                     <th scope="col">Nombres comunes</th>
-                    <th scope="col">Opciones</th>
+                    <th v-if="!isLogin" scope="col">Opciones</th>
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="item in speciesFilter" :key="item.id">
-                    <td>
-                        <router-link
-                            :to="{
-                                name: 'Arbore',
-                                params: {
-                                    id: item.id
-                                }
-                            }"
-                        >{{ item.genus }}</router-link>
-                    </td>
-                    <td>{{ item.specie }}</td>
-                    <td>{{ item.names.join() }}</td>
-                    <td>
-                        <template v-if="!isLogin">
+                <template v-if="!isLogin">
+                    <tr v-for="item in speciesFilter" :key="item.id">
+                        <td>
+                            <router-link
+                                :to="{
+                                    name: 'Arbore',
+                                    params: {
+                                        id: item.id
+                                    }
+                                }"
+                            >{{ item.genus }}</router-link>
+                        </td>
+                        <td>{{ item.specie }}</td>
+                        <td>{{ item.names.join() }}</td>
+                        <td>
                             <router-link
                                 title="Subida de imágenes"
                                 class="text-decoration-none"
@@ -118,9 +118,25 @@
                                     />
                                 </svg>
                             </router-link>
-                        </template>
-                    </td>
-                </tr>
+                        </td>
+                    </tr>
+                </template>
+                <template v-else>
+                    <tr v-for="item in speciesFilter" :key="item.id">
+                        <td>
+                            <router-link
+                                :to="{
+                                    name: 'Arbore',
+                                    params: {
+                                        id: item.id
+                                    }
+                                }"
+                            >{{ item.genus }}</router-link>
+                        </td>
+                        <td>{{ item.specie }}</td>
+                        <td>{{ item.names.join() }}</td>
+                    </tr>
+                </template>
             </tbody>
         </table>
         <loader-component :visibleBool="visibleBool"></loader-component>

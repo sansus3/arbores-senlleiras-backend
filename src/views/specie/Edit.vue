@@ -1,6 +1,6 @@
 <template>
-    <section class="section">
-        <h2 class="section__title display-3">Edición de Especie</h2>
+    <section class="section container mt-3">
+        <h2 class="section__title display-6">Edición de Especie</h2>
         <!-- Create Read Update Delete (Crud) Árboles. Formulario -->
         <loader-component :visibleBool="visibleBool"></loader-component>
         <template v-if="specie">

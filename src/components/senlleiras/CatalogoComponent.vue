@@ -49,7 +49,16 @@
                                     tag="button"
                                     class="btn btn-sm btn-info ms-2"
                                 >Editar</router-link>
-                                <button type="button" class="btn btn-sm btn-danger ms-2">Eliminar</button>
+                                <router-link
+                                    :to="{
+                                        name: 'DeleteSenlleira',
+                                        params: {
+                                            id: item.id
+                                        }
+                                    }"
+                                    tag="button"
+                                    class="btn btn-sm btn-danger ms-2"
+                                >Eliminar</router-link>
                             </div>
                         </td>
                     </tr>

@@ -25,6 +25,12 @@ const routes = [
     component: () => import('@/views/senlleiras/EditView.vue')
   },
   {
+    path: `/delete-senlleira-:id`,
+    name: 'DeleteSenlleira',
+    meta: { requiresAuth: true },
+    component: () => import('@/views/senlleiras/DeleteView.vue')
+  },
+  {
     path: '/about',
     name: 'About',
     component: () => import('../views/About.vue')

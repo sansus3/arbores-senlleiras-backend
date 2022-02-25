@@ -1,5 +1,5 @@
 <template>
-    <article v-if="specie" class="bd-cheatsheet container-fluid bg-body">
+    <article v-if="specie" class="bd-cheatsheet container bg-body">
         <header>
             <h2 class="fw-bold pt-3 pt-xl-5 pb-2 pb-xl-3">{{ specie.genus }} {{ specie.specie }}</h2>
         </header>

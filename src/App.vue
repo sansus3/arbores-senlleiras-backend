@@ -7,7 +7,6 @@
 
 <script setup>
 import TheHeader from './views/TheHeader.vue';
-import { onMounted } from 'vue';
 </script>
 
 <style lang="scss">

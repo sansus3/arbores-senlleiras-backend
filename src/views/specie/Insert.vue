@@ -1,6 +1,6 @@
 <template>
-    <section class="section">
-        <h2 class="section__title display-3">Nueva Especie</h2>
+    <section class="section container mt-3">
+        <h2 class="section__title display-6">Nueva Especie</h2>
         <loader-component :visibleBool="visibleBool"></loader-component>
         <!-- Create Read Update Delete (Crud) Árboles. Formulario -->
         <formulario-especie @custom-action="actionAlta" :arbore="specie"></formulario-especie>

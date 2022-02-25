@@ -4,7 +4,7 @@
             <h2 class="fw-bold pt-3 pt-xl-3 pb-2 pb-xl-3">Eliminación de senlleira</h2>
         </header>
         <section class="bd-heading sticky-xl-top align-self-start mt-3 mb-3 mt-xl-0 mb-xl-2">
-            <h3>{{ senlleira.nombreReferencia }}</h3>
+            <h3>{{senlleira.id}} - {{ senlleira.nombreReferencia }}</h3>
             <ul>
                 <li>{{ senlleira.genus }} {{ senlleira.specie }}</li>
                 <li>{{ senlleira.nombreComun }}</li>
@@ -48,5 +48,6 @@ onMounted(() => {
 
 //Carga de varibles
 const senlleira = computed(() => store.state.senlleiras.senlleira);
-provide('senlleira', senlleira.value);//Lo almacenamos para la utilización en los componentes hijos
+
+provide('senlleira', senlleira);//Lo almacenamos para la utilización en los componentes hijos
 </script>

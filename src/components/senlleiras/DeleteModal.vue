@@ -8,7 +8,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content rounded-6 shadow">
                 <div class="modal-header border-bottom-0">
-                    <h5 class="modal-title">{{senlleira.nombreReferencia}}</h5>
+                    <h5 class="modal-title">{{senlleira.id}}-{{ senlleira.nombreReferencia }}</h5>
                 </div>
                 <div class="modal-body py-0">
                     <p>Va a proceder a eliminar esta especie y todo su contenido. Incluídas las imágenes. Tómase su tiempo antes de realizar esta acción.</p>
@@ -18,7 +18,9 @@
                         type="button"
                         class="btn btn-lg btn-danger w-100 mx-0 mb-2"
                         @click="onDelete"
-                    >Eliminar especie</button>
+                    >
+                    <span v-if="loaderSave" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                    Eliminar especie</button>
                     <div
                         v-if="warning"
                         class="alert alert-warning"
@@ -45,10 +47,42 @@
 
 <script setup>
 //Dependencias
-import { inject,ref } from 'vue';
-//Variables
+import { getAllFiles, deleteFile } from '@/hooks/files.hook';
+import { inject, ref } from 'vue';
+import { useStore } from 'vuex';
+//Cargamos Vuex
+const store = useStore();
+//Variables 
 const senlleira = inject('senlleira'); //Cargamos el objeto senlleira
 const checked = ref(false); //Checkbox de html para verificar que se quiere eliminar esta senlleira realmente.
 const warning = ref(false); //Mensaje de error que se mostrará en caso de no marcarse la casilla de verificación.
+const loaderSave = ref(false);//En espera a guardar el formulario
+
+
+//Métodos
+const onDelete = async () => {
+    
+    if (checked.value) {
+        loaderSave.value=true;
+        try {
+            const { response } = await getAllFiles(senlleira.value.id);
+            for (let i = 0, tam = response.items.length; i < tam; i++) {
+                await deleteFile(`${senlleira.value.id}/${response.items[i].name}`);
+            }
+            await store.dispatch('senlleiras/deleteSenlleira',senlleira.value);
+        } catch (error) {
+            console.log(error);
+        } finally {
+            loaderSave.value=false;
+        }
+        
+    } else {
+        warning.value = true;
+        setTimeout(() => {
+            warning.value = false;
+        },
+            3000);
+    }
+}
 </script>
 

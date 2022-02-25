@@ -13,10 +13,11 @@
                 />
             </li>
              <li class="mb-3">
-                <button class="btn btn-dark" :disabled="btnDisabled">{{ btnText }}</button>
+                <button class="btn btn-dark" :disabled="btnDisabled">
+                 <span v-if="visible" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                {{ btnText }}</button>
             </li>
         </ul>
-        <loader-component :visibleBool="visible"></loader-component>
         <div v-if="errorStr" class="alert alert-danger" role="alert">{{ errorStr }}</div>
     </form>
     
@@ -26,12 +27,8 @@
 import { reactive,ref as referencia,computed } from "vue";
 import { storage } from "@/hooks/firebase";
 import { ref,uploadBytes  } from "firebase/storage";
-import LoaderComponent from './LoaderComponent'
 
 export default {
-    components: {
-        LoaderComponent
-    },
     props: {
         urlBase: {
             type: String,

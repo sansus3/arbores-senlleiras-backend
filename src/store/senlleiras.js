@@ -1,17 +1,20 @@
+//Dependencia router/index.js
+import router from '@/router';
 //Ruta en firebase del proyecto
 const SENLLEIRAS = 'https://arbores-senlleiras-b52f1-default-rtdb.europe-west1.firebasedatabase.app/';
 
 //Objecto
 const SENLLEIRA = {
     idSpecie: '',
-    nombreComun:'',
-    nombreReferencia:'',
+    id: '',
+    nombreComun: '',
+    nombreReferencia: '',
     genus: '',
     specie: '',
     provincia: 'A Coruña',
     lugar: '',
     concello: '',
-    location: { latitude: '', longitude: ''},
+    location: { latitude: '', longitude: '' },
     nombrePila: '',
     apellidos: '',
     comentarios: '',
@@ -21,29 +24,33 @@ const SENLLEIRA = {
 
 const state = {
     senlleiras: [],
-    senlleira: {...SENLLEIRA},
+    senlleira: { ...SENLLEIRA },
 }
 
 const mutations = {
-    listSenlleiras(state,payload){
+    listSenlleiras(state, payload) {
         state.senlleiras = payload;
     },
-    confirmToggle(state,payload){
-        const index = state.senlleiras.findIndex(el=>el.id===payload.id);
+    confirmToggle(state, payload) {
+        const index = state.senlleiras.findIndex(el => el.id === payload.id);
         state.senlleiras[index].confirmado = payload.confirm;
     },
-    setSenlleira(state,payload){
+    setSenlleira(state, payload) {
         // state.senlleira = state.senlleiras.reduce((acumulador,actual)=>actual.id===payload?actual:acumulador,{});
-        const senlleira = state.senlleiras.find(element=>element.id===payload);
-        const clone = {...SENLLEIRA};
+        const senlleira = state.senlleiras.find(element => element.id === payload);
+        const clone = { ...SENLLEIRA };
         //console.log(clone)
-        for(let key in senlleira){
-            clone[key]=senlleira[key];
+        for (let key in senlleira) {
+            clone[key] = senlleira[key];
         }
         state.senlleira = clone;
     },
-    updateSenlleira(state,payload){
+    updateSenlleira(state, payload) {
         state.specie = payload;
+    },
+    deleteSenlleira(state, payload) {
+        state.senlleiras = state.senlleiras.filter(el => el.id !== payload);
+        router.push('/Senlleiras');//router es importado
     }
 }
 
@@ -57,22 +64,22 @@ const actions = {
                 }
             });
         const data = await response.json();
-        if(data)
+        if (data)
             context.commit('listSenlleiras', Object.values(data));
     },
-    async confirmToggle({commit},{id,confirm}){
+    async confirmToggle({ commit }, { id, confirm }) {
         const response = await fetch(`${SENLLEIRAS}senlleiras/${id}.json`,
-        {
-            method: 'PATCH',
-            headers: {
-                'Cotent-Type' : 'application/json'
-            },
-            body :
-                JSON.stringify({'confirmado':confirm})
-        });
-        commit('confirmToggle',{id,confirm});
+            {
+                method: 'PATCH',
+                headers: {
+                    'Cotent-Type': 'application/json'
+                },
+                body:
+                    JSON.stringify({ 'confirmado': confirm })
+            });
+        commit('confirmToggle', { id, confirm });
     },
-    async updateSenlleira({commit},obj){
+    async updateSenlleira({ commit }, obj) {
         await fetch(
             `${SENLLEIRAS}senlleiras/${obj.id}.json`,
             {
@@ -85,8 +92,21 @@ const actions = {
         );
         commit('updateSenlleira', obj);
     },
-    setSenlleira({commit},id){
-        commit('setSenlleira',id);
+    async deleteSenlleira({ commit }, { id }) {
+        if (id) {
+            await fetch(
+                `${SENLLEIRAS}senlleiras/${id}.json`,
+                {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                })
+            commit('deleteSenlleira', id);
+        }
+    },
+    setSenlleira({ commit }, id) {
+        commit('setSenlleira', id);
     }
 }
 

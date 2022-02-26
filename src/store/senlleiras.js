@@ -8,6 +8,7 @@ const SENLLEIRA = {
     idSpecie: '',
     id: '',
     nombreComun: '',
+    confirmado: false,
     nombreReferencia: '',
     genus: '',
     specie: '',
@@ -46,7 +47,7 @@ const mutations = {
         state.senlleira = clone;
     },
     updateSenlleira(state, payload) {
-        state.specie = payload;
+        state.senlleira = payload;
     },
     deleteSenlleira(state, payload) {
         state.senlleiras = state.senlleiras.filter(el => el.id !== payload);

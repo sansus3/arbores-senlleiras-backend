@@ -30,6 +30,7 @@
                                 <button
                                     @click="confirmToggle({ id: item.id, confirm: !item.confirmado })"
                                     type="button"
+                                    style="width: 8em !important;"
                                     class="btn btn-sm"
                                     :class="{
                                         'btn-primary': item.confirmado,
@@ -37,7 +38,7 @@
                                         'text-decoration-line-through': !item.confirmado
                                     }"
                                 >
-                                <span v-if="confirmadoBool" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                <span v-if="confirmadoBool && idTmp===item.id" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                                 {{ confirmado(item.confirmado) }}</button>
                                 <router-link
                                     :to="{
@@ -46,7 +47,6 @@
                                             id: item.id
                                         }
                                     }"
-                                    tag="button"
                                     class="btn btn-sm btn-info ms-2"
                                 >Editar</router-link>
                                 <router-link
@@ -56,7 +56,6 @@
                                             id: item.id
                                         }
                                     }"
-                                    tag="button"
                                     class="btn btn-sm btn-danger ms-2"
                                 >Eliminar</router-link>
                             </div>
@@ -89,6 +88,7 @@ import { computed, onMounted, ref } from 'vue';
 import { useStore } from 'vuex';
 const store = useStore();
 const loading = ref(false);
+const idTmp = ref('');
 const confirmadoBool = ref(false);
 const isLogin = computed(() => {
     return store.state.users.user === null;
@@ -114,6 +114,7 @@ const confirmado = bool => !bool ? 'Sin confirmar' : 'Confirmado';
 const confirmToggle = async (obj) => {
     try {
         confirmadoBool.value=true;
+        idTmp.value = obj.id;
         await store.dispatch('senlleiras/confirmToggle', obj)
     } catch (error) {
         console.log(error);

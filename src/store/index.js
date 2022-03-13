@@ -9,7 +9,10 @@ import senlleiras from './senlleiras';
 
 
 const store = createStore({
-  state: {},
+  state: {
+    //realtimeDatabase : 'https://senlleiras-especies-default-rtdb.europe-west1.firebasedatabase.app/',
+    realtimeDatabase : 'https://altas-senlleiras-default-rtdb.europe-west1.firebasedatabase.app/',//demo
+  },
   mutations: {},
   actions: {  
     //Chequeamos si hay un usuario en firebase

@@ -1,7 +1,5 @@
 //Dependencia router/index.js
 import router from '@/router';
-//Ruta en firebase del proyecto
-const SENLLEIRAS = 'https://senlleiras-especies-default-rtdb.europe-west1.firebasedatabase.app/';
 
 //Objecto
 const SENLLEIRA = {
@@ -12,6 +10,9 @@ const SENLLEIRA = {
     nombreReferencia: '',
     genus: '',
     specie: '',
+    altura: '', //String por si meten medidas como "20-30 cm"
+    diametro: '', //String por si meten medidas
+    edadEstimada: 0, //Edad estimada de la senlleira
     provincia: 'A Coruña',
     lugar: '',
     concello: '',
@@ -57,7 +58,7 @@ const mutations = {
 
 const actions = {
     async listSenlleiras(context) {
-        const response = await fetch(`${SENLLEIRAS}senlleiras.json`,
+        const response = await fetch(`${context.rootState.realtimeDatabase}senlleiras.json`,
             {
                 method: 'GET',
                 headers: {
@@ -68,8 +69,8 @@ const actions = {
         if (data)
             context.commit('listSenlleiras', Object.values(data));
     },
-    async confirmToggle({ commit }, { id, confirm }) {
-        const response = await fetch(`${SENLLEIRAS}senlleiras/${id}.json`,
+    async confirmToggle({ commit,rootState }, { id, confirm }) {
+        const response = await fetch(`${rootState.realtimeDatabase}senlleiras/${id}.json`,
             {
                 method: 'PATCH',
                 headers: {
@@ -80,9 +81,9 @@ const actions = {
             });
         commit('confirmToggle', { id, confirm });
     },
-    async updateSenlleira({ commit }, obj) {
+    async updateSenlleira({ commit,rootState }, obj) {
         await fetch(
-            `${SENLLEIRAS}senlleiras/${obj.id}.json`,
+            `${rootState.realtimeDatabase}senlleiras/${obj.id}.json`,
             {
                 method: 'PATCH', // Editar datos
                 headers: {
@@ -93,10 +94,10 @@ const actions = {
         );
         commit('updateSenlleira', obj);
     },
-    async deleteSenlleira({ commit }, { id }) {
+    async deleteSenlleira({ commit,rootState }, { id }) {
         if (id) {
             await fetch(
-                `${SENLLEIRAS}senlleiras/${id}.json`,
+                `${rootState.realtimeDatabase}senlleiras/${id}.json`,
                 {
                     method: 'DELETE',
                     headers: {

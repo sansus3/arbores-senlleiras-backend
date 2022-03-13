@@ -48,6 +48,93 @@
                     class="field__control form-control"
                 />
             </li>
+            <!-- Altura / diametro /distribucion -->
+            <li class="field mb-3 row">
+                <div class="col-auto">
+                    <label for="altura" class="form-label">Altura</label>
+                    <input
+                        id="altura"
+                        name="altura"
+                        v-model.trim="arbore.altura"
+                        type="text"
+                        placeholder="Entre 10 y 20 metros"
+                        class="field__control form-control"
+                    />
+                </div>
+                <div class="col-auto">
+                    <label for="diametro" class="form-label">Diámetro</label>
+                    <input
+                        id="diametro"
+                        name="diametro"
+                        v-model.trim="arbore.diametro"
+                        type="text"
+                        placeholder="Sobre 1.5 metros"
+                        class="field__control form-control"
+                    />
+                </div>
+                <div class="col">
+                    <label for="distribucion" class="form-label">Distribución xeográfica</label>
+                    <input
+                        id="distribucion"
+                        name="distribucion"
+                        v-model.trim="arbore.distribucion"
+                        type="text"
+                        placeholder="Europa occidental"
+                        class="field__control form-control"
+                    />
+                </div>
+            </li>
+            <!-- Datos adicionales -->
+            <li class="field mb-3 row">
+                <div class="col">
+                    <div class="form-check">
+                        <input
+                            class="form-check-input"
+                            type="radio"
+                            name="hojaPerenne"
+                            :value="false"
+                            id="si"
+                            v-model="arbore.hojaPerenne"
+                        />
+                        <label class="form-check-label" for="si">Hoja caduca</label>
+                    </div>
+                    <div class="form-check">
+                        <input
+                            class="form-check-input"
+                            type="radio"
+                            name="hojaPerenne"
+                            :value="true"
+                            id="no"
+                            v-model="arbore.hojaPerenne"
+                        />
+                        <label class="form-check-label" for="flexRadioDefault2">Hoja perenne</label>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-check">
+                        <input
+                            class="form-check-input"
+                            type="radio"
+                            name="ginnospermas"
+                            :value="false"
+                            id="si"
+                            v-model="arbore.ginnospermas"
+                        />
+                        <label class="form-check-label" for="si">Angiospermas</label>
+                    </div>
+                    <div class="form-check">
+                        <input
+                            class="form-check-input"
+                            type="radio"
+                            name="ginnospermas"
+                            :value="true"
+                            id="no"
+                            v-model="arbore.ginnospermas"
+                        />
+                        <label class="form-check-label" for="flexRadioDefault2">Ginnospermas</label>
+                    </div>
+                </div>
+            </li>
 
             <li class="field mb-3">
                 <label for="descriptio" class="form-label">Descripción</label>

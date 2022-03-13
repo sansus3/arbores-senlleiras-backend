@@ -1,10 +1,14 @@
 import router from '@/router';//Esta línea no está en el original. Nos permite manipular las rutas
-const URL = 'https://senlleiras-especies-default-rtdb.europe-west1.firebasedatabase.app/';
 const SPECIE = {
     id: null,
     specie: '',
     genus: '',
     names: [],
+    hojaPerenne: false, //false hoja caduca
+    ginnospermas: false,//false angiospermas
+    altura: '', //String por si meten medidas como "20-30 cm"
+    diametro: '', //String por si meten medidas,
+    distribucion:'',//distribución geográfica
     descriptio: ''
 }
 const state = {
@@ -41,9 +45,9 @@ const mutations = {
 
 const actions = {
     //Listado de especies
-    async getListadoEspecies({ commit }) {        
+    async getListadoEspecies({ commit,rootState }) {        
         const response = await fetch(
-            `${URL}species.json`,
+            `${rootState.realtimeDatabase}species.json`,
             {
                 method: 'GET', // Lectura de datos
                 headers: {
@@ -60,9 +64,9 @@ const actions = {
         context.commit('setEspecie', id);
     },
     //Actualización de la especie
-    async updateSpecie({ commit }, objSpecie) {
+    async updateSpecie({ commit,rootState }, objSpecie) {
         await fetch(
-            `${URL}species/specie-${objSpecie.id}.json`,
+            `${rootState.realtimeDatabase}species/specie-${objSpecie.id}.json`,
             {
                 method: 'PATCH', // Editar datos
                 headers: {
@@ -74,9 +78,9 @@ const actions = {
         commit('actualizarEspecie', objSpecie);
     },
     //Eleminación de especie
-    async deleteSpecie({ commit }, id) {
+    async deleteSpecie({ commit,rootState }, id) {
         await fetch( 
-            `${URL}species/specie-${id}.json`,
+            `${rootState.realtimeDatabase}species/specie-${id}.json`,
             {
             method: 'DELETE',
             headers: {
@@ -90,9 +94,9 @@ const actions = {
         commit('resetSpecie');
     },
     //Insertar una nueva especie
-    async insertSpecie({ commit }, objTree) {
+    async insertSpecie({ commit,rootState }, objTree) {
         await fetch(
-            `${URL}species/specie-${objTree.id}.json`,
+            `${rootState.realtimeDatabase}species/specie-${objTree.id}.json`,
             {
                 method: 'PUT', // Editar datos
                 headers: {

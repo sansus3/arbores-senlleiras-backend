@@ -6,10 +6,10 @@
             @submit.prevent="submit"
         >
             <header>
-                <h2 class="display-6">Senlleira</h2>
+                <h2 class="display-6">{{form.nombreReferencia}}</h2>
             </header>
             <fieldset class="card p-3 mb-3">
-                <legend>Nombre de la planta</legend>
+                <legend>Datos de la planta</legend>
                 <ul class="fields row g-2">
                     <li class="field col-auto">
                         <label class="form-label" for="especie">
@@ -63,6 +63,42 @@
                             v-model.trim="form.nombreReferencia"
                             name="nombrearbol"
                             id="nombrearbol"
+                        />
+                    </li>
+                </ul>
+                <!-- Altura / diametro / Edad -->
+                <ul class="field row g-2">
+                    <li class="field col-auto">
+                        <label for="altura" class="form-label">Altura</label>
+                        <input
+                            id="altura"
+                            name="altura"
+                            v-model.trim="form.altura"
+                            type="text"
+                            placeholder="Entre 10 y 20 metros"
+                            class="field__control form-control"
+                        />
+                    </li>
+                    <li class="field col-auto">
+                        <label for="diametro" class="form-label">Diametro</label>
+                        <input
+                            id="diametro"
+                            name="diametro"
+                            v-model.trim="form.diametro"
+                            type="text"
+                            placeholder="Sobre 1.5 metros"
+                            class="field__control form-control"
+                        />
+                    </li>
+                    <li class="field col-auto">
+                        <label for="edadEstimada" class="form-label">Edad estimada en años</label>
+                        <input
+                            id="edadEstimada"
+                            name="edadEstimada"
+                            v-model.number="form.edadEstimada"
+                            type="number"
+                            placeholder="20"
+                            class="field__control form-control"
                         />
                     </li>
                 </ul>

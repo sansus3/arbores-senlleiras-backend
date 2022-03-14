@@ -5,7 +5,10 @@ const SPECIE = {
     genus: '',
     names: [],
     hojaPerenne: false, //false hoja caduca
+    descHoja: '',
     ginnospermas: false,//false angiospermas
+    descFlorFruto: '',
+    usosAprovechamiento: '',
     altura: '', //String por si meten medidas como "20-30 cm"
     diametro: '', //String por si meten medidas,
     distribucion:'',//distribución geográfica

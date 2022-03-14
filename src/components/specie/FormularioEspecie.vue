@@ -6,13 +6,13 @@
                     data-title="⚠ Campo obligatorio"
                     for="genus"
                     class="form-label control-label"
-                >Género</label>
+                >Xénero</label>
                 <input
                     id="genus"
                     name="genus"
                     v-model.trim="arbore.genus"
                     type="text"
-                    placeholder="Género aquí"
+                    placeholder="Xénero aquí"
                     class="field__control form-control"
                     pattern=".{3,}"
                     title="Mínimo 3 caracteres"
@@ -38,13 +38,13 @@
             </li>
 
             <li class="field mb-3">
-                <label for="names" class="form-label">Nombres</label>
+                <label for="names" class="form-label">Nomes</label>
                 <input
                     id="names"
                     name="names"
                     v-model.trim="arbore.nombres"
                     type="text"
-                    placeholder="Nombres separados con comas"
+                    placeholder="Nomes separados con comas"
                     class="field__control form-control"
                 />
             </li>
@@ -96,7 +96,7 @@
                             id="si"
                             v-model="arbore.hojaPerenne"
                         />
-                        <label class="form-check-label" for="si">Hoja caduca</label>
+                        <label class="form-check-label" for="si">Folla caduca</label>
                     </div>
                     <div class="form-check">
                         <input
@@ -107,7 +107,7 @@
                             id="no"
                             v-model="arbore.hojaPerenne"
                         />
-                        <label class="form-check-label" for="flexRadioDefault2">Hoja perenne</label>
+                        <label class="form-check-label" for="flexRadioDefault2">Folla perenne</label>
                     </div>
                 </div>
                 <div class="col">
@@ -136,8 +136,39 @@
                 </div>
             </li>
 
+             <li class="field mb-3">
+                <label for="descHoja" class="form-label">Descripción da Folla</label>
+                <textarea
+                    v-model.trim="arbore.descHoja"
+                    class="form-control"
+                    id="descHoja"
+                    rows="3"
+                ></textarea>
+            </li>
+
+             <li class="field mb-3">
+                <label for="descFlorFruto" class="form-label">Descripción da flor/froito</label>
+                <textarea
+                    v-model.trim="arbore.descFlorFruto"
+                    class="form-control"
+                    id="descFlorFruto"
+                    rows="3"
+                ></textarea>
+            </li>
+
             <li class="field mb-3">
-                <label for="descriptio" class="form-label">Descripción</label>
+                <label for="usosAprovechamiento" class="form-label">Usos e aproveitamento</label>
+                <textarea
+                    v-model.trim="arbore.usosAprovechamiento"
+                    class="form-control"
+                    id="usosAprovechamiento"
+                    rows="3"
+                ></textarea>
+            </li>
+
+
+            <li class="field mb-3">
+                <label for="descriptio" class="form-label">Outros datos</label>
                 <textarea
                     v-model.trim="arbore.descriptio"
                     class="form-control"

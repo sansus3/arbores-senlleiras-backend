@@ -54,7 +54,7 @@
                         />
                     </li>
                     <li class="field col">
-                        <label class="form-label" for="nombrearbol">Nombre de referencia</label>
+                        <label class="form-label" for="nombrearbol">Nome de referencia <span class="text-danger">(Obligatorio)</span></label>
                         <input
                             class="form-control"
                             placeholder="Su nombre aquí"
@@ -177,7 +177,7 @@
                         aria-describedby="correo"
                         v-model.trim="form.email"
                     />
-                    <span class="input-group-text" id="correo">Correo electrónico</span>
+                    <span class="input-group-text" id="correo">Correo electrónico&nbsp;<span class="text-danger">(Obligatorio)</span></span>
                 </div>
             </fieldset>
             <fieldset class="card p-3 mb-3">
@@ -269,10 +269,9 @@ const obtenerNombreComun = e => {
  * Cargado todas las especies del selector
  */
 const btnDisabled = computed(() => {
-    const expReg = /^-?\d+\.\d+$/;
     const expRegEmail = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
     //console.log(expReg.test(form.value.location.latitude))
-    return !expReg.test(form.value.location.latitude) || !expReg.test(form.value.location.longitude) || !expRegEmail.test(form.value.email) || !form.value.nombreReferencia.length || !form.value.email.length || loaderSpecies.value;// || !images.length
+    return !expRegEmail.test(form.value.email) || !form.value.nombreReferencia.length || !form.value.email.length || loaderSpecies.value;// || !images.length
 });
 /**
  * Validaremos el tamaño de imágenes por si alguno se pasa y si todo ok subimos

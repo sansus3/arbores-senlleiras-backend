@@ -21,6 +21,11 @@ const SENLLEIRA = {
     apellidos: '',
     comentarios: '',
     email: '',
+    destacaAntiguedad: false,
+    destacaTamano: false,
+    destacaSituacion: false,
+    destacaContexto: false, //Destaca por su contexto histórico
+    usosCuriosidades: '',    
 }
 
 

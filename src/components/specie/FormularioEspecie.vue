@@ -136,8 +136,8 @@
                 </div>
             </li>
 
-             <li class="field mb-3">
-                <label for="descHoja" class="form-label">Descripción da Folla</label>
+            <li class="field mb-3">
+                <label for="descHoja" class="form-label">Descrición da Folla</label>
                 <textarea
                     v-model.trim="arbore.descHoja"
                     class="form-control"
@@ -146,12 +146,22 @@
                 ></textarea>
             </li>
 
-             <li class="field mb-3">
-                <label for="descFlorFruto" class="form-label">Descripción da flor/froito</label>
+            <li class="field mb-3">
+                <label for="descFlorFruto" class="form-label">Descrición da flor/froito</label>
                 <textarea
                     v-model.trim="arbore.descFlorFruto"
                     class="form-control"
                     id="descFlorFruto"
+                    rows="3"
+                ></textarea>
+            </li>
+
+            <li class="field mb-3">
+                <label for="descTronco" class="form-label">Descrición do Tronco</label>
+                <textarea
+                    v-model.trim="arbore.descTronco"
+                    class="form-control"
+                    id="descTronco"
                     rows="3"
                 ></textarea>
             </li>
@@ -166,7 +176,6 @@
                 ></textarea>
             </li>
 
-
             <li class="field mb-3">
                 <label for="descriptio" class="form-label">Outros datos</label>
                 <textarea
@@ -178,21 +187,61 @@
             </li>
 
             <li class="mb-3">
-                <button class="btn btn-dark" :disabled="btnDisabled">{{ btntext }}</button>
+                <button class="btn btn-dark" :disabled="btnDisabled">
+                    <div v-if="spinner" class="spinner-border" style="width: 1rem; height: 1rem;" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                    {{ btntext }}
+                </button>
             </li>
         </ul>
     </form>
 </template>
 
 <script setup>
-
 import { computed, defineEmits, defineProps } from 'vue';
+
 const props = defineProps({
+    /**
+     * @param {Object} arbore - Objeto con todos los datos de una especie
+     * @description Ejemplo:
+        {
+        "altura": "Pode superar os 40 metros",
+        "descFlorFruto": "O carballo común presenta dous tipos de flores masculinas e as femininas",
+        "descHoja": "Follas grandes.",
+        "descTronco": "Tronco leñoso con gretas lonxitudinais",
+        "descriptio": "Árbore de copa ampla.",
+        "diametro": "",
+        "distribucion": "Europa",
+        "genus": "Quercus",
+        "ginnospermas": false,
+        "hojaPerenne": false,
+        "id": "sp-1647167763925",
+        "names": [
+            "Carballo",
+            "roble"
+        ],
+        "specie": "Robur",
+        "usosAprovechamiento": "A madeira do carballo é de excelente calidade.",
+        "nombres": "Carballo,roble"
+        }
+     * 
+     */
     arbore: {
         type: Object,
         required: false,
 
     },
+    /**
+     * @param {Boolean} spinner - Spinner colocado el botón de actualización
+     */
+    spinner: {
+        type: Boolean,
+        default: false,
+    },
+    /**
+     * {String} btntext - Texto que figura en el botón
+     */
     btntext: {
         type: String,
         required: false,

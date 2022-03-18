@@ -4,25 +4,25 @@
             v-model="search"
             class="form-control me-2"
             type="search"
-            placeholder="Género, especie, nombre común"
+            placeholder="Xénero, especie, nome común"
             aria-label="Search"
         />
     </form>
     <div class="table-responsive">
         <table class="table table-striped">
-            <caption>Ejemplares: {{ totalCatalogo }}</caption>
+            <caption>Exemplares: {{ totalCatalogo }}</caption>
             <thead>
                 <tr>
                     <th scope="col">
-                        <a @click.prevent="sortSpecie('genus')" href="#">Género</a>
+                        <a @click.prevent="sortSpecie('genus')" href="#">Xénero</a>
                         <i class="bi" :class="genusSort"></i>
                     </th>
                     <th scope="col">
                         <a @click.prevent="sortSpecie('specie')" href="#">Especie</a>
                         <i class="bi" :class="specieSort"></i>
                     </th>
-                    <th scope="col">Nombres comunes</th>
-                    <th v-if="!isLogin" scope="col">Opciones</th>
+                    <th scope="col">Nomes comúns</th>
+                    <th v-if="!isLogin" scope="col">Opcións</th>
                 </tr>
             </thead>
             <tbody>
@@ -42,7 +42,7 @@
                         <td>{{ item.names.join() }}</td>
                         <td>
                             <router-link
-                                title="Subida de imágenes"
+                                title="Subida de imaxes"
                                 class="text-decoration-none"
                                 :to="{
                                     name: 'SpecieImages',

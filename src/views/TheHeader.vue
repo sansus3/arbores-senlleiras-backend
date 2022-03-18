@@ -42,7 +42,7 @@
                                     :to="{
                                         name: 'Specie'
                                     }"
-                                >Nueva especie</router-link>
+                                >Nova especie</router-link>
                             </li>
                         </ul>
                     </li>

@@ -2,12 +2,12 @@
     <section class="section container mt-3">
         <h2 class="section__title display-6">Edición de Especie</h2>
         <!-- Create Read Update Delete (Crud) Árboles. Formulario -->
-        <loader-component :visibleBool="visibleBool"></loader-component>
         <template v-if="specie">
             <formulario-especie
                 @custom-action="actionActualizacion"
                 :arbore="specie"
                 btntext="Actualizar"
+                :spinner="visibleBool"
             ></formulario-especie>
              <div>                
                 <storage-firebase :optionsBool="true" :files_uid="$route.params.id"></storage-firebase>
@@ -27,7 +27,6 @@ import { useRoute } from "vue-router";
 import { computed,onMounted,ref } from "vue";
 import StorageFirebase from "@/components/specie/StorageFirebase.vue"
 import FormularioEspecie from "@/components/specie/FormularioEspecie";
-import LoaderComponent from "@/components/LoaderComponent.vue";
 
 const store = useStore();
 const route = useRoute();

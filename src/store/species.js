@@ -8,6 +8,7 @@ const SPECIE = {
     descHoja: '',
     ginnospermas: false,//false angiospermas
     descFlorFruto: '',
+    descTronco: '',
     usosAprovechamiento: '',
     altura: '', //String por si meten medidas como "20-30 cm"
     diametro: '', //String por si meten medidas,

@@ -11,7 +11,7 @@
             v-else
             class="alert alert-danger"
             role="alert"
-        >Ha ocurrido un error en la edición de la especie vuelva al catálogo y vuelva a intentarlo</div>
+        >Ocorreu un erro na edición da especie volva ao catálogo e volva tentalo</div>
     </section>
 </template>
 

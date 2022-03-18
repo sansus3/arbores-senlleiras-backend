@@ -1,9 +1,12 @@
 <template>
     <section class="section container mt-3">
         <h2 class="section__title display-6">Nueva Especie</h2>
-        <loader-component :visibleBool="visibleBool"></loader-component>
         <!-- Create Read Update Delete (Crud) Árboles. Formulario -->
-        <formulario-especie @custom-action="actionAlta" :arbore="specie"></formulario-especie>
+        <formulario-especie 
+            @custom-action="actionAlta" 
+            :arbore="specie"
+            :spinner="visibleBool"
+        ></formulario-especie>
     </section>
 </template>
 
@@ -11,7 +14,6 @@
 import { useStore } from "vuex";
 import { onMounted, computed, ref } from "vue";
 import FormularioEspecie from "@/components/specie/FormularioEspecie";
-import LoaderComponent from "@/components/LoaderComponent.vue";
 
 onMounted(() => {
     store.dispatch('species/resetSpecie');

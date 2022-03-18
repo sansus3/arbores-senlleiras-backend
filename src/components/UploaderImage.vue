@@ -2,7 +2,7 @@
     <form method="post" enctype="multipart/form-data" action="#" v-on:submit.prevent="subirFicheros">
         <ul class="fields p-2">
             <li class="field mb-3">
-                <label for="formFileMultiple" class="form-label">Selecciona imágenes</label>
+                <label for="formFileMultiple" class="form-label">Selecciona imaxes</label>
                 <input
                     @change="almacenarImagenes($event)"
                     class="form-control"

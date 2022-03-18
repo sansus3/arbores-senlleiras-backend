@@ -2,17 +2,17 @@
     <div class="table-responsive">
         <!-- {{senlleirasFilter}} -->
         <table class="table table-success table-striped">
-            <caption>Ejemplares: {{ totalCatalogo }}</caption>
+            <caption>Exemplares: {{ totalCatalogo }}</caption>
             <thead>
                 <tr>
                     <th scope="col">
-                        Nombre
+                        Nome
                     </th>
                     <th scope="col">
                        Correo
                     </th>
                     <th scope="col">Localización</th>
-                    <th scope="col" v-if="!isLogin">Opciones</th>
+                    <th scope="col" v-if="!isLogin">Opcións</th>
                 </tr>
             </thead>
             <tbody>

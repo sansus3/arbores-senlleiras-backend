@@ -6,10 +6,18 @@
             <thead>
                 <tr>
                     <th scope="col">
-                        Nome
+                        <a 
+                            href="#"
+                            @click.prevent="ordenar({'campo':'nombreReferencia','a-z':sw})">
+                            Nome
+                        </a>
                     </th>
                     <th scope="col">
-                       Correo
+                       <a 
+                            href="#"
+                            @click.prevent="ordenar({'campo':'email','a-z':sw})">
+                            Correo
+                        </a>
                     </th>
                     <th scope="col">Localización</th>
                     <th scope="col" v-if="!isLogin">Opcións</th>
@@ -74,43 +82,35 @@
                     </tr>
                 </template>
             </tbody>
-        </table>
-        <div v-if="loading" class="d-flex justify-content-center">
-            <div class="spinner-border" role="status">
-                <span class="visually-hidden">Loading...</span>
-            </div>
-        </div>
+        </table>        
     </div>
 </template>
 
 <script setup>
-import { computed, onMounted, ref } from 'vue';
+import { computed, ref, toRefs } from 'vue';
 import { useStore } from 'vuex';
 const store = useStore();
-const loading = ref(false);
 const idTmp = ref('');
+const sw = ref(false);
 const confirmadoBool = ref(false);
 const isLogin = computed(() => {
     return store.state.users.user === null;
 });
 
-onMounted(async () => {
-    try {
-        loading.value = true;
-        store.dispatch('senlleiras/listSenlleiras');
-    } catch (error) {
-        console.log('Error CataloComponent.vue',error);
-    } finally {
-        loading.value = false;
-    }
-});
+
 
 //Elementos computados
-const senlleirasFilter = computed(() => store.state.senlleiras.senlleiras);
-
+const senlleirasFilter = computed(() => store.getters['senlleiras/getSenlleirasFiltradas']);
 const totalCatalogo = computed(() => senlleirasFilter.value ? senlleirasFilter.value.length : 0);
-//Métodos
 const confirmado = bool => !bool ? 'Sin confirmar' : 'Confirmado';
+//Métodos
+
+const ordenar = order => {
+    sw.value=!sw.value;
+    order['a-z']=!sw.value;
+    store.dispatch('senlleiras/ordenarSenlleiras',order);
+}
+
 const confirmToggle = async (obj) => {
     try {
         confirmadoBool.value=true;

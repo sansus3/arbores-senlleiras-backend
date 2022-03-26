@@ -25,18 +25,19 @@ const SENLLEIRA = {
     destacaTamano: false,
     destacaSituacion: false,
     destacaContexto: false, //Destaca por su contexto histórico
-    usosCuriosidades: '',    
+    usosCuriosidades: '',
 }
 
 
 const state = {
     senlleiras: [],
+    senlleirasFiltradas: [],
     senlleira: { ...SENLLEIRA },
 }
 
 const mutations = {
     listSenlleiras(state, payload) {
-        state.senlleiras = payload;
+        state.senlleiras = state.senlleirasFiltradas = payload;
     },
     confirmToggle(state, payload) {
         const index = state.senlleiras.findIndex(el => el.id === payload.id);
@@ -58,6 +59,24 @@ const mutations = {
     deleteSenlleira(state, payload) {
         state.senlleiras = state.senlleiras.filter(el => el.id !== payload);
         router.push('/Senlleiras');//router es importado
+    },
+    ordenarSenlleiras(state, payload) {
+        if (payload['a-z'])
+            state.senlleirasFiltradas.sort((x, y) => x[payload.campo].localeCompare(y[payload.campo]));
+        else
+            state.senlleirasFiltradas.sort((y, x) => x[payload.campo].localeCompare(y[payload.campo]));
+    },
+    listarConfirmados(state, payload) {
+        if (payload === -1)
+            state.senlleirasFiltradas = state.senlleiras;
+        else
+            state.senlleirasFiltradas = state.senlleiras.filter(senlleira => senlleira.confirmado === payload);
+    },
+    filtrar(state,payload){
+        //Pasamos todo a minúsculas pues includes es sensible a mayúsculas y minúsculas
+        const min = payload.toLowerCase();
+        //Array temporal donde almacenamos los resultados
+        state.senlleirasFiltradas = state.senlleiras.filter(senlleira => senlleira.genus.toLowerCase().includes(min) || senlleira.specie.toLowerCase().includes(min) || senlleira.nombreReferencia.toLowerCase().includes(min) || senlleira.concello.toLowerCase().includes(min) || senlleira.lugar.toLowerCase().includes(min) || senlleira.nombreComun.toLowerCase().includes(min));
     }
 }
 
@@ -74,7 +93,7 @@ const actions = {
         if (data)
             context.commit('listSenlleiras', Object.values(data));
     },
-    async confirmToggle({ commit,rootState }, { id, confirm }) {
+    async confirmToggle({ commit, rootState }, { id, confirm }) {
         const response = await fetch(`${rootState.realtimeDatabase}senlleiras/${id}.json`,
             {
                 method: 'PATCH',
@@ -86,7 +105,7 @@ const actions = {
             });
         commit('confirmToggle', { id, confirm });
     },
-    async updateSenlleira({ commit,rootState }, obj) {
+    async updateSenlleira({ commit, rootState }, obj) {
         await fetch(
             `${rootState.realtimeDatabase}senlleiras/${obj.id}.json`,
             {
@@ -99,7 +118,7 @@ const actions = {
         );
         commit('updateSenlleira', obj);
     },
-    async deleteSenlleira({ commit,rootState }, { id }) {
+    async deleteSenlleira({ commit, rootState }, { id }) {
         if (id) {
             await fetch(
                 `${rootState.realtimeDatabase}senlleiras/${id}.json`,
@@ -114,6 +133,22 @@ const actions = {
     },
     setSenlleira({ commit }, id) {
         commit('setSenlleira', id);
+    },
+    ordenarSenlleiras({ commit }, order) {
+        commit('ordenarSenlleiras', order)
+    },
+    listarConfirmados({ commit }, value) {
+        commit('listarConfirmados', value);
+    },
+    filtrar({ commit}, data) {
+        commit('filtrar',data);    
+    },
+}
+
+
+const getters = {
+    getSenlleirasFiltradas(state) {
+        return state.senlleirasFiltradas;
     }
 }
 
@@ -124,4 +159,5 @@ export default {
     state,
     mutations,
     actions,
+    getters,
 }

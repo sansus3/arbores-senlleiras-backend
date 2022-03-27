@@ -10,7 +10,7 @@
                 type="number"
                 placeholder="43.5060736"
                 class="field__control form-control"
-                step="0.00000000000001"
+                step="0.000000000000001"
             />
         </div>
 
@@ -24,7 +24,7 @@
                 type="number"
                 placeholder="-8.2051072"
                 class="field__control form-control"
-                step="0.00000000000001"
+                step="0.000000000000001"
             />
         </div>
         <div class="col-auto">

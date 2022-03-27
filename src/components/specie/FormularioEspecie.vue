@@ -51,24 +51,38 @@
             <!-- Altura / diametro /distribucion -->
             <li class="field mb-3 row">
                 <div class="col-auto">
-                    <label for="altura" class="form-label">Altura</label>
+                    <label for="altura" class="form-label">Altura (metros)</label>
                     <input
                         id="altura"
                         name="altura"
-                        v-model.trim="arbore.altura"
-                        type="text"
-                        placeholder="Entre 10 y 20 metros"
+                        v-model.number="arbore.altura"
+                        type="number"
+                        step="0.01"
+                        placeholder="31"
                         class="field__control form-control"
                     />
                 </div>
                 <div class="col-auto">
-                    <label for="diametro" class="form-label">Diámetro</label>
+                    <label for="diametroCopa" class="form-label">Diámetro da copa (metros)</label>
                     <input
-                        id="diametro"
-                        name="diametro"
-                        v-model.trim="arbore.diametro"
-                        type="text"
-                        placeholder="Sobre 1.5 metros"
+                        id="diametroCopa"
+                        name="diametroCopa"
+                        v-model.number="arbore.diametroCopa"
+                        type="number"
+                        step="0.01"
+                        placeholder="10,5"
+                        class="field__control form-control"
+                    />
+                </div>
+                <div class="col-auto">
+                    <label for="diametro" class="form-label">Perímetro do tronco (metros)</label>
+                    <input
+                        id="perimetroTronco"
+                        name="perimetroTronco"
+                        v-model.number="arbore.perimetroTronco"
+                        type="number"
+                        step="0.01"
+                        placeholder="10,5"
                         class="field__control form-control"
                     />
                 </div>
@@ -206,12 +220,14 @@ const props = defineProps({
      * @param {Object} arbore - Objeto con todos los datos de una especie
      * @description Ejemplo:
         {
-        "altura": "Pode superar os 40 metros",
         "descFlorFruto": "O carballo común presenta dous tipos de flores masculinas e as femininas",
         "descHoja": "Follas grandes.",
         "descTronco": "Tronco leñoso con gretas lonxitudinais",
         "descriptio": "Árbore de copa ampla.",
-        "diametro": "",
+        "altura": 0, //numérico Ej: 31 metros
+        "diametroCopa": 0, //numérico Ej: 10.5 metros
+        "perimetroTronco": 0, // numérico Ej: 3.45 metros
+        "edadEstimada": 0, // numérico Ej: 100 anos
         "distribucion": "Europa",
         "genus": "Quercus",
         "ginnospermas": false,

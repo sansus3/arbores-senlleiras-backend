@@ -47,7 +47,8 @@
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item"><strong>Nomes:</strong> {{ specie.names.join(', ') }}</li>
                     <li class="list-group-item"><strong>Altura</strong> {{specie.altura}}</li>
-                    <li class="list-group-item"><strong>Diámetro</strong> {{specie.diametro}}</li>
+                    <li class="list-group-item"><strong>Diámetro de copa</strong> {{specie.diametroCopa}}</li>
+                    <li class="list-group-item"><strong>Perímetro do tronco</strong> {{specie.perimetroTronco}}</li>
                     <li class="list-group-item"><strong>Distribución</strong> {{specie.distribucion}}</li>
                 </ul>
                 <storage-firebase :files_uid="$route.params.id"></storage-firebase>

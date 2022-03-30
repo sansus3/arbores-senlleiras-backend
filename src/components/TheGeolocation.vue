@@ -1,7 +1,10 @@
 <template>
     <section class="geolocation row">
         <div class="geolocation__field col">
-            <label for="latitud" class="form-label">Latitude <span class="text-danger">(Obrigatorio)</span></label>
+            <label for="latitud" class="form-label">Latitude 
+            <span
+                v-if="typeof location.latitude==='string'" 
+                class="text-danger">(Obrigatorio)</span></label>
             <input
                 required
                 id="latitud"
@@ -10,12 +13,15 @@
                 type="number"
                 placeholder="43.5060736"
                 class="field__control form-control"
-                step="0.000000000000001"
+                step="any"
             />
         </div>
 
         <div class="geolocation__field col">
-            <label for="longitude" class="form-label">Lonxitude <span class="text-danger">(Obrigatorio)</span></label>
+            <label for="longitude" class="form-label">Lonxitude 
+                <span 
+                    v-if="typeof location.longitude==='string'"
+                    class="text-danger">(Obrigatorio)</span></label>
             <input
                 required
                 id="longitude"
@@ -24,7 +30,7 @@
                 type="number"
                 placeholder="-8.2051072"
                 class="field__control form-control"
-                step="0.000000000000001"
+                step="any"
             />
         </div>
         <div class="col-auto">

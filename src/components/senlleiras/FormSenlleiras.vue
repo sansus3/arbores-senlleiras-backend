@@ -29,7 +29,7 @@
                         required
                     >
                         <optgroup label="Sin confirmar">
-                            <option value="null">Descoñecida</option>
+                            <option value="null">Outro</option>
                         </optgroup>
                         <optgroup label="Especies">
                             <option
@@ -56,7 +56,7 @@
                 <li class="field col">
                     <label class="form-label" for="nombrearbol">
                         Nome de referencia
-                        <span class="text-danger">(Obrigatorio)</span>
+                        <span v-if="!form.nombreReferencia.length" class="text-danger">(Obrigatorio)</span>
                     </label>
                     <input
                         class="form-control"
@@ -78,7 +78,7 @@
                         name="altura"
                         v-model.number="form.altura"
                         type="number"
-                        step="0.01"
+                        step="any"
                         placeholder="31"
                         class="field__control form-control"
                     />
@@ -90,7 +90,7 @@
                         name="diametroCopa"
                         v-model.number="form.diametroCopa"
                         type="number"
-                        step="0.01"
+                        step="any"
                         placeholder="10,5"
                         class="field__control form-control"
                     />
@@ -102,7 +102,7 @@
                         name="perimetroTronco"
                         v-model.number="form.perimetroTronco"
                         type="number"
-                        step="0.01"
+                        step="any"
                         placeholder="3,5"
                         class="field__control form-control"
                     />
@@ -247,7 +247,9 @@
                 />
                 <span class="input-group-text" id="correo">
                     Correo electrónico&nbsp;
-                    <span class="text-danger">(Obrigatorio)</span>
+                    <span
+                        v-if="form.email.length===0" 
+                        class="text-danger">(Obrigatorio)</span>
                 </span>
             </div>
         </fieldset>

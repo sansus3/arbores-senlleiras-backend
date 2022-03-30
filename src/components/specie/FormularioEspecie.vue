@@ -57,7 +57,7 @@
                         name="altura"
                         v-model.number="arbore.altura"
                         type="number"
-                        step="0.01"
+                        step="any"
                         placeholder="31"
                         class="field__control form-control"
                     />
@@ -69,7 +69,7 @@
                         name="diametroCopa"
                         v-model.number="arbore.diametroCopa"
                         type="number"
-                        step="0.01"
+                        step="any"
                         placeholder="10,5"
                         class="field__control form-control"
                     />
@@ -81,7 +81,7 @@
                         name="perimetroTronco"
                         v-model.number="arbore.perimetroTronco"
                         type="number"
-                        step="0.01"
+                        step="any"
                         placeholder="10,5"
                         class="field__control form-control"
                     />

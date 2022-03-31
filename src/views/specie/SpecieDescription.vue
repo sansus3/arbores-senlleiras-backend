@@ -132,7 +132,7 @@
                 <p class="card-text">{{ specie.descFlorFruto }}</p>
             </div>
         </div>
-        <div class="btn-group m-3" role="group">
+        <div v-if="!isLogin" class="btn-group m-3" role="group">
             <router-link
                 :to="{
                     name: 'Edit',
@@ -163,6 +163,10 @@ import StorageFirebase from "@/components/specie/StorageFirebase.vue"
 
 const route = useRoute();
 const store = useStore();
+
+const isLogin = computed(() => {
+    return store.state.users.user === null;
+});
 
 const tabs = reactive({
     item1: {

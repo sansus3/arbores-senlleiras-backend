@@ -45,14 +45,29 @@
             <div v-if="tabs.item1.active" class="card-body">
                 <h5 class="card-title">{{ specie.genus }} {{ specie.specie }}</h5>
                 <ul class="list-group list-group-flush">
-                    <li class="list-group-item"><strong>Nomes:</strong> {{ specie.names.join(', ') }}</li>
-                    <li class="list-group-item"><strong>Altura</strong> {{specie.altura}}</li>
-                    <li class="list-group-item"><strong>Diámetro de copa</strong> {{specie.diametroCopa}}</li>
-                    <li class="list-group-item"><strong>Perímetro do tronco</strong> {{specie.perimetroTronco}}</li>
-                    <li class="list-group-item"><strong>Distribución</strong> {{specie.distribucion}}</li>
+                    <li class="list-group-item">
+                        <strong>Nomes:</strong>
+                        {{ specie.names.join(', ') }}
+                    </li>
+                    <li v-if="specie.altura" class="list-group-item">
+                        <strong>Altura (máx)</strong>
+                        {{ specie.altura }} metros
+                    </li>
+                    <li v-if="specie.diametroCopa" class="list-group-item">
+                        <strong>Diámetro de copa (máx)</strong>
+                        {{ specie.diametroCopa }} metros
+                    </li>
+                    <li v-if="specie.perimetroTronco" class="list-group-item">
+                        <strong>Perímetro do tronco (máx)</strong>
+                        {{ specie.perimetroTronco }} metros
+                    </li>
+                    <li class="list-group-item">
+                        <strong>Distribución</strong>
+                        {{ specie.distribucion }}
+                    </li>
                 </ul>
                 <storage-firebase :files_uid="$route.params.id"></storage-firebase>
-            </div>            
+            </div>
             <!-- Descricion -->
             <div v-if="tabs.item2.active" class="card-body">
                 <h5 class="card-title">Descrición tronco</h5>
@@ -61,7 +76,6 @@
                 <p class="card-text">{{ specie.usosAprovechamiento }}</p>
                 <h5 class="card-title">Outros</h5>
                 <p class="card-text">{{ specie.descriptio }}</p>
-                
             </div>
             <!-- Follas -->
             <div v-if="tabs.item3.active" class="card-body">
@@ -117,6 +131,26 @@
                 </div>
                 <p class="card-text">{{ specie.descFlorFruto }}</p>
             </div>
+        </div>
+        <div class="btn-group m-3" role="group">
+            <router-link
+                :to="{
+                    name: 'Edit',
+                    params: {
+                        id: $route.params.id
+                    }
+                }"
+                class="btn btn-primary"
+            >Editar</router-link>
+            <router-link
+                :to="{
+                    name: 'DeleteSpecie',
+                    params: {
+                        id: $route.params.id
+                    }
+                }"
+                class="btn btn-danger"
+            >Eliminar</router-link>
         </div>
     </article>
 </template>

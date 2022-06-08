@@ -3,7 +3,10 @@ const SPECIE = {
     id: null,
     specie: '',
     genus: '',
-    names: [],
+    names: [], //En castelán
+    nomes: '', //En galego
+    etimoloxia: '',
+    curiosidades: '',
     hojaPerenne: false, //false hoja caduca
     descHoja: '',
     ginnospermas: false,//false angiospermas

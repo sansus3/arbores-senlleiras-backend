@@ -46,8 +46,12 @@
                 <h5 class="card-title">{{ specie.genus }} {{ specie.specie }}</h5>
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item">
-                        <strong>Nomes:</strong>
+                        <strong>Nomes en castelán:</strong>
                         {{ specie.names.join(', ') }}
+                    </li>
+                    <li class="list-group-item">
+                        <strong>Nomes en galego:</strong>
+                        {{ specie.nomes }}
                     </li>
                     <li v-if="specie.altura" class="list-group-item">
                         <strong>Altura (máx)</strong>
@@ -72,9 +76,13 @@
             <div v-if="tabs.item2.active" class="card-body">
                 <h5 class="card-title">Descrición tronco</h5>
                 <p class="card-text">{{ specie.descTronco }}</p>
+                <h5>Etimoloxía</h5>
+                <p class="card-text">{{ specie.etimoloxia }}</p>
                 <h5>Usos e aproveitamento</h5>
                 <p class="card-text">{{ specie.usosAprovechamiento }}</p>
-                <h5 class="card-title">Outros</h5>
+                <h5 class="card-title">Curiosidades</h5>
+                <p class="card-text">{{ specie.curiosidades }}</p>
+                <h5 class="card-title">Orixe e descrición</h5>
                 <p class="card-text">{{ specie.descriptio }}</p>
             </div>
             <!-- Follas -->

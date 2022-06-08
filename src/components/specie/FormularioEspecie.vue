@@ -38,11 +38,23 @@
             </li>
 
             <li class="field mb-3">
-                <label for="names" class="form-label">Nomes</label>
+                <label for="names" class="form-label">Nomes en castelán</label>
                 <input
                     id="names"
                     name="names"
                     v-model.trim="arbore.nombres"
+                    type="text"
+                    placeholder="Nomes separados con comas"
+                    class="field__control form-control"
+                />
+            </li>
+
+            <li class="field mb-3">
+                <label for="nomes" class="form-label">Nomes en galego</label>
+                <input
+                    id="nomes"
+                    name="nomes"
+                    v-model.trim="arbore.nomes"
                     type="text"
                     placeholder="Nomes separados con comas"
                     class="field__control form-control"
@@ -85,18 +97,7 @@
                         placeholder="10,5"
                         class="field__control form-control"
                     />
-                </div>
-                <div class="col">
-                    <label for="distribucion" class="form-label">Distribución xeográfica</label>
-                    <input
-                        id="distribucion"
-                        name="distribucion"
-                        v-model.trim="arbore.distribucion"
-                        type="text"
-                        placeholder="Europa occidental"
-                        class="field__control form-control"
-                    />
-                </div>
+                </div>                
             </li>
             <!-- Datos adicionales -->
             <li class="field mb-3 row">
@@ -181,6 +182,17 @@
             </li>
 
             <li class="field mb-3">
+                    <label for="distribucion" class="form-label">Distribución xeográfica</label>
+                    <textarea
+                        id="distribucion"
+                        name="distribucion"
+                        v-model.trim="arbore.distribucion"
+                        placeholder="Europa occidental"
+                        class="form-control"
+                    ></textarea>
+                </li>
+
+            <li class="field mb-3">
                 <label for="usosAprovechamiento" class="form-label">Usos e aproveitamento</label>
                 <textarea
                     v-model.trim="arbore.usosAprovechamiento"
@@ -191,14 +203,34 @@
             </li>
 
             <li class="field mb-3">
-                <label for="descriptio" class="form-label">Outros datos</label>
+                <label for="etimoloxia" class="form-label">Etimoloxía</label>
+                <textarea
+                    v-model.trim="arbore.etimoloxia"
+                    class="form-control"
+                    id="etimoloxia"
+                    rows="3"
+                ></textarea>
+            </li>
+
+             <li class="field mb-3">
+                <label for="curiosidades" class="form-label">Curiosidades</label>
+                <textarea
+                    v-model.trim="arbore.curiosidades"
+                    class="form-control"
+                    id="curiosidades"
+                    rows="3"
+                ></textarea>
+            </li>
+
+            <li class="field mb-3">
+                <label for="descriptio" class="form-label">Orixe e descrición</label>
                 <textarea
                     v-model.trim="arbore.descriptio"
                     class="form-control"
                     id="descriptio"
                     rows="3"
                 ></textarea>
-            </li>
+            </li>           
 
             <li class="mb-3">
                 <button class="btn btn-dark" :disabled="btnDisabled">
